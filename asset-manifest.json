@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/dolinka-offical/static/css/main.ae42ac5f.css",
+    "main.js": "/dolinka-offical/static/js/main.52dbc92c.js",
+    "index.html": "/dolinka-offical/index.html",
+    "main.ae42ac5f.css.map": "/dolinka-offical/static/css/main.ae42ac5f.css.map",
+    "main.52dbc92c.js.map": "/dolinka-offical/static/js/main.52dbc92c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ae42ac5f.css",
+    "static/js/main.52dbc92c.js"
+  ]
+}
