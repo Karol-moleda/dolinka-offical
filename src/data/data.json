@@ -1,0 +1,227 @@
+{
+  "Header": {
+    "title": "DOLINKA",
+    "paragraph": "Oficjalna strona Zarządu Osiedla Młodych w Olkuszu"
+  },
+  "About": {
+    "paragraph": "Jesteśmy grupą ludzi, którzy z pasją działają na rzecz naszej lokalnej społeczności. Naszym celem jest tworzenie przestrzeni, w której każdy mieszkaniec czuje się dobrze i ma wpływ na rozwój osiedla. Organizujemy wydarzenia, wspieramy inicjatywy sąsiedzkie, a przede wszystkim dbamy o to, aby nasze osiedle było miejscem przyjaznym, bezpiecznym i pełnym życia. Działamy dla Was i z Wami, bo wierzymy, że razem możemy stworzyć wyjątkową wspólnotę!",
+    "Why": [
+      "Festyny rodzinne",
+      "Kina plnerowe",
+      "Wydarzenia sportowe",
+      "Mikołajki"
+    ],
+    "Why2": [
+      "Doposażamy Dolinkę",
+      "Zgłaszamy usterki i problemy",
+      "Wspieramy inicjatywy sąsiedzkie",
+      "Działamy na rzecz Osiedla"
+    ]
+  },
+  "Gallery": [
+    {
+      "title": "Zebranie z mieszkańcami",
+      "largeImage": "img/event/zebranie.jpg",
+      "smallImage": "img/event/zebranie.jpg"
+    },
+    {
+      "title": "Zebranie z mieszkańcami",
+      "largeImage": "img/event/zebranie-2.jpg",
+      "smallImage": "img/event/zebranie-2.jpg"
+    },
+    {
+      "title": "Zebranie z mieszkańcami",
+      "largeImage": "img/event/zebranie-3.jpg",
+      "smallImage": "img/event/zebranie-3.jpg"
+    },
+    {
+      "title": "Festyn w Dolince",
+      "largeImage": "img/event/1.jpg",
+      "smallImage": "img/event/1.jpg"
+    },
+    {
+      "title": "Festyn w Dolince",
+      "largeImage": "img/event/2.jpg",
+      "smallImage": "img/event/2.jpg"
+    },
+    {
+      "title": "Festyn w Dolince",
+      "largeImage": "img/event/3.jpg",
+      "smallImage": "img/event/3.jpg"
+    },
+    {
+      "title": "Festyn w Dolince",
+      "largeImage": "img/event/4.jpg",
+      "smallImage": "img/event/4.jpg"
+    },
+    {
+      "title": "Festyn w Dolince",
+      "largeImage": "img/event/5.jpg",
+      "smallImage": "img/event/5.jpg"
+    },
+    {
+      "title": "Festyn w Dolince",
+      "largeImage": "img/event/6.jpg",
+      "smallImage": "img/event/6.jpg"
+    },
+    {
+      "title": "Festyn w Dolince",
+      "largeImage": "img/event/7.jpg",
+      "smallImage": "img/event/7.jpg"
+    },
+    {
+      "title": "Festyn w Dolince",
+      "largeImage": "img/event/8.jpg",
+      "smallImage": "img/event/8.jpg"
+    },
+    {
+      "title": "Festyn w Dolince",
+      "largeImage": "img/event/9.jpg",
+      "smallImage": "img/event/9.jpg"
+    },
+    {
+      "title": "Festyn w Dolince",
+      "largeImage": "img/event/10.jpg",
+      "smallImage": "img/event/10.jpg"
+    },
+    {
+      "title": "Festyn w Dolince",
+      "largeImage": "img/event/11.jpg",
+      "smallImage": "img/event/11.jpg"
+    },
+    {
+      "title": "Festyn w Dolince",
+      "largeImage": "img/event/12.jpg",
+      "smallImage": "img/event/12.jpg"
+    },
+    {
+      "title": "Festyn w Dolince",
+      "largeImage": "img/event/13.jpg",
+      "smallImage": "img/event/13.jpg"
+    },
+    {
+      "title": "Festyn w Dolince",
+      "largeImage": "img/event/14.jpg",
+      "smallImage": "img/event/14.jpg"
+    },
+    {
+      "title": "Festyn w Dolince",
+      "largeImage": "img/event/15.jpg",
+      "smallImage": "img/event/15.jpg"
+    },
+    {
+      "title": "Festyn w Dolince",
+      "largeImage": "img/event/16.jpg",
+      "smallImage": "img/event/16.jpg"
+    }
+  ],
+  "Services": [
+    {
+      "img": "img/Festyn.jpg",
+      "name": "Festyn rodzinny",
+      "text": "Jako Zarząd Osiedla Młodych organizujemy coroczny festyn rodzinny, który jest wyjątkową okazją do wspólnej zabawy i integracji mieszkańców. Przygotowujemy atrakcje dla dzieci i dorosłych, koncerty, gry, konkursy oraz pyszne jedzenie, aby każdy mógł znaleźć coś dla siebie. Festyn to czas radości, budowania więzi i spędzania miłych chwil w gronie sąsiadów!"
+    },
+    {
+      "img": "img/kino.jpg",
+      "name": "Kino plenerowe",
+      "text": "Jako Zarząd Osiedla Młodych zapraszamy na kino plenerowe, gdzie w letnie wieczory można cieszyć się filmami pod gołym niebem! To doskonała okazja, by spotkać się z sąsiadami, zrelaksować na świeżym powietrzu i wspólnie obejrzeć ulubione produkcje. Przygotowujemy różnorodne filmy, które zachwycą zarówno starszych, jak i młodszych widzów. Kino plenerowe to nasz sposób na wprowadzenie nieco magii do codziennego życia na osiedlu!"
+    },
+    {
+      "img": "img/kosz.jpg",
+      "name": "Turnieje sportowe",
+      "text": "Jako Zarząd Osiedla Młodych organizujemy turnieje sportowe, które integrują mieszkańców i zachęcają do aktywnego spędzania czasu. Niezależnie od wieku i poziomu zaawansowania, każdy może wziąć udział w naszych rozgrywkach. Koszykówka, siatkówka – stawiamy na różnorodność i zdrową rywalizację. To świetna okazja, by zadbać o kondycję, poznać nowych ludzi i wspólnie cieszyć się sportem na świeżym powietrzu!"
+    },
+    {
+      "img": "img/tance.jpg",
+      "name": "Potańcówki",
+      "text": "Jako Zarząd Osiedla Młodych organizujemy potańcówki, które łączą mieszkańców w rytmie muzyki i dobrej zabawy! To idealna okazja, by oderwać się od codzienności, spotkać z sąsiadami i wspólnie bawić się na parkiecie. Dla starszych to powrót do dawnych wspomnień, a dla młodszych okazja do poznania tradycyjnych i nowoczesnych stylów tańca. Nasze potańcówki tworzą wyjątkową atmosferę, pełną radości i pozytywnej energii!"
+    },
+    {
+      "img": "img/miko.jpg",
+      "name": "Mikołajki- spotkanie świąteczne",
+      "text": "Jako Zarząd Osiedla Młodych organizujemy coroczne Mikołajki – spotkanie świąteczne pełne magii i radości. To wyjątkowy czas, kiedy najmłodsi mogą spotkać się z Mikołajem, wziąć udział w zabawach, konkursach oraz odebrać świąteczne upominki. Dla całych rodzin przygotowujemy mnóstwo atrakcji, które wprowadzają wszystkich w świąteczny nastrój i budują ciepłą, sąsiedzką atmosferę. Nasze Mikołajki to niezapomniane chwile pełne uśmiechu i wspólnej radości!"
+    },
+    {
+      "img": "img/smieci.jpg",
+      "name": "Sprzątanie Osiedla",
+      "text": "Jako Zarząd Osiedla Młodych organizujemy akcje sprzątania osiedla, aby wspólnie dbać o czystość i estetykę naszej przestrzeni. Włączając się w te inicjatywy, pokazujemy, że troska o środowisko i nasze otoczenie leży nam na sercu. To również świetna okazja, by spotkać się z sąsiadami i razem działać na rzecz czystszego, bardziej przyjaznego osiedla. Razem możemy sprawić, że nasza okolica będzie miejscem, z którego będziemy dumni!"
+    }
+  ],
+  "Testimonials": [
+    {
+      "img": "img/Ozdoba.jpg",
+      "text": "\"Przewodniczący Zarządu\"",
+      "name": "Wojciech Ozdoba"
+    },
+    {
+      "img": "img/testimonials/02.jpg",
+      "text": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at.\"",
+      "name": "Johnathan Doe"
+    },
+    {
+      "img": "img/testimonials/03.jpg",
+      "text": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at.\"",
+      "name": "John Doe"
+    },
+    {
+      "img": "img/testimonials/04.jpg",
+      "text": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at.\"",
+      "name": "Johnathan Doe"
+    },
+    {
+      "img": "img/testimonials/05.jpg",
+      "text": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at.\"",
+      "name": "John Doe"
+    },
+    {
+      "img": "img/testimonials/06.jpg",
+      "text": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at.\"",
+      "name": "Johnathan Doe"
+    }
+  ],
+  "Team": [
+    {
+      "img": "img/Ozdoba.jpg",
+      "name": "Wojciech Ozdoba",
+      "job": "Przewodniczący Zarządu"
+    },
+    {
+      "img": "img/Maliszewska.jpg",
+      "name": "Katarzyna Maliszewska-Tomsia",
+      "job": "Członek Zarządu"
+    },
+    {
+      "img": "img/Czopek.jpg",
+      "name": "Kamil Czopek",
+      "job": "Członek Zarządu"
+    },
+    {
+      "img": "img/Moleda.png",
+      "name": "Karol Molęda",
+      "job": "Członek Zarządu"
+    },
+    {
+      "img": "img/Patrykiewicz.jpg",
+      "name": "Zofia Patrykiewicz",
+      "job": "Członek Zarządu"
+    },
+    {
+      "img": "img/Henryka.png",
+      "name": "Henryka Foryś",
+      "job": "Członek Zarządu"
+    }
+  ],
+  "Contact": {
+    "address": "Osiedla Młodych, 32-300 Olkusz",
+    "email": "zarzad.dolinka@gmail.com",
+    "facebook": "https://www.facebook.com/profile.php?id=61563485266766"
+  },
+  "Features": [
+    {
+      "icon": "fa fa-bullhorn",
+      "title": "Spotkanie z mieszkańcami osiedla",
+      "text": "Dnia 23 września odbyło się zebranie z mieszkańcami osiedla, na którym omówione zostały plany na najbliższe miesiące. W spotkaniu wzięło udział ponad 80 osób, które aktywnie włączyły się w dyskusję i podzieliły się swoimi pomysłami na rozwój osiedla. Podczas dzisiejszego spotkania uchwaliliśmy nasz osiedlowy budżet na 2025 rok.Na koniec spotkania zaprosiliśmy wszystkich na kiełbaski prosto z grilla 🔥🌭"
+    }
+
+  ]
+}
