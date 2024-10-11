@@ -607,20 +607,6 @@ label {
   }
 }
 
-.flex-row {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-
-  @media (max-width: 998px) {
-    flex-direction: column;
-  }
 
 
-}
 
-.service-img {
-  width: 250px;
-  height: 250px;
-  object-fit: cover;
-}

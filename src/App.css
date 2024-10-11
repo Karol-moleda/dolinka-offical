@@ -1,18 +1,61 @@
-@media screen and (max-width: 400px) {
-  #features {
-    padding: 20px;
-    width: 111%;
-  }
-  #about,
-  #services,
-  #testimonials,
-  #team,
-  #contact,
-  #footer {
-    width: 111%;
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
+  @media (max-width: 998px) {
+    flex-direction: column;
   }
 
-  #portfolio {
-    width: 110%;
+
+}
+
+.service-img {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+}
+
+.my-masonry-grid {
+  display: flex;
+  margin-left: -30px; /* gutter size offset */
+  width: auto;
+}
+.my-masonry-grid_column {
+  padding-left: 30px; /* gutter size */
+  background-clip: padding-box;
+}
+
+/* Style each item */
+.my-masonry-grid_column > div {
+  background: #fff;
+  margin-bottom: 30px;
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
+@media (max-width: 992px) {
+  .text-center {
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .my-masonry-grid {
+    display: block;
+  }
+  .my-masonry-grid_column {
+    padding-left: 0;
+  }
+  .my-masonry-grid_column > div {
+    margin-bottom: 15px;
   }
 }

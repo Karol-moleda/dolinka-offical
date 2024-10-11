@@ -1,7 +1,14 @@
 import { Image } from "./image";
 import React from "react";
+import Masonry from 'react-masonry-css';
 
 export const Gallery = (props) => {
+  const breakpointColumnsObj = {
+    default: 3,
+    1100: 2,
+    700: 1
+  };
+
   return (
     <div id="portfolio" className="text-center">
       <div className="container">
@@ -11,24 +18,23 @@ export const Gallery = (props) => {
             Zarząd Osiedla Młodych w akcji – Zobacz, jak wspólnie działamy, organizujemy i bawimy się podczas naszych osiedlowych wydarzeń!
           </p>
         </div>
-        <div className="row">
-          <div className="portfolio-items">
-            {props.data
-              ? props.data.map((d, i) => (
-                  <div
-                    key={`${d.title}-${i}`}
-                    className="col-sm-6 col-md-4 col-lg-4"
-                  >
-                    <Image
-                      title={d.title}
-                      largeImage={d.largeImage}
-                      smallImage={d.smallImage}
-                    />
-                  </div>
-                ))
-              : "Loading..."}
-          </div>
-        </div>
+        <Masonry
+          breakpointCols={breakpointColumnsObj}
+          className="my-masonry-grid"
+          columnClassName="my-masonry-grid_column"
+        >
+          {props.data
+            ? props.data.map((d, i) => (
+                <div key={`${d.title}-${i}`}>
+                  <Image
+                    title={d.title}
+                    largeImage={d.largeImage}
+                    smallImage={d.smallImage}
+                  />
+                </div>
+              ))
+            : "Loading..."}
+        </Masonry>
       </div>
     </div>
   );
