@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/dolinka-offical/static/css/main.ae42ac5f.css",
-    "main.js": "/dolinka-offical/static/js/main.52dbc92c.js",
+    "main.css": "/dolinka-offical/static/css/main.cfb081e4.css",
+    "main.js": "/dolinka-offical/static/js/main.7254f358.js",
     "index.html": "/dolinka-offical/index.html",
-    "main.ae42ac5f.css.map": "/dolinka-offical/static/css/main.ae42ac5f.css.map",
-    "main.52dbc92c.js.map": "/dolinka-offical/static/js/main.52dbc92c.js.map"
+    "main.cfb081e4.css.map": "/dolinka-offical/static/css/main.cfb081e4.css.map",
+    "main.7254f358.js.map": "/dolinka-offical/static/js/main.7254f358.js.map"
   },
   "entrypoints": [
-    "static/css/main.ae42ac5f.css",
-    "static/js/main.52dbc92c.js"
+    "static/css/main.cfb081e4.css",
+    "static/js/main.7254f358.js"
   ]
 }
