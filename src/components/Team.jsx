@@ -13,7 +13,7 @@ export const Team = (props) => {
         <div id="row" className="flex-row">
           {props.data
             ? props.data.map((d, i) => (
-                <div key={`${d.name}-${i}`} className="col-md-3 col-sm-6 team">
+                <div key={`${d.name}-${i}`} className="team">
                   <div className="thumbnail">
                     {" "}
                     <img src={process.env.PUBLIC_URL + '/' +  d.img} alt="..." className="team-img" />

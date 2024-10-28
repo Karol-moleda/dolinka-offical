@@ -209,18 +209,23 @@
       "img": "img/Henryka.png",
       "name": "Henryka Foryś",
       "job": "Członek Zarządu"
+    },
+    {
+      "img": "img/Henryka.png",
+      "name": "Roksana Gorajczyk",
+      "job": "Członek Zarządu"
     }
   ],
   "Contact": {
     "address": "Osiedla Młodych, 32-300 Olkusz",
-    "email": "zarzad.dolinka@gmail.com",
+    "email": "dolinka.olkusz@gmail.com",
     "facebook": "https://www.facebook.com/profile.php?id=61563485266766"
   },
   "Features": [
     {
       "icon": "fa fa-bullhorn",
-      "title": "Spotkanie z mieszkańcami osiedla",
-      "text": "Dnia 23 września odbyło się zebranie z mieszkańcami osiedla, na którym omówione zostały plany na najbliższe miesiące. W spotkaniu wzięło udział ponad 80 osób, które aktywnie włączyły się w dyskusję i podzieliły się swoimi pomysłami na rozwój osiedla. Podczas dzisiejszego spotkania uchwaliliśmy nasz osiedlowy budżet na 2025 rok.Na koniec spotkania zaprosiliśmy wszystkich na kiełbaski prosto z grilla 🔥🌭"
+      "title": "Spotkanie z mikołajem",
+      "text": "Dnia 06.12.2024 każdy mieszkaniec osiedla będzie mógł spotkać się z Mikołajem, który przygotuje dla dzieci niespodzianki."
     }
 
   ]
