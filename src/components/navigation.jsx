@@ -1,6 +1,18 @@
+// Navigation.jsx
 import React from "react";
+import styled from 'styled-components';
+import Toggle from 'react-toggle';
+import "react-toggle/style.css";
+import FontSizeToggle from './FontSizeToggle';  
 
-export const Navigation = (props) => {
+const ToggleContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+`;
+
+export const Navigation = ({ toggleTheme, increaseFontSize, decreaseFontSize }) => {
   return (
     <nav id="menu" className="navbar navbar-default navbar-fixed-top">
       <div className="container">
@@ -61,6 +73,18 @@ export const Navigation = (props) => {
               <a href="#contact" className="page-scroll">
                 Kontakt
               </a>
+            </li>
+            <li>
+              <ToggleContainer>
+                <Toggle
+                  defaultChecked={false}
+                  icons={{ checked: "🌙", unchecked: "☀️" }}
+                  onChange={toggleTheme}
+                />
+              </ToggleContainer>
+            </li>
+            <li>
+              <FontSizeToggle increaseFontSize={increaseFontSize} decreaseFontSize={decreaseFontSize} />
             </li>
           </ul>
         </div>
