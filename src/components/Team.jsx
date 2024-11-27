@@ -16,7 +16,7 @@ export const Team = (props) => {
                 <div key={`${d.name}-${i}`} className="team">
                   <div className="thumbnail">
                     {" "}
-                    <img src={process.env.PUBLIC_URL + '/' +  d.img} alt="..." className="team-img" />
+                    <img src={process.env.PUBLIC_URL + '/' +  d.img} alt={d.img} className="team-img" />
                     <div className="caption">
                       <h4>{d.name}</h4>
                       <p>{d.job}</p>

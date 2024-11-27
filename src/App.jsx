@@ -23,13 +23,11 @@ const GlobalStyle = createGlobalStyle`
   body {
     background-color: ${(props) => props.theme.backgroundColor} !important;
     color: ${(props) => props.theme.color} !important;
-    font-size: ${(props) => props.theme.fontSize}px !important;
     transition: all 0.3s ease;
   }
 
   h1, h2, h3, h4, h5, h6, p, a, li, span, div, a {
     color: ${(props) => props.theme.color} !important;
-    font-size: ${(props) => props.theme.fontSize}px !important;
     transition: all 0.3s ease;
   }
 
@@ -37,12 +35,11 @@ const GlobalStyle = createGlobalStyle`
     background-color: ${(props) => props.theme.backgroundColor} !important;
     background: ${(props) => props.theme.backgroundColor} !important;
     color: ${(props) => props.theme.color} !important;
-    font-size: ${(props) => props.theme.fontSize}px !important;
     transition: all 0.3s ease;
   }
 
   .page-scroll {
-    font-size: ${(props) => props.theme.fontSize}px !important;
+    transition: all 0.3s ease;
   }
 `;
 
@@ -59,7 +56,6 @@ const darkTheme = {
 const App = () => {
   const [landingPageData, setLandingPageData] = useState({});
   const [theme, setTheme] = useState(lightTheme);
-  const [fontSize, setFontSize] = useState(16);
 
   useEffect(() => {
     setLandingPageData(JsonData);
@@ -69,16 +65,27 @@ const App = () => {
     setTheme((prevTheme) => (prevTheme === lightTheme ? darkTheme : lightTheme));
   };
 
+  const changeFontSize = (newFontSize) => {
+    document.body.style.fontSize = `${newFontSize}px`;
+    const elements = document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, a, li, span, div, .navbar, .navbar-default, .navbar-brand, .navbar-nav > li > a, #features, #services, #contact, .intro, .page-scroll');
+    elements.forEach(element => {
+      element.style.fontSize = `${newFontSize}px`;
+    });
+  };
+
   const increaseFontSize = () => {
-    setFontSize((prevFontSize) => prevFontSize + 2);
+    changeFontSize(parseInt(getComputedStyle(document.body).fontSize) + 2);
   };
 
   const decreaseFontSize = () => {
-    setFontSize((prevFontSize) => (prevFontSize > 10 ? prevFontSize - 2 : prevFontSize));
+    const currentFontSize = parseInt(getComputedStyle(document.body).fontSize);
+    if (currentFontSize > 10) {
+      changeFontSize(currentFontSize - 2);
+    }
   };
 
   return (
-    <ThemeProvider theme={{ ...theme, fontSize }}>
+    <ThemeProvider theme={theme}>
       <GlobalStyle />
       <div>
         <Navigation toggleTheme={toggleTheme} increaseFontSize={increaseFontSize} decreaseFontSize={decreaseFontSize} />

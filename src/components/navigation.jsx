@@ -12,6 +12,21 @@ const ToggleContainer = styled.div`
   padding: 10px;
 `;
 
+const AccessibilityContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px;
+  text-align: center;
+`;
+
+const AccessibilityText = styled.p`
+  margin: 0;
+  font-size: 14px;
+  color: ${(props) => props.theme.color};
+`;
+
 export const Navigation = ({ toggleTheme, increaseFontSize, decreaseFontSize }) => {
   return (
     <nav id="menu" className="navbar navbar-default navbar-fixed-top">
@@ -59,11 +74,6 @@ export const Navigation = ({ toggleTheme, increaseFontSize, decreaseFontSize }) 
                 Zdjęcia
               </a>
             </li>
-            {/* <li>
-              <a href="#testimonials" className="page-scroll">
-                Opinie
-              </a>
-            </li> */}
             <li>
               <a href="#team" className="page-scroll">
                 Zarząd
@@ -75,16 +85,21 @@ export const Navigation = ({ toggleTheme, increaseFontSize, decreaseFontSize }) 
               </a>
             </li>
             <li>
-              <ToggleContainer>
-                <Toggle
-                  defaultChecked={false}
-                  icons={{ checked: "🌙", unchecked: "☀️" }}
-                  onChange={toggleTheme}
-                />
-              </ToggleContainer>
-            </li>
-            <li>
-              <FontSizeToggle increaseFontSize={increaseFontSize} decreaseFontSize={decreaseFontSize} />
+              <AccessibilityContainer>
+                <AccessibilityText>
+                  <strong>Dla osób słabowidzących:</strong>
+                </AccessibilityText>
+                <div className="display-row">
+                <ToggleContainer>
+                  <Toggle
+                    defaultChecked={false}
+                    icons={{ checked: "🌙", unchecked: "☀️" }}
+                    onChange={toggleTheme}
+                  />
+                </ToggleContainer>
+                <FontSizeToggle increaseFontSize={increaseFontSize} decreaseFontSize={decreaseFontSize} />
+                </div>
+              </AccessibilityContainer>
             </li>
           </ul>
         </div>
