@@ -24,10 +24,10 @@ const FontSizeToggle = ({ increaseFontSize, decreaseFontSize }) => {
   console.log(increaseFontSize, decreaseFontSize);
   return (
     <ToggleContainer>
-      <Button onClick={decreaseFontSize}>
+      <Button onClick={decreaseFontSize} aria-label="Decrease font size">
         <FontAwesomeIcon icon={faMinus} />
       </Button>
-      <Button onClick={increaseFontSize}>
+      <Button onClick={increaseFontSize} aria-label="Increase font size">
         <FontAwesomeIcon icon={faPlus} />
       </Button>
     </ToggleContainer>
