@@ -20,6 +20,61 @@
   },
   "Gallery": [
     {
+      "title": "Spotkanie świąteczne",
+      "largeImage": "img/event/Mikolaj-11.jpg",
+      "smallImage": "img/event/Mikolaj-11.jpg"
+    },
+    {
+      "title": "Spotkanie świąteczne",
+      "largeImage": "img/event/Mikolaj-10.jpg",
+      "smallImage": "img/event/Mikolaj-10.jpg"
+    },
+    {
+      "title": "Spotkanie świąteczne",
+      "largeImage": "img/event/Mikolaj-9.jpg",
+      "smallImage": "img/event/Mikolaj-9.jpg"
+    },
+    {
+      "title": "Spotkanie świąteczne",
+      "largeImage": "img/event/Mikolaj-8.jpg",
+      "smallImage": "img/event/Mikolaj-8.jpg"
+    },
+    {
+      "title": "Spotkanie świąteczne",
+      "largeImage": "img/event/Mikolaj-7.jpg",
+      "smallImage": "img/event/Mikolaj-7.jpg"
+    },
+    {
+      "title": "Spotkanie świąteczne",
+      "largeImage": "img/event/Mikolaj-6.jpg",
+      "smallImage": "img/event/Mikolaj-6.jpg"
+    },
+    {
+      "title": "Spotkanie świąteczne",
+      "largeImage": "img/event/Mikolaj-5.jpg",
+      "smallImage": "img/event/Mikolaj-5.jpg"
+    },
+    {
+      "title": "Spotkanie świąteczne",
+      "largeImage": "img/event/Mikolaj-4.jpg",
+      "smallImage": "img/event/Mikolaj-4.jpg"
+    },
+    {
+      "title": "Spotkanie świąteczne",
+      "largeImage": "img/event/Mikolaj-3.jpg",
+      "smallImage": "img/event/Mikolaj-3.jpg"
+    },
+    {
+      "title": "Spotkanie świąteczne",
+      "largeImage": "img/event/Mikolaj-2.jpg",
+      "smallImage": "img/event/Mikolaj-2.jpg"
+    },
+    {
+      "title": "Spotkanie świąteczne",
+      "largeImage": "img/event/Mikolaj-1.jpg",
+      "smallImage": "img/event/Mikolaj-1.jpg"
+    },
+    {
       "title": "Zebranie z mieszkańcami",
       "largeImage": "img/event/zebranie.jpg",
       "smallImage": "img/event/zebranie.jpg"
@@ -181,28 +236,8 @@
   ],
   "Team": [
     {
-      "img": "img/Ozdoba.jpg",
-      "name": "Wojciech Ozdoba",
-      "job": "Przewodniczący Zarządu"
-    },
-    {
-      "img": "img/Maliszewska.jpg",
-      "name": "Katarzyna Maliszewska-Tomsia",
-      "job": "Członek Zarządu"
-    },
-    {
       "img": "img/Czopek.jpg",
       "name": "Kamil Czopek",
-      "job": "Członek Zarządu"
-    },
-    {
-      "img": "img/Moleda.png",
-      "name": "Karol Molęda",
-      "job": "Członek Zarządu"
-    },
-    {
-      "img": "img/Patrykiewicz.jpg",
-      "name": "Zofia Patrykiewicz",
       "job": "Członek Zarządu"
     },
     {
@@ -211,8 +246,28 @@
       "job": "Członek Zarządu"
     },
     {
-      "img": "img/Henryka.png",
+      "img": "img/Roskana.jpg",
       "name": "Roksana Gorajczyk",
+      "job": "Członek Zarządu"
+    },
+    {
+      "img": "img/Maliszewska.jpg",
+      "name": "Katarzyna Maliszewska-Tomsia",
+      "job": "Członek Zarządu"
+    },
+    {
+      "img": "img/Moleda.png",
+      "name": "Karol Molęda",
+      "job": "Członek Zarządu"
+    },
+    {
+      "img": "img/Ozdoba.jpg",
+      "name": "Wojciech Ozdoba",
+      "job": "Przewodniczący Zarządu"
+    },
+    {
+      "img": "img/Zosia.jpeg",
+      "name": "Zofia Patrykiewicz",
       "job": "Członek Zarządu"
     }
   ],
@@ -224,8 +279,13 @@
   "Features": [
     {
       "icon": "fa fa-bullhorn",
-      "title": "Spotkanie z mikołajem",
-      "text": "Dnia 15.12.2024 każdy mieszkaniec osiedla będzie mógł spotkać się z Mikołajem, który przygotuje dla dzieci niespodzianki. Start 11:00. Zapraszamy serdecznie!"
+      "title": "Spotkanie zarządu!",
+      "text": "Zebranie Zarządu Osiedla Młodych odbędzie się 2 kwietnia godz. 17:00 w Szkole Podstawowej nr 10"
+    },
+    {
+      "icon": "fa fa-bullhorn",
+      "title": "Dolinka objęta ochroną fizyczną!",
+      "text": "Na wniosek Zarządu Osiedla, a po uzyskaniu aprobaty zgromadzenia mieszkańców Osiedla Młodych, firma Agencja Ochrony Nawigator Security chroni nasz piękny park."
     },
     {
       "icon": "fa fa-bullhorn",
