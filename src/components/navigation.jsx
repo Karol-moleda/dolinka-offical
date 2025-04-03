@@ -9,22 +9,46 @@ const ToggleContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
+  padding: 3px;
 `;
 
 const AccessibilityContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  padding: 10px;
-  text-align: center;
+  justify-content: space-between;
+  padding: 2px;
+  margin-left: 2px;
+  border-left: 1px solid #eee;
+  height: 50px;
 `;
 
-const AccessibilityText = styled.p`
-  margin: 0;
-  font-size: 14px;
+const AccessibilityText = styled.span`
+  margin: 0 5px;
+  font-size: 11px;
   color: ${(props) => props.theme.color};
+  white-space: nowrap;
+`;
+
+const DisplayRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 3px;
+`;
+
+const NavItem = styled.li`
+  a {
+    padding-left: 7px !important;
+    padding-right: 7px !important;
+    font-size: 13px;
+    white-space: nowrap;
+    letter-spacing: -0.2px;
+  }
+`;
+
+const NavbarRight = styled.ul`
+  display: flex;
+  align-items: center;
+  margin-right: -15px;
 `;
 
 export const Navigation = ({ toggleTheme, increaseFontSize, decreaseFontSize }) => {
@@ -53,55 +77,61 @@ export const Navigation = ({ toggleTheme, increaseFontSize, decreaseFontSize }) 
           className="collapse navbar-collapse"
           id="bs-example-navbar-collapse-1"
         >
-          <ul className="nav navbar-nav navbar-right">
-            <li>
+          <NavbarRight className="nav navbar-nav navbar-right">
+            <NavItem>
               <a href="#features" className="page-scroll">
                 Aktualności
               </a>
-            </li>
-            <li>
+            </NavItem>
+            <NavItem>
               <a href="#about" className="page-scroll">
-                O nas
+                O&nbsp;nas
               </a>
-            </li>
-            <li>
+            </NavItem>
+            <NavItem>
               <a href="#services" className="page-scroll">
                 Wydarzenia
               </a>
-            </li>
-            <li>
+            </NavItem>
+            <NavItem>
               <a href="#portfolio" className="page-scroll">
-                Zdjęcia
+                Galeria
               </a>
-            </li>
-            <li>
+            </NavItem>
+            <NavItem>
               <a href="#team" className="page-scroll">
                 Zarząd
               </a>
-            </li>
-            <li>
+            </NavItem>
+            <NavItem>
+              <a href="#calendar" className="page-scroll">
+                Kalendarz
+              </a>
+            </NavItem>
+            <NavItem>
               <a href="#contact" className="page-scroll">
                 Kontakt
               </a>
-            </li>
+            </NavItem>
             <li>
               <AccessibilityContainer>
                 <AccessibilityText>
-                  <strong>Dla osób słabowidzących:</strong>
+                  <strong>Panel dostępności</strong>
                 </AccessibilityText>
-                <div className="display-row">
-                <ToggleContainer>
-                  <Toggle
-                    defaultChecked={false}
-                    icons={{ checked: "🌙", unchecked: "☀️" }}
-                    onChange={toggleTheme}
-                  />
-                </ToggleContainer>
-                <FontSizeToggle increaseFontSize={increaseFontSize} decreaseFontSize={decreaseFontSize} />
-                </div>
+                <DisplayRow>
+                  <ToggleContainer>
+                    <Toggle
+                      defaultChecked={false}
+                      icons={{ checked: "🌙", unchecked: "☀️" }}
+                      onChange={toggleTheme}
+                      className="small-toggle"
+                    />
+                  </ToggleContainer>
+                  <FontSizeToggle increaseFontSize={increaseFontSize} decreaseFontSize={decreaseFontSize} />
+                </DisplayRow>
               </AccessibilityContainer>
             </li>
-          </ul>
+          </NavbarRight>
         </div>
       </div>
     </nav>

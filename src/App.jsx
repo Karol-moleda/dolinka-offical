@@ -13,6 +13,7 @@ import JsonData from "./data/data.json";
 import SmoothScroll from "smooth-scroll";
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 import "./App.css";
+import Calendar from "./components/calendar";
 
 export const scroll = new SmoothScroll('a[href*="#"]', {
   speed: 1000,
@@ -96,6 +97,7 @@ const App = () => {
         <Gallery data={landingPageData.Gallery} />
         {/* <Testimonials data={landingPageData.Testimonials} /> */}
         <Team data={landingPageData.Team} />
+        <Calendar data={landingPageData.Calendar} />
         <Contact data={landingPageData.Contact} />
       </div>
     </ThemeProvider>
