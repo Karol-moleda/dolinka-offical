@@ -45,6 +45,15 @@ const Timeline = styled.div`
     margin-left: -3px;
     border-radius: 3px;
   }
+  
+  @media (max-width: 768px) {
+    max-width: 100%;
+    
+    &::after {
+      left: 31px;
+      margin-left: 0;
+    }
+  }
 `;
 
 const TimelineItem = styled.div`
@@ -77,6 +86,20 @@ const TimelineItem = styled.div`
     border-radius: 50%;
     z-index: 1;
   }
+  
+  @media (max-width: 768px) {
+    width: calc(100% - 70px);
+    padding: 10px 20px;
+    left: 70px !important;
+    text-align: left !important;
+    
+    &::after {
+      left: -43px !important;
+      right: auto !important;
+      width: 20px;
+      height: 20px;
+    }
+  }
 `;
 
 const EventCard = styled.div`
@@ -90,6 +113,10 @@ const EventCard = styled.div`
     transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
   }
+  
+  @media (max-width: 768px) {
+    padding: 15px;
+  }
 `;
 
 const EventDate = styled.div`
@@ -97,17 +124,29 @@ const EventDate = styled.div`
   font-weight: bold;
   margin-bottom: 8px;
   font-size: 18px;
+  
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
 `;
 
 const EventTitle = styled.h3`
   margin: 0 0 10px 0;
   color: #333;
   font-size: 22px;
+  
+  @media (max-width: 768px) {
+    font-size: 18px;
+  }
 `;
 
 const EventDescription = styled.p`
   margin: 0;
   color: #666;
+  
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
 `;
 
 const Calendar = () => {
@@ -121,37 +160,37 @@ const Calendar = () => {
     },
     {
       id: 2,
-      date: "6 czerwca 2025",
-      title: "Dzień dziecka",
-      description: "Zapraszamy na radosny festyn z okazji Dnia Dziecka przy Szkole Podstawowej nr 10! Czeka mnóstwo atrakcji, zabaw i niespodzianek dla najmłodszych. Nie zabraknie konkursów, animacji i słodkich upominków. Spędźmy ten dzień pełen uśmiechu razem! 🎊👧🧒💖",
+      date: "26 kwietnia 2025",
+      title: "Wiosenne sprzątanie",
+      description: "Zapraszamy wszystkich mieszkańców do wspólnego sprzątania naszej okolicy! To świetna okazja, by zadbać o czystość i przywitać wiosnę w pięknym otoczeniu. Razem możemy więcej! 💪♻️",
       position: "right"
     },
     {
       id: 3,
-      date: "20 lipca 2025",
-      title: "IV Turniej Siatkówki",
-      description: "Zapraszamy na czwartą edycję Turnieju Siatkówki! To doskonała okazja do sportowej rywalizacji, dobrej zabawy i integracji. Nie zabraknie emocjonujących meczów, ducha fair play i pozytywnej energii. Dołącz do nas i wspólnie przeżyjmy sportowe emocje! 💪🔥",
+      date: "6 czerwca 2025",
+      title: "Dzień dziecka",
+      description: "Zapraszamy na radosny festyn z okazji Dnia Dziecka przy Szkole Podstawowej nr 10! Czeka mnóstwo atrakcji, zabaw i niespodzianek dla najmłodszych. Nie zabraknie konkursów, animacji i słodkich upominków. Spędźmy ten dzień pełen uśmiechu razem! 🎊👧🧒💖",
       position: "left"
     },
     {
       id: 4,
-      date: "9 sierpnia 2025",
-      title: "X Kino plenerowe",
-      description: "Zapraszamy na jubileuszową, dziesiątą edycję Kina Plenerowego! Czeka na Was niezapomniany seans pod gołym niebem, magiczna atmosfera i świetne kino. Weźcie koc, coś do przekąszenia i spędźmy razem wieczór pełen filmowych emocji! 🎥✨🍿",
+      date: "20 lipca 2025",
+      title: "IV Turniej Siatkówki",
+      description: "Zapraszamy na czwartą edycję Turnieju Siatkówki! To doskonała okazja do sportowej rywalizacji, dobrej zabawy i integracji. Nie zabraknie emocjonujących meczów, ducha fair play i pozytywnej energii. Dołącz do nas i wspólnie przeżyjmy sportowe emocje! 💪🔥",
       position: "right"
     },
     {
       id: 5,
-      date: "24 sierpnia 2025",
-      title: "III Turniej Koszykówki 3x3",
-      description: "Zapraszamy na trzecią edycję Turnieju Koszykówki 3x3! Szybka akcja, dynamiczna gra i sportowe emocje gwarantowane. Zbierz drużynę, pokaż swoje umiejętności i walcz o zwycięstwo! Do zobaczenia na boisku! ⛹️‍♂️🏆🔥",
+      date: "9 sierpnia 2025",
+      title: "X Kino plenerowe",
+      description: "Zapraszamy na jubileuszową, dziesiątą edycję Kina Plenerowego! Czeka na Was niezapomniany seans pod gołym niebem, magiczna atmosfera i świetne kino. Weźcie koc, coś do przekąszenia i spędźmy razem wieczór pełen filmowych emocji! 🎥✨🍿",
       position: "left"
     },
     {
       id: 6,
-      date: "9 sierpnia 2025",
-      title: "X Kino plenerowe",
-      description: "Zapraszamy na jubileuszową, dziesiątą edycję Kina Plenerowego! Czeka na Was niezapomniany seans pod gołym niebem, magiczna atmosfera i świetne kino. Weźcie koc, coś do przekąszenia i spędźmy razem wieczór pełen filmowych emocji! 🎥✨🍿",
+      date: "24 sierpnia 2025",
+      title: "III Turniej Koszykówki 3x3",
+      description: "Zapraszamy na trzecią edycję Turnieju Koszykówki 3x3! Szybka akcja, dynamiczna gra i sportowe emocje gwarantowane. Zbierz drużynę, pokaż swoje umiejętności i walcz o zwycięstwo! Do zobaczenia na boisku! ⛹️‍♂️🏆🔥",
       position: "right"
     },
     {
@@ -162,7 +201,7 @@ const Calendar = () => {
       position: "left"
     },
     {
-      id: 8,
+      id: 9,
       date: "grudzień 2025",
       title: "Spotkanie Mikołajkowe",
       description: "Zapraszamy na magiczne Spotkanie Mikołajkowe! Czeka na Was świąteczna atmosfera, moc atrakcji i, oczywiście, wizyta Świętego Mikołaja! Nie zabraknie prezentów, zabaw i wspólnego kolędowania. Spędźmy razem ten wyjątkowy czas! 🎁🎶❄️",
