@@ -1,0 +1,110 @@
+/* Podstawowe style dla karuzeli */
+.carousel-wrapper {
+  position: relative;
+  margin: 0 auto 40px;
+  padding: 0 60px; /* Zwiększam padding po bokach dla większej przestrzeni na strzałki */
+}
+
+/* Style dla slajdów */
+.carousel-item {
+  padding: 20px;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  margin: 10px;
+  min-height: 200px;
+}
+
+/* Style dla obrazków */
+.carousel-image-box {
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.carousel-image-box img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* Style dla nagłówków i tekstu */
+.carousel-item h3 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.carousel-item p {
+  font-size: 16px;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+/* Style dla ikon */
+.carousel-item i {
+  font-size: 40px;
+  margin: 20px 0;
+}
+
+/* Style dla strzałek nawigacyjnych */
+.nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #006400;
+  border: none;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s, transform 0.2s;
+  padding: 0;
+  line-height: 1;
+}
+
+.nav-arrow:hover {
+  background-color: #008800;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.nav-arrow:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 100, 0, 0.3);
+}
+
+.nav-arrow-prev {
+  left: 15px; /* Odsuwam strzałkę od lewego brzegu */
+}
+
+.nav-arrow-next {
+  right: 15px; /* Odsuwam strzałkę od prawego brzegu */
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+  .carousel-wrapper {
+    padding: 0 40px; /* Mniejszy padding na mniejszych ekranach */
+  }
+  
+  .nav-arrow {
+    width: 35px;
+    height: 35px;
+    font-size: 18px;
+  }
+  
+  .carousel-item p {
+    font-size: 15px;
+  }
+}

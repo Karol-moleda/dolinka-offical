@@ -20,6 +20,7 @@ const AccessibilityContainer = styled.div`
   margin-left: 2px;
   border-left: 1px solid #eee;
   height: 50px;
+  overflow: hidden; /* Zapobieganie wyświetlaniu poza kontenerem */
 `;
 
 const AccessibilityText = styled.span`
@@ -27,6 +28,9 @@ const AccessibilityText = styled.span`
   font-size: 11px;
   color: ${(props) => props.theme.color};
   white-space: nowrap;
+  writing-mode: horizontal-tb !important; /* Wymuszenie poziomego tekstu */
+  text-orientation: mixed !important;
+  transform: none !important; /* Usunięcie transformacji */
 `;
 
 const DisplayRow = styled.div`

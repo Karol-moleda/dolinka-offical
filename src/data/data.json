@@ -20,6 +20,136 @@
   },
   "Gallery": [
     {
+      "title": "Festyn Wielkanocny",
+      "largeImage": "img/festyn/26.JPG",
+      "smallImage": "img/festyn/26.JPG"
+    },
+    {
+      "title": "Festyn Wielkanocny",
+      "largeImage": "img/festyn/25.JPG",
+      "smallImage": "img/festyn/25.JPG"
+    },
+    {
+      "title": "Festyn Wielkanocny",
+      "largeImage": "img/festyn/24.JPG",
+      "smallImage": "img/festyn/24.JPG"
+    },
+    {
+      "title": "Festyn Wielkanocny",
+      "largeImage": "img/festyn/23.JPG",
+      "smallImage": "img/festyn/23.JPG"
+    },
+    {
+      "title": "Festyn Wielkanocny",
+      "largeImage": "img/festyn/22.JPG",
+      "smallImage": "img/festyn/22.JPG"
+    },
+    {
+      "title": "Festyn Wielkanocny",
+      "largeImage": "img/festyn/21.JPG",
+      "smallImage": "img/festyn/21.JPG"
+    },
+    {
+      "title": "Festyn Wielkanocny",
+      "largeImage": "img/festyn/20.JPG",
+      "smallImage": "img/festyn/20.JPG"
+    },
+    {
+      "title": "Festyn Wielkanocny",
+      "largeImage": "img/festyn/19.JPG",
+      "smallImage": "img/festyn/19.JPG"
+    },
+    {
+      "title": "Festyn Wielkanocny",
+      "largeImage": "img/festyn/18.JPG",
+      "smallImage": "img/festyn/18.JPG"
+    },
+    {
+      "title": "Festyn Wielkanocny",
+      "largeImage": "img/festyn/17.JPG",
+      "smallImage": "img/festyn/17.JPG"
+    },
+    {
+      "title": "Festyn Wielkanocny",
+      "largeImage": "img/festyn/16.JPG",
+      "smallImage": "img/festyn/16.JPG"
+    },
+    {
+      "title": "Festyn Wielkanocny",
+      "largeImage": "img/festyn/15.JPG",
+      "smallImage": "img/festyn/15.JPG"
+    },
+    {
+      "title": "Festyn Wielkanocny",
+      "largeImage": "img/festyn/14.JPG",
+      "smallImage": "img/festyn/14.JPG"
+    },
+    {
+      "title": "Festyn Wielkanocny",
+      "largeImage": "img/festyn/13.JPG",
+      "smallImage": "img/festyn/13.JPG"
+    },
+    {
+      "title": "Festyn Wielkanocny",
+      "largeImage": "img/festyn/12.JPG",
+      "smallImage": "img/festyn/12.JPG"
+    },
+    {
+      "title": "Festyn Wielkanocny",
+      "largeImage": "img/festyn/11.JPG",
+      "smallImage": "img/festyn/11.JPG"
+    },
+    {
+      "title": "Festyn Wielkanocny",
+      "largeImage": "img/festyn/10.JPG",
+      "smallImage": "img/festyn/10.JPG"
+    },
+    {
+      "title": "Festyn Wielkanocny",
+      "largeImage": "img/festyn/9.JPG",
+      "smallImage": "img/festyn/9.JPG"
+    },
+    {
+      "title": "Festyn Wielkanocny",
+      "largeImage": "img/festyn/8.JPG",
+      "smallImage": "img/festyn/8.JPG"
+    },
+    {
+      "title": "Festyn Wielkanocny",
+      "largeImage": "img/festyn/7.JPG",
+      "smallImage": "img/festyn/7.JPG"
+    },
+    {
+      "title": "Festyn Wielkanocny",
+      "largeImage": "img/festyn/6.JPG",
+      "smallImage": "img/festyn/6.JPG"
+    },
+    {
+      "title": "Festyn Wielkanocny",
+      "largeImage": "img/festyn/5.JPG",
+      "smallImage": "img/festyn/5.JPG"
+    },
+    {
+      "title": "Festyn Wielkanocny",
+      "largeImage": "img/festyn/4.JPG",
+      "smallImage": "img/festyn/4.JPG"
+    },
+    {
+      "title": "Festyn Wielkanocny",
+      "largeImage": "img/festyn/3.JPG",
+      "smallImage": "img/festyn/3.JPG"
+    },
+    {
+      "title": "Festyn Wielkanocny",
+      "largeImage": "img/festyn/2.JPG",
+      "smallImage": "img/festyn/2.JPG"
+    },
+    {
+      "title": "Festyn Wielkanocny",
+      "largeImage": "img/festyn/1.JPG",
+      "smallImage": "img/festyn/1.JPG"
+    },
+    {
       "title": "Spotkanie świąteczne",
       "largeImage": "img/event/Mikolaj-11.jpg",
       "smallImage": "img/event/Mikolaj-11.jpg"
@@ -277,21 +407,25 @@
     "facebook": "https://www.facebook.com/profile.php?id=61563485266766"
   },
   "Features": [
-    {
+        {
       "icon": "fa fa-bullhorn",
-      "title": "Spotkanie zarządu!",
-      "text": "Zebranie Zarządu Osiedla Młodych odbędzie się 2 kwietnia godz. 17:00 w Szkole Podstawowej nr 10"
+      "title": "Zebranie z mieszkańcami",
+      "text": "Zapraszamy na zebranie mieszkańców Osiedla Młodych ktore odbędzie się 19 maja 2025 roku,<br> o godzinie 17.30 w Szkole Podstawowej nr 10 przy ul. Żeromskiego 1."
     },
     {
-      "icon": "fa fa-bullhorn",
-      "title": "Dolinka objęta ochroną fizyczną!",
-      "text": "Na wniosek Zarządu Osiedla, a po uzyskaniu aprobaty zgromadzenia mieszkańców Osiedla Młodych, firma Agencja Ochrony Nawigator Security chroni nasz piękny park."
+      "image": "img/akt/skalniak.jpg",
+      "title": "Mamy piękny ogród skalny!",
+      "text": "Wykorzystaliśmy do tego kamienie z prac, które wykonywaliśmy w ostatnim tygodniu w naszym parku, a także rośliny otrzymane od Powiat Olkuski i Olkusz Srebrne Miasto.<br> Chciałbym serdecznie podziękować pani Dyrektor Aldonie Nowickiej z ZS Nr 1 w Olkuszu za pomoc uczennic z klasy 2a oraz ich opiekunowi pani Patrycji Gamrat. Dziewczyny wykonały świetna pracę i mam nadzieję, że nasi mieszkańcy docenią ich starania dbając o rośliny \uD83D\uDC4D\n <br> Dziękuję staroście olkuskiemu panu Bogumiłowi Sobczykowi za wsparcie w przygotowaniu tak pięknego ogrodu i dbanie o bioróżnorodność w naszym powiecie. Dzisiejsza akcja była wspierana przez Dyrektora Wydziału Ochrony Środowiska, Leśnictwa i Rolnictwa p. Jana Książka i powiatowego ekodoradcę p. Łukasza Zarzyckiego, który osobiście dobierał gatunki roślin. Akcję zrealizowano w ramach Projektu LIFE-IP EKOMAŁOPOLSKA \"Wdrażanie Regionalnego Planu \uD83C\uDF43  Działań dla Klimatu i Energii dla województwa małopolskiego\" (LIFE-IP EKOMALOPOLSKA/LIFE19 IPC/PL/000005) \n <br> Dziękuję panu burmistrzowi Marcinowi Wierciochowi oraz Wydziałowi Ochrony Środowiska z UMiG z panią Anną Biały i Renata Gęgotek na czele- za zgodę na stworzenie nowego pięknego miejsca na mapie Dolinki oraz za fachową pomoc w przygotowaniu naszego skalniaka. \nJak widzicie sami- wiele osób było mocno zaangażowanych w przygotowanie i realizację dzisiejszej akcji. Jeszcze raz proszę wszystkich o zadbanie o nowostworzony ogródek. Proszę nie wyrywać (mamy monitoring) ani nie deptać roślin \uD83D\uDE42"
+    },
+    {
+      "image": "img/akt/smieci.jpg",
+      "title": "Osiedle posprzątane!",
+      "text": "Podczas dzisiejszej akcji sprzątania naszego Osiedla zebraliśmy kilkadziesiąt worków śmieci \uD83D\uDDD1\uFE0F\n <br> Dziękujemy członkom Zarządu : Wojciech Ozdoba dla Olkusza Henryka Foryś Karol Molęda  Zofia Stachurska Patrykiewicz członkom obu klubów seniora oraz Armia Wisły Olkusz  za wspólną pracę \uD83D\uDC4F\n <br> Dziękujemy Olkusz Srebrne Miasto za worki i rękawiczki \uD83D\uDC4D\n <br> Mamy nadzieję, że podczas kolejnego sprzątania nie będziemy musieli dźwigać aż tylu śmieci..."
     },
     {
       "icon": "fa fa-bullhorn",
       "title": "Witamy na naszej stronie",
       "text": "Witamy na stronie Zarządu Osiedla Młodych! Zachęcamy do śledzenia aktualności, wydarzeń i informacji dotyczących naszego osiedla. Miłego oglądania!"
     }
-
   ]
 }

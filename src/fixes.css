@@ -1,0 +1,102 @@
+/* fixes.css - naprawy dla pionowego tekstu */
+
+/* Wyłączenie pionowego tekstu na całej stronie */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6,
+p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del,
+dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup,
+tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label,
+legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside,
+canvas, details, embed, figure, figcaption, footer, header, hgroup, menu,
+nav, output, ruby, section, summary, time, mark, audio, video {
+  writing-mode: horizontal-tb !important;
+  text-orientation: mixed !important;
+  letter-spacing: normal !important;
+  word-spacing: normal !important;
+  text-transform: none !important;
+  text-indent: 0 !important;
+  text-align: start !important;
+  position: static;
+  transform: none !important;
+}
+
+/* Zapobieganie niewidzialnym elementom, które zajmują miejsce */
+body * {
+  visibility: visible;
+}
+
+/* Ukrycie wszystkich elementów z position absolute po prawej stronie ekranu */
+body > *:not(.container):not(#root):not(nav):not(script):not(style) {
+  display: none !important;
+}
+
+/* Naprawienie layoutu dla głównego kontenera */
+#root, .container, body, html {
+  overflow-x: hidden !important;
+  width: 100% !important;
+  max-width: 100vw !important;
+  position: relative !important;
+}
+
+/* Usunięcie dziwnych efektów tekstu */
+* {
+  text-shadow: none !important;
+  -webkit-text-stroke: 0 !important;
+  text-stroke: 0 !important;
+}
+
+/* Ukrycie pionowego tekstu po prawej stronie */
+body > div:not(#root):not(.carousel-wrapper):not(.container),
+div[style*="writing-mode"],
+div[style*="vertical-rl"],
+span[style*="writing-mode"],
+span[style*="vertical-rl"],
+p[style*="writing-mode"],
+p[style*="vertical-rl"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  left: -9999px !important;
+}
+
+/* Ukrycie wszystkiego po prawej stronie od głównego kontenera */
+.carousel-wrapper + div,
+#features + div:not(#about),
+body > div:nth-child(n+20) {
+  display: none !important;
+}
+
+/* Ograniczenie szerokości strony */
+html, body {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+}
+
+#root {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+}
+
+/* Wyłączenie wszelkich obrotów tekstu */
+* {
+  transform: none !important;
+  writing-mode: horizontal-tb !important;
+  text-orientation: mixed !important;
+}
+
+/* Wyraźne ukrycie elementów po prawej stronie */
+@media (min-width: 100px) {
+  body::after {
+    content: '';
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    width: 120px;
+    background-color: white;
+    z-index: 9999;
+  }
+}
