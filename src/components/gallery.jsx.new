@@ -9,7 +9,6 @@ export const Gallery = (props) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [masonryKey, setMasonryKey] = useState(0); // Klucz do wymuszenia ponownego renderowania Masonry
-  const initialBatchSize = 8; // Początkowa liczba obrazów
   const imagesPerBatch = 12; // Liczba obrazów ładowanych w jednej partii
   const masonryRef = useRef(null); // Referencja do komponentu Masonry
 
@@ -19,36 +18,21 @@ export const Gallery = (props) => {
     1100: 2,
     700: 1
   };
+
   // Funkcja ładująca kolejną partię obrazów
   const loadMoreImages = useCallback(() => {
     if (props.data) {
       try {
-        // Ustawiamy loading na true aby pokazać spinner
-        setLoading(true);
-        
         console.log("Ładowanie kolejnej partii obrazów:", visibleImages.length, "+", imagesPerBatch);
         const nextBatch = props.data.slice(0, visibleImages.length + imagesPerBatch);
+        setVisibleImages(nextBatch);
         
-        // Używamy setTimeout aby dać przeglądarce czas na renderowanie
-        setTimeout(() => {
-          setVisibleImages(nextBatch);
-          
-          // Wymuszenie ponownego renderowania Masonry, aby poprawić układ
-          setMasonryKey(prevKey => prevKey + 1);
-          
-          // Kolejny setTimeout aby dać czas na załadowanie i wyrenderowanie obrazów
-          setTimeout(() => {
-            // Wywołaj ponownie zdarzenie resize aby poprawić układ
-            window.dispatchEvent(new Event('resize'));
-            setMasonryKey(prevKey => prevKey + 1);
-            
-            if (nextBatch.length >= props.data.length) {
-              console.log("Załadowano wszystkie zdjęcia");
-            }
-            
-            setLoading(false);
-          }, 500);
-        }, 100);
+        // Wymuszenie ponownego renderowania Masonry, aby poprawić układ
+        setMasonryKey(prevKey => prevKey + 1);
+        
+        if (nextBatch.length >= props.data.length) {
+          setLoading(false);
+        }
       } catch (err) {
         console.error("Błąd podczas ładowania obrazów:", err);
         setError(true);
@@ -56,6 +40,7 @@ export const Gallery = (props) => {
       }
     }
   }, [props.data, visibleImages.length, imagesPerBatch]);
+
   // Inicjalne załadowanie pierwszej partii obrazów
   useEffect(() => {
     console.log("Inicjalizacja galerii z danymi:", props.data?.length || 0, "obrazów");
@@ -72,59 +57,78 @@ export const Gallery = (props) => {
         console.warn(`Wykryto ${props.data.length - validImages.length} nieprawidłowych obrazów.`);
       }
       
-      // Używamy stałej initialBatchSize zamiast imagesPerBatch do pierwszego ładowania
-      const firstBatchSize = Math.min(initialBatchSize, props.data.length);
-      console.log("Ładowanie początkowej partii:", firstBatchSize, "obrazów");
+      const initialBatchSize = Math.min(imagesPerBatch, props.data.length);
+      console.log("Ładowanie początkowej partii:", initialBatchSize, "obrazów");
       
-      setVisibleImages(props.data.slice(0, firstBatchSize));
+      setVisibleImages(props.data.slice(0, initialBatchSize));
       
       // Resetowanie klucza Masonry przy załadowaniu nowych danych
       setMasonryKey(prevKey => prevKey + 1);
       
-      if (props.data.length <= firstBatchSize) {
+      if (props.data.length <= initialBatchSize) {
         console.log("Wszystkie obrazy załadowane w pierwszej partii");
         setLoading(false);
       } else {
-        setLoading(false); // Ustawiamy loading na false, reszta zdjęć będzie ładowana po kliknięciu przycisku
+        // Automatycznie załaduj drugą partię po chwili
+        setTimeout(() => {
+          if (props.data.length > initialBatchSize) {
+            console.log("Automatyczne ładowanie drugiej partii...");
+            const secondBatchSize = Math.min(initialBatchSize + imagesPerBatch, props.data.length);
+            setVisibleImages(props.data.slice(0, secondBatchSize));
+            
+            // Ponowne renderowanie Masonry przy załadowaniu kolejnej partii
+            setMasonryKey(prevKey => prevKey + 1);
+            
+            if (secondBatchSize >= props.data.length) {
+              setLoading(false);
+            }
+          }
+        }, 1000);
       }
     }
-  }, [props.data, initialBatchSize]);
-    // Obsługa zdarzenia resize - poprawianie układu Masonry przy zmianie rozmiaru okna
+  }, [props.data, imagesPerBatch]);
+  
+  // Obsługa zdarzenia scroll - ładowanie kolejnych obrazów przy przewijaniu
   useEffect(() => {
-    const handleResize = () => {
-      if (visibleImages.length > 0) {
-        // Przy zmianie rozmiaru okna, wymuszamy ponowne renderowanie Masonry
-        setMasonryKey(prevKey => prevKey + 1);
+    const handleScroll = () => {
+      // Sprawdzamy czy użytkownik doszedł do końca strony
+      const scrollPosition = window.scrollY || window.pageYOffset;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      
+      // Poprawiony warunek sprawdzający, czy jesteśmy blisko końca strony
+      if (
+        scrollPosition + windowHeight >= documentHeight - 300 &&
+        loading &&
+        props.data && 
+        visibleImages.length < props.data.length
+      ) {
+        console.log("Wykryto przewinięcie do końca strony, ładowanie więcej obrazów");
+        loadMoreImages();
       }
     };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [visibleImages.length]);
+    window.addEventListener('scroll', handleScroll);
+    
+    // Wywołanie handleScroll po zamontowaniu, aby sprawdzić, czy trzeba od razu załadować więcej
+    setTimeout(handleScroll, 500);
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [loading, loadMoreImages, props.data, visibleImages.length]);
+
   // Dodanie dodatkowego efektu, który wyrównuje układ Masonry po załadowaniu nowych obrazów
   useEffect(() => {
-    // Wykorzystanie sekwencji timeoutów do poprawy układu po renderowaniu
+    // Wykorzystanie timeoutów do poprawy układu po renderowaniu
     if (visibleImages.length > 0) {
-      // Pierwszy timeout - daj czas na załadowanie obrazów
-      const timer1 = setTimeout(() => {
+      const timer = setTimeout(() => {
+        // Wymuszenie ponownego obliczenia układu przez przeglądarkę
+        window.dispatchEvent(new Event('resize'));
+        
+        // Inkrementacja klucza Masonry aby wymusić ponowne renderowanie
         setMasonryKey(prevKey => prevKey + 1);
-        
-        // Drugi timeout - wymuś ponowne obliczenie układu
-        const timer2 = setTimeout(() => {
-          window.dispatchEvent(new Event('resize'));
-          
-          // Trzeci timeout - jeszcze raz przelicz układ po pełnym załadowaniu
-          const timer3 = setTimeout(() => {
-            setMasonryKey(prevKey => prevKey + 1);
-          }, 500);
-          
-          return () => clearTimeout(timer3);
-        }, 300);
-        
-        return () => clearTimeout(timer2);
-      }, 100);
+      }, 300);
       
-      return () => clearTimeout(timer1);
+      return () => clearTimeout(timer);
     }
   }, [visibleImages]);
 
@@ -161,16 +165,15 @@ export const Gallery = (props) => {
             <p>Ładowanie więcej zdjęć...</p>
           </div>
         )}
-          {/* Przycisk do ręcznego ładowania obrazów - tylko gdy są jeszcze niewyświetlone obrazy */}
+        
+        {/* Przycisk do ręcznego ładowania obrazów - tylko gdy są jeszcze niewyświetlone obrazy */}
         {props.data && (visibleImages.length < props.data.length) && (
           <div className="text-center mt-4 mb-4">
-            <p className="gallery-info">Pokazano {visibleImages.length} z {props.data.length} dostępnych zdjęć.</p>
             <button 
               onClick={loadMoreImages} 
               className="load-more-btn"
-              disabled={loading}
             >
-              {loading ? 'Ładowanie...' : `Załaduj więcej zdjęć (pozostało ${props.data.length - visibleImages.length})`}
+              Załaduj więcej zdjęć ({visibleImages.length} z {props.data.length})
             </button>
           </div>
         )}

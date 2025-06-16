@@ -1,0 +1,40 @@
+/* Styl dla ładowania obrazów */
+.lazy-load-image-background {
+  width: 100%;
+  display: block !important;
+}
+
+.lazy-load-image-background.blur {
+  filter: blur(5px);
+  transition: filter 0.3s ease-in-out;
+}
+
+.lazy-load-image-background.blur.lazy-load-image-loaded {
+  filter: blur(0);
+}
+
+.img-responsive {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Animacja dla wolnego pojawiania się obrazów */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.lazy-load-image-loaded {
+  animation: fadeIn 0.3s ease-in;
+}
+
+/* Styl dla placeholdera */
+.lazy-load-image-placeholder {
+  background-color: #f6f6f6;
+  border-radius: 4px;
+}

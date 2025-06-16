@@ -1,22 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Oficjalna strona Zarządu Osiedla Młodych w Olkuszu" />
+  <meta name="theme-color" content="#006400" />
+  
+  <!-- Favicon -->
   <link rel="shortcut icon" href="/img/logo.jpg" type="image/x-icon" />
-  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
-  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-touch-icon-72x72.png" />
-  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-touch-icon-114x114.png" />
-
-  <link rel="stylesheet" type="text/css" href="/css/bootstrap.css" />
+  <link rel="apple-touch-icon" href="/img/logo.jpg" />
+  
+  <!-- Preload kluczowych zasobów -->
+  <link rel="preload" href="/css/bootstrap.min.css" as="style" />
+  <link rel="preload" href="/js/jquery.1.11.1.js" as="script" />
+  <link rel="preload" href="/js/bootstrap.js" as="script" />
+  <link rel="preload" href="/img/logo.jpg" as="image" />
+  
+  <!-- Style -->
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" href="/fonts/font-awesome/css/font-awesome.css" />
   <link rel="stylesheet" type="text/css" href="/css/style.css" />
   <link rel="stylesheet" type="text/css" href="/css/nivo-lightbox/nivo-lightbox.css" />
   <link rel="stylesheet" type="text/css" href="/css/nivo-lightbox/default.css" />
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900" rel="stylesheet" />
-  <title>Dolinka</title>
+  
+  <!-- Czcionki Google ładowane z opóźnieniem -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  
+  <title>Dolinka - Zarząd Osiedla Młodych w Olkuszu</title>
 </head>
 <body>
   <div id="root"></div>
