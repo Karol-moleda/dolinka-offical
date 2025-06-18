@@ -1,9 +1,9 @@
 // src/components/FontSizeToggle.jsx
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus, faFont } from '@fortawesome/free-solid-svg-icons';
-import { AppContext } from '../App';
+import { useTheme } from '../context/ThemeContext';
 
 const ToggleContainer = styled.div`
   display: flex;
@@ -64,7 +64,7 @@ const Button = styled.button`
 `;
 
 const FontSizeToggle = () => {
-  const { fontSize, increaseFontSize, decreaseFontSize } = useContext(AppContext);
+  const { fontSize, increaseFontSize, decreaseFontSize } = useTheme();
 
   return (
     <ToggleContainer>

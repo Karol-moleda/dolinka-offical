@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components";
-import { AppContext } from "../App";
+import { useTheme } from "../context/ThemeContext";
 
 const TeamContainer = styled.div`
   background-color: ${(props) => (props.isDarkMode ? "#000000" : "#ffffff")};
@@ -34,7 +34,7 @@ const TeamContainer = styled.div`
 `;
 
 export const Team = (props) => {
-  const { fontSize, isDarkMode } = useContext(AppContext);
+  const { fontSize, isDarkMode } = useTheme();
 
   return (
     <div style={{ backgroundColor: isDarkMode ? "#000000" : "#ffffff" }}>

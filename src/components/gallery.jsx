@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useCallback, useContext } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import LazyImage from "./LazyImage";
 import './gallery.css';
 import styled from "styled-components";
-import { AppContext } from "../App";
+import { useTheme } from "../context/ThemeContext";
 
 const GalleryContainer = styled.div`
   background-color: ${props => props.isDarkMode ? '#000000' : 'transparent'};
@@ -56,7 +56,7 @@ const GalleryContainer = styled.div`
 `;
 
 const Gallery = (props) => {
-  const { fontSize, isDarkMode } = useContext(AppContext);
+  const { fontSize, isDarkMode } = useTheme();
   const [currentPage, setCurrentPage] = useState(1);
   const imagesPerPage = 12;
   const [selectedImage, setSelectedImage] = useState(null);

@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import "./services.css";
 import styled from "styled-components";
-import { AppContext } from "../App";
+import { useTheme } from "../context/ThemeContext";
 
 const ServicesContainer = styled.div`
   /* The background is set by CSS, we don't need to change it here */
@@ -43,7 +43,7 @@ const ServicesContainer = styled.div`
 `;
 
 export const Services = (props) => {
-  const { fontSize, isDarkMode } = useContext(AppContext);
+  const { fontSize, isDarkMode } = useTheme();
 
   return (
     <ServicesContainer

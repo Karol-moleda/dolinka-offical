@@ -1,9 +1,9 @@
 // ThemeToggle.jsx
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Toggle from 'react-toggle';
 import "react-toggle/style.css";
-import { AppContext } from '../App';
+import { useTheme } from '../context/ThemeContext';
 
 const ToggleContainer = styled.div`
   display: flex;
@@ -51,7 +51,7 @@ const ToggleContainer = styled.div`
 `;
 
 const ThemeToggle = () => {
-  const { isDarkMode, toggleTheme } = useContext(AppContext);
+  const { isDarkMode, toggleTheme } = useTheme();
 
   return (
     <ToggleContainer>

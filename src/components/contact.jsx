@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import "./contact.css";
 import styled from "styled-components";
-import { AppContext } from "../App";
+import { useTheme } from "../context/ThemeContext";
 
 const ContactContainer = styled.div`
   #contact {
@@ -67,7 +67,7 @@ const ContactContainer = styled.div`
 `;
 
 export const Contact = (props) => {
-  const { fontSize, isDarkMode } = useContext(AppContext);
+  const { fontSize, isDarkMode } = useTheme();
   return (
     <ContactContainer fontSize={fontSize} isDarkMode={isDarkMode}>
       <div id="contact" className={isDarkMode ? "dark-contact" : "light-contact"}>

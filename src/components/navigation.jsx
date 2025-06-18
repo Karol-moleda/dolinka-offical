@@ -1,11 +1,10 @@
 // Navigation.jsx
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 import AccessibilityControls from './AccessibilityControls';
-import { AppContext } from '../App';
-import '../nav-contrast-fix.css'; // Import the new navigation contrast fix CSS
+import { useTheme } from '../context/ThemeContext';
 
 const Nav = styled.nav`
   position: fixed;
@@ -166,7 +165,7 @@ const CloseButton = styled.button`
 `;
 
 const Navigation = () => {
-  const { isDarkMode } = useContext(AppContext); // Remove unused fontSize variable
+  const { isDarkMode } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 

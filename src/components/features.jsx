@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './features.css';
 import './event-image-fix.css'; // Import the event image fix CSS
-import { AppContext } from '../App';
+import { useTheme } from '../context/ThemeContext';
 import styled from 'styled-components';
 
 const FeaturesContainer = styled.div`
@@ -36,7 +36,7 @@ const FeaturesContainer = styled.div`
 `;
 
 const Features = ({ data }) => {
-  const { fontSize, isDarkMode } = useContext(AppContext);
+  const { fontSize, isDarkMode } = useTheme();
   
   if (!data) return <div>Ładowanie...</div>;
   

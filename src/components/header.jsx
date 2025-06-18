@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { AppContext } from "../App";
+import { useTheme } from "../context/ThemeContext";
 
 const HeaderContainer = styled.header`
   position: relative;
@@ -127,7 +127,7 @@ const ScrollIndicator = styled(motion.div)`
 `;
 
 const Header = () => {
-  const { fontSize, isDarkMode } = useContext(AppContext);
+  const { fontSize, isDarkMode } = useTheme();
   
   return (
     <HeaderContainer isDarkMode={isDarkMode}>

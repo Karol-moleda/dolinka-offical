@@ -1,0 +1,116 @@
+/* 
+ * This file contains important CSS fixes that were previously scattered across
+ * multiple files in the project root. All relevant styles have been consolidated
+ * into this file to maintain the site's appearance while providing better
+ * organization.
+ */
+
+/* General fixes */
+.section-title {
+  margin-bottom: 70px;
+}
+
+.section-title h2 {
+  position: relative;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+}
+
+.section-title h2::after {
+  position: absolute;
+  content: "";
+  background: linear-gradient(to right, #5ca9fb 0%, #6372ff 100%);
+  height: 4px;
+  width: 60px;
+  bottom: 0;
+  left: 0;
+}
+
+.section-title p {
+  font-size: 18px;
+}
+
+/* Background fixes */
+#features, #about, #services, #testimonials, #team, #contact, #footer {
+  background-color: #f6f6f6;
+  padding: 80px 0;
+}
+
+#features, #testimonials, #team {
+  background-color: white;
+}
+
+/* Event card fixes */
+.event-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.event-card .event-image-container {
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+}
+
+.event-card .event-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.event-card:hover .event-image {
+  transform: scale(1.05);
+}
+
+/* Text contrast enhancements */
+body.dark-mode .intro h1,
+body.dark-mode .intro p {
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+/* Header fixes */
+.intro {
+  width: 100%;
+  position: relative;
+  padding: 0;
+}
+
+.intro h1 {
+  font-family: "Raleway", sans-serif;
+  color: #fff;
+  font-size: 82px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.intro h1 span {
+  font-weight: 800;
+  color: #5ca9fb;
+}
+
+/* Gallery fixes */
+.portfolio-items {
+  padding: 0;
+  margin: 0;
+}
+
+.modal-content {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+/* Extra fixes for specific components */
+.img-responsive {
+  margin-bottom: 20px;
+}
