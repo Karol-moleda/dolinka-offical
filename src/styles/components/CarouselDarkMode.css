@@ -1,0 +1,44 @@
+/* Custom styles for carousel in dark mode */
+
+.dark-mode .carousel .control-dots {
+  background-color: transparent;
+  margin-top: 30px !important;
+  position: relative !important;
+  bottom: 0 !important;
+}
+
+.dark-mode .carousel .control-dots .dot {
+  background: rgba(255, 255, 255, 0.3) !important;
+  margin: 0 6px !important;
+}
+
+.dark-mode .carousel .control-dots .dot.selected {
+  background: #90caf9 !important;
+  box-shadow: 0 0 5px rgba(144, 202, 249, 0.5) !important;
+}
+
+.dark-mode .carousel .control-arrow {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.dark-mode .carousel .control-arrow:hover {
+  background-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Better styling for carousel item containers */
+.dark-mode .image-container {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Add padding to prevent content from being too close to the controls */
+.carousel-wrapper {
+  padding-bottom: 20px;
+}
+
+/* Make the slide text container more visible in dark mode */
+.dark-mode .text-box {
+  background-color: #1a1a1a !important;
+  border-color: #333 !important;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2) !important;
+}

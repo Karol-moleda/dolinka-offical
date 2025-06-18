@@ -18,10 +18,15 @@ const FeaturesContainer = styled.div`
     font-size: inherit;
     color: ${props => props.isDarkMode ? '#ffffff' : '#333333'};
   }
+    .carousel-container {
+    position: relative;
+    padding-bottom: 60px;  /* Zwiększona wartość dla większego odstępu */
+  }
   
   .text-box {
     background-color: ${props => props.isDarkMode ? '#1a1a1a' : '#ffffff'};
     border: 1px solid ${props => props.isDarkMode ? '#333' : '#e9ecef'};
+    margin-bottom: 10px !important;
   }
   
   .text-box h3 {
@@ -32,6 +37,14 @@ const FeaturesContainer = styled.div`
   .text-box p {
     font-size: inherit;
     color: ${props => props.isDarkMode ? '#ffffff' : '#333333'};
+  }
+  
+  .carousel .control-dots .dot {
+    background: ${props => props.isDarkMode ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.3)'} !important;
+  }
+  
+  .carousel .control-dots .dot.selected {
+    background: ${props => props.theme.primary} !important;
   }
 `;
 
@@ -46,10 +59,8 @@ const Features = ({ data }) => {
         <div className="section-title">
           <h2>AKTUALNOŚCI</h2>
           <p>Najnowsze wydarzenia i inicjatywy w naszej społeczności</p>
-        </div>
-        <div className="carousel-container">
-          <div className="carousel-wrapper">
-            <Carousel
+        </div>        <div className="carousel-container">
+          <div className="carousel-wrapper">              <Carousel
               showArrows={true}
               showStatus={false}
               showThumbs={false}
@@ -59,15 +70,18 @@ const Features = ({ data }) => {
               stopOnHover={true}
               emulateTouch={true}
               swipeable={true}
+              className={`${isDarkMode ? 'dark-carousel' : 'light-carousel'} carousel-with-spacing`}
             >
               {data.map((item, i) => (
                 <div key={`${item.title}-${i}`} className="slide-item">
-                  <div className="image-container">
-                    <img src={item.img} alt={item.title} />
-                  </div>
-                  <div className="text-box">
-                    <h3>{item.title}</h3>
-                    <p>{item.text}</p>
+                  <div className="event-content">
+                    <div className="image-container">
+                      <img src={item.img} alt={item.title} />
+                    </div>
+                    <div className="text-box">
+                      <h3>{item.title}</h3>
+                      <p>{item.text}</p>
+                    </div>
                   </div>
                 </div>
               ))}

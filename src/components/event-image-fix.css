@@ -30,3 +30,30 @@
   background-color: #222 !important;
   border-color: #333 !important;
 }
+
+/* Ensure proper spacing between content and navigation dots */
+.event-content {
+  margin-bottom: 40px !important;
+  padding-bottom: 10px !important;
+  position: relative !important;
+}
+
+/* Position dots properly */
+.react-responsive-carousel .carousel .control-dots {
+  bottom: -30px !important;
+  background-color: transparent !important;
+  padding: 10px 0 !important;
+  z-index: 1 !important;
+}
+
+/* Style dots for better visibility */
+.react-responsive-carousel .carousel .control-dots .dot {
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Adjust style for dark mode */
+.dark-mode .react-responsive-carousel .carousel .control-dots .dot {
+  box-shadow: 0 0 3px rgba(255, 255, 255, 0.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}

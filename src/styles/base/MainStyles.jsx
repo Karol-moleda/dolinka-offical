@@ -6,6 +6,7 @@
 import { createGlobalStyle } from 'styled-components';
 import './LegacyFixes.css';
 import './App.css';
+import '../components/CarouselDarkMode.css';
 
 const MainStyles = createGlobalStyle`
   /* Base styles */
