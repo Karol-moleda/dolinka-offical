@@ -72,8 +72,8 @@ export const Contact = (props) => {
     <ContactContainer fontSize={fontSize} isDarkMode={isDarkMode}>
       <div id="contact" className={isDarkMode ? "dark-contact" : "light-contact"}>
         <div className="container">
-          <div className="col-md-8">
-            <div className="row">
+          <div className="row">
+            <div className="col-md-12">
               <div className="section-title">
                 <h2>Kontakt</h2>
                 <p>
@@ -84,84 +84,74 @@ export const Contact = (props) => {
                   życia, więc nie wahaj się do nas zgłosić!
                 </p>
               </div>
-              <div className="section-title">
-                <h2>Telefony</h2>
-                <p>
-                  <i className="fa fa-phone"></i> <span>32 6260100</span> - Urząd Miasta w
-                  Olkuszu <br />
-                  <i className="fa fa-phone emergency-phone"></i> <span className="emergency-number">112</span> - numer służy do
-                  powiadamiania w sytuacjach zagrożenia zdrowia, życia lub mienia
-                  <br />
-                  <i className="fa fa-phone emergency-phone"></i> <span className="emergency-number">999</span> - Pogotowie Ratunkowe <br />
-                  <i className="fa fa-phone emergency-phone"></i> <span className="emergency-number">998</span> - Straż Pożarna <br />
-                  <i className="fa fa-phone emergency-phone"></i> <span className="emergency-number">997</span> - Policja <br />
-                  <i className="fa fa-phone"></i> <span>986</span> - Straż Miejska <br />
-                </p>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-md-4">
+              <div className="contact-info">
+                <h3>Telefony</h3>
+                <div className="contact-item">
+                  <span><i className="fa fa-phone"></i> 32 6260100</span>
+                  <p>Urząd Miasta w Olkuszu</p>
+                </div>
+                <div className="contact-item">
+                  <span><i className="fa fa-phone emergency-phone"></i> 112</span>
+                  <p>numer służy do powiadamiania w sytuacjach zagrożenia zdrowia, życia lub mienia</p>
+                </div>
+                <div className="contact-item">
+                  <span><i className="fa fa-phone emergency-phone"></i> 999</span>
+                  <p>Pogotowie Ratunkowe</p>
+                </div>
+                <div className="contact-item">
+                  <span><i className="fa fa-phone emergency-phone"></i> 998</span>
+                  <p>Straż Pożarna</p>
+                </div>
               </div>
-              <div className="section-title">
-                <h2>Strony</h2>
-                <p>
-                  <a
-                    href="https://umig.olkusz.pl/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="external-link"
-                  >
+            </div>
+
+            <div className="col-md-4">
+              <div className="contact-info">
+                <h3>Strony</h3>
+                <div className="contact-item">
+                  <a href="https://umig.olkusz.pl/" target="_blank" rel="noopener noreferrer" className="external-link">
                     Urząd miasta
-                  </a>{" "}
-                  <br />
-                  <a
-                    href="https://www.sp.olkusz.pl/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="external-link"
-                  >
+                  </a>
+                </div>
+                <div className="contact-item">
+                  <a href="https://www.sp.olkusz.pl/" target="_blank" rel="noopener noreferrer" className="external-link">
                     Starostwo Powiatowe
-                  </a>{" "}
-                  <br />
-                  <a
-                    href="http://www.osm.olkusz.pl//"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="external-link"
-                  >
+                  </a>
+                </div>
+                <div className="contact-item">
+                  <a href="http://www.osm.olkusz.pl//" target="_blank" rel="noopener noreferrer" className="external-link">
                     Olkuska Spóldzielnia mieszkaniowa
-                  </a>{" "}
-                  <br />
-                </p>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-md-4">
+              <div className="contact-info">
+                <h3>Informacje kontaktowe</h3>
+                <div className="contact-item">
+                  <span><i className="fa fa-map-marker"></i> Adres</span>
+                  <p>Osiedla Młodych, 32-300 Olkusz</p>
+                </div>
+                <div className="contact-item">
+                  <span><i className="fa fa-phone"></i> Przewodniczący Osiedla Młodych</span>
+                  <p>789 595 848</p>
+                </div>
+                <div className="contact-item">
+                  <span><i className="fa fa-envelope-o"></i> Email</span>
+                  <p>dolinka.olkusz@gmail.com</p>
+                </div>
               </div>
             </div>
           </div>
-          <div className="col-md-3 col-md-offset-1 contact-info">
-            <div className="contact-item">
-              <h3>Informacje kontaktowe</h3>
-              <p>
-                <span>
-                  <i className="fa fa-map-marker"></i> Adres
-                </span>
-                {props.data ? props.data.address : "loading"}
-              </p>
-            </div>
-            <div className="contact-item">
-              <p>
-                <span>
-                  <i className="fa fa-phone"></i> Przewodniczacy Osiedla Młodych -
-                  789 595 848
-                </span>{" "}
-                {props.data ? props.data.phone : "loading"}
-              </p>
-            </div>
-            <div className="contact-item">
-              <p>
-                <span>
-                  <i className="fa fa-envelope-o"></i> Email
-                </span>{" "}
-                {props.data ? props.data.email : "loading"}
-              </p>
-            </div>
-          </div>
-          <div className="col-md-12">
-            <div className="row">
+
+          <div className="row">
+            <div className="col-md-12">
               <div className="social">
                 <ul>
                   <li>

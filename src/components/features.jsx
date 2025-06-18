@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './features.css';
+import './event-image-fix.css'; // Import the event image fix CSS
 import { AppContext } from '../App';
 import styled from 'styled-components';
 
@@ -47,27 +48,31 @@ const Features = ({ data }) => {
           <p>Najnowsze wydarzenia i inicjatywy w naszej społeczności</p>
         </div>
         <div className="carousel-container">
-          <Carousel
-            showArrows={true}
-            showStatus={false}
-            showThumbs={false}
-            infiniteLoop={true}
-            autoPlay={true}
-            interval={5000}
-            stopOnHover={true}
-            emulateTouch={true}
-            swipeable={true}
-          >
-            {data.map((item, i) => (
-              <div key={`${item.title}-${i}`} className="slide-item">
-                <img src={item.img} alt={item.title} />
-                <div className="text-box">
-                  <h3>{item.title}</h3>
-                  <p>{item.text}</p>
+          <div className="carousel-wrapper">
+            <Carousel
+              showArrows={true}
+              showStatus={false}
+              showThumbs={false}
+              infiniteLoop={true}
+              autoPlay={true}
+              interval={5000}
+              stopOnHover={true}
+              emulateTouch={true}
+              swipeable={true}
+            >
+              {data.map((item, i) => (
+                <div key={`${item.title}-${i}`} className="slide-item">
+                  <div className="image-container">
+                    <img src={item.img} alt={item.title} />
+                  </div>
+                  <div className="text-box">
+                    <h3>{item.title}</h3>
+                    <p>{item.text}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </Carousel>
+              ))}
+            </Carousel>
+          </div>
         </div>
       </div>
     </FeaturesContainer>

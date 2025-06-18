@@ -5,6 +5,7 @@ import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 import AccessibilityControls from './AccessibilityControls';
 import { AppContext } from '../App';
+import '../nav-contrast-fix.css'; // Import the new navigation contrast fix CSS
 
 const Nav = styled.nav`
   position: fixed;
@@ -14,7 +15,7 @@ const Nav = styled.nav`
   z-index: 9999;
   background: ${props => props.$isScrolled 
     ? (props.$isDarkMode ? 'rgba(0, 0, 0, 0.95)' : 'rgba(255, 255, 255, 0.95)') 
-    : (props.$isDarkMode ? 'rgba(0, 0, 0, 0.3)' : 'rgba(255, 255, 255, 0.3)')
+    : (props.$isDarkMode ? 'rgba(0, 0, 0, 0.4)' : 'rgba(0, 0, 0, 0.4)')  /* Darker background for better visibility */
   };
   padding: ${props => props.$isScrolled ? '15px 0' : '20px 0'};
   transition: all 0.5s ease;
@@ -23,6 +24,10 @@ const Nav = styled.nav`
   display: flex;
   align-items: center;
   justify-content: center;
+  /* Add className for easier CSS targeting */
+  &.scrolled {
+    opacity: 1;
+  }
 `;
 
 const Container = styled.div`
@@ -39,11 +44,14 @@ const Container = styled.div`
 const Brand = styled.a`
   font-family: 'Raleway', sans-serif;
   font-size: 24px;
-  color: ${props => props.$isDarkMode ? '#fff' : '#333'};
+  color: ${props => props.$isDarkMode 
+    ? '#fff' 
+    : props.$isScrolled ? '#333' : '#fff'}; /* White text when not scrolled for better visibility */
   text-decoration: none;
   font-weight: 700;
   letter-spacing: 1px;
   transition: all 0.3s ease;
+  text-shadow: ${props => props.$isScrolled ? 'none' : '1px 1px 3px rgba(0, 0, 0, 0.8)'}; /* Text shadow when not scrolled */
 
   &:hover {
     color: #3498db;
@@ -108,16 +116,19 @@ const NavItem = styled.li`
 `;
 
 const NavLink = styled.a`
-  color: ${props => props.$isDarkMode ? '#fff' : '#333'};
+  color: ${props => props.$isDarkMode 
+    ? '#fff' 
+    : props.$isScrolled ? '#333' : '#fff'}; /* White text when not scrolled for better visibility */
   text-decoration: none;
   font-size: inherit;
-  font-weight: 500;
+  font-weight: ${props => props.$isScrolled ? '500' : '600'}; /* Bolder text when not scrolled */
   padding: 5px 0;
   transition: all 0.3s ease;
   position: relative;
   display: flex;
   align-items: center;
   height: 100%;
+  text-shadow: ${props => props.$isScrolled ? 'none' : '1px 1px 2px rgba(0, 0, 0, 0.7)'}; /* Text shadow when not scrolled */
 
   &:after {
     content: '';
@@ -155,7 +166,7 @@ const CloseButton = styled.button`
 `;
 
 const Navigation = () => {
-  const { isDarkMode, fontSize } = useContext(AppContext);
+  const { isDarkMode } = useContext(AppContext); // Remove unused fontSize variable
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -173,9 +184,9 @@ const Navigation = () => {
   };
 
   return (
-    <Nav $isScrolled={isScrolled} $isDarkMode={isDarkMode}>
+    <Nav $isScrolled={isScrolled} $isDarkMode={isDarkMode} className={isScrolled ? 'scrolled' : ''}>
       <Container>
-        <Brand href="#page-top" $isDarkMode={isDarkMode}>Dolinka</Brand>
+        <Brand href="#page-top" $isDarkMode={isDarkMode} $isScrolled={isScrolled}>Dolinka</Brand>
         <MenuButton onClick={toggleMenu} $isDarkMode={isDarkMode}>
           <FontAwesomeIcon icon={faBars} />
         </MenuButton>
@@ -185,19 +196,19 @@ const Navigation = () => {
           </CloseButton>
           <NavList>
             <NavItem>
-              <NavLink href="#features" $isDarkMode={isDarkMode}>Wydarzenia</NavLink>
+              <NavLink href="#features" $isDarkMode={isDarkMode} $isScrolled={isScrolled}>Wydarzenia</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="#about" $isDarkMode={isDarkMode}>O nas</NavLink>
+              <NavLink href="#about" $isDarkMode={isDarkMode} $isScrolled={isScrolled}>O nas</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="#services" $isDarkMode={isDarkMode}>Nasze działania</NavLink>
+              <NavLink href="#services" $isDarkMode={isDarkMode} $isScrolled={isScrolled}>Nasze działania</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="#team" $isDarkMode={isDarkMode}>Zarząd</NavLink>
+              <NavLink href="#team" $isDarkMode={isDarkMode} $isScrolled={isScrolled}>Zarząd</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="#contact" $isDarkMode={isDarkMode}>Kontakt</NavLink>
+              <NavLink href="#contact" $isDarkMode={isDarkMode} $isScrolled={isScrolled}>Kontakt</NavLink>
             </NavItem>
           </NavList>          <AccessibilityControls />
         </NavMenu>

@@ -1,0 +1,31 @@
+/* Navigation contrast enhancement for aerial view background */
+
+/* Increase background opacity and add text shadow for better visibility */
+.intro nav, nav:not(.scrolled) {
+  background: rgba(0, 0, 0, 0.5) !important; /* Darker semi-transparent background */
+  backdrop-filter: blur(15px) !important; /* Increase blur for better contrast */
+}
+
+/* Enhance text visibility with shadow and stronger contrast */
+nav:not(.scrolled) a, 
+nav:not(.scrolled) .navbar-brand, 
+nav:not(.scrolled) button,
+.intro nav a,
+.intro nav .navbar-brand,
+.intro nav button {
+  color: #ffffff !important; /* Force white text */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8) !important; /* Add text shadow for readability */
+  font-weight: 600 !important; /* Make font slightly bolder */
+}
+
+/* Add a subtle bottom border for navigation for extra definition */
+nav:not(.scrolled) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Enhance navigation links on hover */
+nav:not(.scrolled) a:hover,
+.intro nav a:hover {
+  color: #3498db !important; /* Bright blue on hover */
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.9) !important;
+}

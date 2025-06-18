@@ -1,13 +1,5 @@
 // App.jsx
-import React, { useState, useEffect, createContext } from "react";
-import Navigation from "./components/navigation";
-import Header from "./components/header";
-import About from "./components/about";
-import Services from "./components/services";
-import Features from "./components/features";
-import Gallery from "./components/gallery";
-import Team from "./components/Team";
-import Contact from "./components/contact";
+import React, { useState, useEffect, createContext, Suspense, lazy } from "react";
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import "./App.css";
 // Import restore original styling (restores original look while keeping dark mode feature)
@@ -28,6 +20,10 @@ import "./services-contrast-fix.css";
 import "./services-light-mode-fix.css";
 // Import aerial view text fix
 import "./aerial-view-fix.css";
+// Import navigation contrast fix for aerial background
+import "./nav-contrast-fix.css";
+// Import event card fix for proper text spacing
+import "./event-card-fix.css";
 import JsonData from "./data/data.json";
 
 // Theme context
@@ -200,6 +196,16 @@ const GlobalStyle = createGlobalStyle`
 
 // Loading component removed as it was not being used
 
+// Lazy load main sections for code splitting
+const Navigation = lazy(() => import("./components/navigation"));
+const Header = lazy(() => import("./components/header"));
+const About = lazy(() => import("./components/about"));
+const Services = lazy(() => import("./components/services"));
+const Features = lazy(() => import("./components/features"));
+const Gallery = lazy(() => import("./components/gallery"));
+const Team = lazy(() => import("./components/Team"));
+const Contact = lazy(() => import("./components/contact"));
+
 function App() {
   const [landingPageData, setLandingPageData] = useState({});
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -260,16 +266,18 @@ function App() {
         decreaseFontSize
       }}>
         <GlobalStyle fontSize={fontSize} />
-        <div>
-          <Navigation />
-          <Header data={landingPageData.Header} />
-          <Features data={landingPageData.Features} />
-          <About data={landingPageData.About} />
-          <Services data={landingPageData.Services} />
-          <Gallery data={landingPageData.Gallery}/>
-          <Team data={landingPageData.Team} />
-          <Contact data={landingPageData.Contact} />
-        </div>
+        <Suspense fallback={<div style={{textAlign: 'center', marginTop: 100}}>Ładowanie strony...</div>}>
+          <div>
+            <Navigation />
+            <Header data={landingPageData.Header} />
+            <Features data={landingPageData.Features} />
+            <About data={landingPageData.About} />
+            <Services data={landingPageData.Services} />
+            <Gallery data={landingPageData.Gallery}/>
+            <Team data={landingPageData.Team} />
+            <Contact data={landingPageData.Contact} />
+          </div>
+        </Suspense>
       </AppContext.Provider>
     </ThemeProvider>
   );

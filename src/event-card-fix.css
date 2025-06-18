@@ -1,0 +1,60 @@
+/* Event card fix - adding more padding to prevent text touching borders */
+
+/* Increased padding for carousel text boxes */
+.slide-item .text-box {
+  padding: 20px 25px !important; /* Increase padding all around */
+  margin: 10px !important;
+  border-radius: 10px !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Ensure text has proper spacing inside event cards */
+.slide-item h3 {
+  margin-bottom: 15px !important;
+  line-height: 1.4 !important;
+  padding: 0 5px !important;
+}
+
+.slide-item p {
+  padding: 0 5px !important;
+  margin-bottom: 10px !important;
+  line-height: 1.6 !important;
+}
+
+/* Fix for the specific event card type shown in the image */
+.carousel .slide-item,
+.carousel-item {
+  padding: 15px !important;
+  margin: 10px auto 20px !important;
+}
+
+/* Ensure images are properly contained within their containers */
+.slide-item img {
+  max-width: calc(100% - 20px) !important;
+  margin: 10px !important;
+  border-radius: 5px !important;
+}
+
+/* Additional fixes for text box */
+.text-box {
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05) !important;
+  margin: 15px !important;
+  border-radius: 10px !important;
+}
+
+/* Fix for full carousel slide */
+.carousel .slide {
+  padding: 10px !important;
+  background: transparent !important;
+}
+
+/* Special fix for the potańcówka card shown in the image */
+.carousel .slide-item {
+  max-width: 800px !important;
+  margin: 15px auto 25px !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  background-color: #fff !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1) !important;
+}
