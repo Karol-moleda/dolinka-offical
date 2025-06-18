@@ -11,27 +11,55 @@ const AccessibilityContainer = styled.div`
   display: flex;
   flex-direction: column;
   background-color: ${props => props.theme.cardBackground};
-  padding: 10px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  border: 1px solid ${props => props.isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)'};
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+  }
+  
+  @media (max-width: 768px) {
+    right: 15px;
+    padding: 12px;
+  }
 `;
 
 const AccessibilityButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 5px 0;
+  margin: 5px 5px;
   padding: 8px 12px;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   background-color: ${props => props.theme.primary};
   color: ${props => props.theme.buttonColor};
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 600;
+  font-size: 16px;
+  min-width: 40px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: all 0.2s ease;
 
   &:hover {
     background-color: ${props => props.theme.primaryHover};
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  &:active {
+    transform: translateY(1px);
+  }
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
   }
 `;
 
@@ -47,6 +75,16 @@ const ToggleLabel = styled.span`
   font-size: 14px;
 `;
 
+const PanelTitle = styled.h3`
+  color: ${props => props.theme.headingColor};
+  margin: 0 0 12px;
+  padding-bottom: 8px;
+  font-size: 16px;
+  text-align: center;
+  border-bottom: 1px solid ${props => props.isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'};
+  width: 100%;
+`;
+
 const AccessibilityPanel = () => {
   const { 
     isDarkMode, 
@@ -54,10 +92,9 @@ const AccessibilityPanel = () => {
     fontSize, 
     increaseFontSize, 
     decreaseFontSize 
-  } = useTheme();
-
-  return (
-    <AccessibilityContainer>
+  } = useTheme();  return (
+    <AccessibilityContainer isDarkMode={isDarkMode}>
+      <PanelTitle isDarkMode={isDarkMode}>Dostępność</PanelTitle>
       <ToggleContainer>
         <ToggleLabel>Tryb ciemny:</ToggleLabel>
         <label className="switch">

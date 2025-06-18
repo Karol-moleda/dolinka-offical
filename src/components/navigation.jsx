@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
-import AccessibilityControls from './AccessibilityControls';
 import { useTheme } from '../context/ThemeContext';
 
 const Nav = styled.nav`
@@ -192,8 +191,7 @@ const Navigation = () => {
         <NavMenu $isOpen={isOpen} $isDarkMode={isDarkMode}>
           <CloseButton onClick={toggleMenu} $isDarkMode={isDarkMode}>
             <FontAwesomeIcon icon={faTimes} />
-          </CloseButton>
-          <NavList>
+          </CloseButton>          <NavList>
             <NavItem>
               <NavLink href="#features" $isDarkMode={isDarkMode} $isScrolled={isScrolled}>Wydarzenia</NavLink>
             </NavItem>
@@ -209,7 +207,7 @@ const Navigation = () => {
             <NavItem>
               <NavLink href="#contact" $isDarkMode={isDarkMode} $isScrolled={isScrolled}>Kontakt</NavLink>
             </NavItem>
-          </NavList>          <AccessibilityControls />
+          </NavList>
         </NavMenu>
       </Container>
     </Nav>
