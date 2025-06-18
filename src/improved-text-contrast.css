@@ -1,0 +1,92 @@
+/* improved-text-contrast.css - Ensures text is visible on all backgrounds */
+
+/* Service/Events section - blue gradient background */
+#services {
+  position: relative;
+}
+
+#services::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.15); /* Slightly darken the background for better text contrast */
+  pointer-events: none;
+  z-index: 0;
+}
+
+#services .container {
+  position: relative;
+  z-index: 1; /* Ensure content is above the darkening layer */
+}
+
+#services .section-title h2 {
+  color: #ffffff !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5) !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.5px;
+}
+
+#services .section-title p {
+  color: #ffffff !important;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4) !important;
+  font-weight: 500 !important;
+  line-height: 1.7 !important;
+}
+
+/* Service cards with better contrast */
+#services .service-desc {
+  background-color: rgba(255, 255, 255, 0.92) !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2) !important;
+}
+
+#services .service-desc h3 {
+  color: #2c3e50 !important;
+  font-weight: 700 !important;
+}
+
+#services .service-desc p {
+  color: #333333 !important;
+  font-weight: normal !important;
+  text-shadow: none !important;
+}
+
+/* Make the Accessibility Toggle Button more visible */
+.accessibility-toggle-btn {
+  border: 2px solid #fff !important;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2) !important;
+}
+
+/* Better contrast for other sections with colored backgrounds */
+#features, #about, #team, #portfolio {
+  position: relative;
+}
+
+#features p, #about p, #team p, #portfolio p {
+  color: #333333 !important;
+  font-weight: 500;
+}
+
+/* Dark mode text improvements */
+body.dark-mode #services p,
+body.dark-mode #features p,
+body.dark-mode #about p,
+body.dark-mode #team p,
+body.dark-mode #portfolio p {
+  color: #ffffff !important;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Improve gallery text visibility in light mode */
+.gallery-caption {
+  background: rgba(0, 0, 0, 0.6) !important;
+  padding: 10px !important;
+}
+
+.gallery-caption p {
+  color: #ffffff !important;
+  font-weight: 500 !important;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
+}

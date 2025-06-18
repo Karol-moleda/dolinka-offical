@@ -1,0 +1,57 @@
+/* contact-contrast-fix.css - Ensures proper contrast in contact section */
+
+/* Ensure high contrast in dark mode for contact section */
+body.dark-mode #contact {
+  background-color: #000000 !important;
+}
+
+body.dark-mode #contact .section-title h2 {
+  color: #ffffff !important;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+body.dark-mode #contact .section-title p,
+body.dark-mode #contact p,
+body.dark-mode #contact span {
+  color: #ffffff !important;
+}
+
+/* Make contact info box stand out more in dark mode */
+body.dark-mode #contact .contact-info {
+  background: rgba(26, 26, 26, 0.95) !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid #333 !important;
+}
+
+body.dark-mode #contact .contact-item {
+  background-color: rgba(26, 26, 26, 0.95) !important; 
+  border: 1px solid #333 !important;
+}
+
+/* Better links in dark mode */
+body.dark-mode #contact a {
+  color: #90caf9 !important;
+}
+
+body.dark-mode #contact a:hover {
+  color: #42a5f5 !important;
+}
+
+/* Better icons in dark mode */
+body.dark-mode #contact .contact-info i {
+  color: #90caf9 !important;
+}
+
+/* Preserve the original blue gradient in light mode */
+body:not(.dark-mode) #contact {
+  background: linear-gradient(to right, #4e54c8, #8f94fb) !important;
+}
+
+/* Ensure text visibility in original blue gradient */
+body:not(.dark-mode) #contact .section-title h2,
+body:not(.dark-mode) #contact h3,
+body:not(.dark-mode) #contact p,
+body:not(.dark-mode) #contact .contact-item span,
+body:not(.dark-mode) #contact .contact-item p {
+  color: #ffffff !important;
+}

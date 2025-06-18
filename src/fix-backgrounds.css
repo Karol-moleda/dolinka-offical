@@ -1,0 +1,59 @@
+/* Fix background images in dark mode */
+
+/* Reset styles that affect background images */
+[style*="background-image"],
+[style*="background:url"],
+[style*="background-position"],
+[style*="background-repeat"],
+[style*="background-size"] {
+  background-color: initial !important;
+}
+
+/* Target specific components with background images */
+header,
+.intro,
+.intro-bg,
+.intro-content,
+.bg-image,
+#header,
+.header-bg,
+#headerWrapper,
+#intro {
+  background-color: transparent !important;
+}
+
+/* Make sure pseudoelements with backgrounds are not affected */
+header::before,
+header::after,
+.intro::before,
+.intro::after,
+#header::before,
+#header::after,
+.bg-image::before,
+.bg-image::after,
+[class*="background"]::before,
+[class*="background"]::after,
+[class*="bg-"]::before,
+[class*="bg-"]::after {
+  background-color: initial !important;
+}
+
+/* Apply dark mode properly to sections after header */
+#features,
+#about,
+#services,
+#portfolio,
+#team,
+#testimonials,
+#contact,
+footer {
+  background-color: #000000 !important;
+}
+
+/* Fix any inline-styled backgrounds */
+[data-bg],
+[data-background],
+.background-holder,
+.bg-holder {
+  background-color: transparent !important;
+}

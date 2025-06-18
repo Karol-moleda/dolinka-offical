@@ -1,0 +1,165 @@
+#contact {
+  padding: 100px 0;
+  color: #ffffff;
+}
+
+/* Light mode specific styling */
+#contact.light-contact {
+  background: linear-gradient(to right, #4e54c8, #8f94fb);
+}
+
+/* Dark mode specific styling */
+#contact.dark-contact {
+  background: #000000;
+}
+
+#contact .section-title {
+  margin-bottom: 40px;
+}
+
+#contact .section-title h2 {
+  color: #ffffff;
+  font-size: 2.5em;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#contact .section-title p {
+  font-size: 16px;
+  line-height: 1.8;
+  margin-bottom: 30px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+#contact a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+#contact a:hover {
+  color: #ffd700;
+}
+
+.contact-info {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 30px;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  color: #ffffff;
+}
+
+.contact-info h3 {
+  color: #ffffff;
+  font-size: 1.8em;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.contact-item {
+  margin-bottom: 20px;
+}
+
+.contact-item i {
+  margin-right: 10px;
+  color: #ffd700;
+}
+
+.contact-item span {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #ffffff;
+}
+
+/* Dodatkowe style dla lepszej czytelności tekstu */
+#contact p, 
+#contact .contact-item p, 
+#contact .contact-info p {
+  color: #ffffff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+#contact .contact-info span + div,
+#contact .contact-info span + span {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* Emergency phone number styling */
+.emergency-phone {
+  color: #ff5252 !important;
+}
+
+.emergency-number {
+  font-weight: bold;
+  color: #ff5252 !important;
+}
+
+/* External links styling */
+.external-link {
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.dark-contact .external-link {
+  color: #90caf9 !important;
+}
+
+.dark-contact .external-link:hover {
+  color: #42a5f5 !important;
+}
+
+.light-contact .external-link {
+  color: #ffffff !important;
+}
+
+.light-contact .external-link:hover {
+  color: #ffd700 !important;
+}
+
+/* Social links */
+.social-link {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.dark-contact .social-link {
+  background-color: #1a1a1a;
+  color: #90caf9 !important;
+}
+
+.dark-contact .social-link:hover {
+  background-color: #333;
+  color: #ffffff !important;
+}
+
+.light-contact .social-link {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff !important;
+}
+
+.light-contact .social-link:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+  color: #ffd700 !important;
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+  #contact .section-title h2 {
+    font-size: 2em;
+  }
+  
+  .contact-info {
+    margin-top: 30px;
+  }
+}

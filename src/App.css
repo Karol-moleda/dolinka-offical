@@ -134,3 +134,336 @@ a:hover {
   color: #23527c;
   text-decoration: underline;
 }
+
+/* Nowe style ładowania */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  width: 100%;
+  padding: 50px 0;
+}
+
+.spinner-container {
+  position: relative;
+  width: 60px;
+  height: 60px;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 5px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: #608dfd;
+  animation: spin 1s linear infinite;
+}
+
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  z-index: 9999;
+}
+
+.loading-screen h2 {
+  margin-top: 20px;
+  color: #555;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.loader {
+  width: 80px;
+  height: 80px;
+  border: 8px solid rgba(96, 141, 253, 0.2);
+  border-radius: 50%;
+  border-top-color: #608dfd;
+  animation: spin 1s ease-in-out infinite;
+  box-shadow: 0 0 20px rgba(96, 141, 253, 0.3);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Nowe style responsywne */
+@media (max-width: 992px) {
+  .container, .row, .col-md-10, .col-md-offset-1, section {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  
+  .section-title h2 {
+    font-size: 2rem;
+  }
+  
+  .intro h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .btn-custom {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .intro h1 {
+    font-size: 2rem;
+  }
+  
+  #features, #about, #portfolio, #testimonials, #team, #contact, #services {
+    padding: 60px 0;
+  }
+  
+  .section-title {
+    margin-bottom: 40px;
+  }
+  
+  .section-title h2 {
+    font-size: 1.8rem;
+  }
+}
+
+/* Nowe animacje dla elementów strony */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromBottom {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.8s ease-out;
+}
+
+.slide-in {
+  animation: slideInFromBottom 0.8s ease-out;
+}
+
+/* Ulepszenia dostępności */
+a:focus, button:focus {
+  outline: 3px solid #608dfd;
+  outline-offset: 2px;
+}
+
+.btn-custom:focus {
+  outline: 3px solid rgba(96, 141, 253, 0.6);
+  box-shadow: 0 0 0 3px rgba(96, 141, 253, 0.3);
+}
+
+/* Nowy styl dla kart i kontenerów */
+.custom-card {
+  background-color: var(--card-bg, #fff);
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  padding: 30px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 30px;
+  overflow: hidden;
+  position: relative;
+}
+
+.custom-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.dark-mode .custom-card {
+  background-color: #2d2d2d;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Tryb ciemny dla elementów strony */
+.dark-mode {
+  --card-bg: #2d2d2d;
+  --text-color: #e0e0e0;
+  --heading-color: #ffffff;
+  --border-color: #444444;
+  --shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Modern section styling */
+section {
+  padding: 100px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+#header {
+  background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+  color: white;
+}
+
+#features {
+  background: #f8f9fa;
+  position: relative;
+}
+
+#about {
+  background: linear-gradient(135deg, #fff 0%, #e3f2fd 100%);
+}
+
+#services {
+  background: #ffffff;
+}
+
+#testimonials {
+  background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%);
+}
+
+#team {
+  background: #ffffff;
+}
+
+#contact {
+  background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+  color: white;
+}
+
+/* Gallery section */
+#gallery {
+  background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+  padding: 80px 0;
+}
+
+#gallery .section-title h2 {
+  color: #1565C0;
+}
+
+#gallery .section-title h2::after {
+  background: #1565C0;
+}
+
+/* Team section (ZARZĄD OSIEDLA MŁODYCH) */
+#team {
+  background: linear-gradient(135deg, #E3F2FD 0%, #90CAF9 100%);
+  padding: 80px 0;
+}
+
+#team .section-title h2 {
+  color: #1565C0;
+}
+
+#team .section-title h2::after {
+  background: #1565C0;
+}
+
+#team .team-member {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* Calendar section (KALENDARZ WYDARZEŃ) */
+#calendar {
+  background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+  padding: 80px 0;
+}
+
+#calendar .section-title h2 {
+  color: #2E7D32;
+}
+
+#calendar .section-title h2::after {
+  background: #2E7D32;
+}
+
+#calendar .timeline-item {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Make images in these sections pop with subtle shadow */
+#gallery img, #team img {
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+#gallery img:hover, #team img:hover {
+  transform: translateY(-5px);
+}
+
+/* Section title styling */
+.section-title {
+  margin-bottom: 60px;
+}
+
+.section-title h2 {
+  position: relative;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  font-weight: 700;
+}
+
+.section-title h2::after {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 50px;
+  height: 3px;
+  background: #1a237e;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Card and content styling */
+.service-description, .team-member, .testimonial {
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  padding: 30px;
+  transition: transform 0.3s ease;
+}
+
+.service-description:hover, .team-member:hover, .testimonial:hover {
+  transform: translateY(-5px);
+}
+
+/* Button styling */
+.btn-custom {
+  background: #1a237e;
+  color: white;
+  padding: 12px 30px;
+  border-radius: 30px;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-custom:hover {
+  background: #283593;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}

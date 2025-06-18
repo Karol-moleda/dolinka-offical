@@ -1,0 +1,134 @@
+/* colorful-original.css - Ensure original colorful backgrounds in light mode */
+
+/* Features Section */
+body:not(.dark-mode) #features {
+  background: #f6f6f6 !important;
+}
+
+body:not(.dark-mode) #features i.fa {
+  color: #fff !important;
+  background: linear-gradient(to right, #6372ff 0%, #5ca9fb 100%) !important;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* About Section */
+body:not(.dark-mode) #about {
+  background: #fff !important;
+}
+
+/* Services Section - Original gradient */
+body:not(.dark-mode) #services {
+  background: linear-gradient(to right, #6372ff 0%, #5ca9fb 100%) !important;
+  color: #fff !important;
+}
+
+body:not(.dark-mode) #services h2,
+body:not(.dark-mode) #services h3 {
+  color: #fff !important;
+}
+
+body:not(.dark-mode) #services .section-title h2::after {
+  background: rgba(255, 255, 255, 0.3) !important;
+}
+
+body:not(.dark-mode) #services p {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+body:not(.dark-mode) #services i.fa {
+  color: #fff !important;
+  background: linear-gradient(to right, #6372ff 0%, #5ca9fb 100%) !important;
+}
+
+/* Portfolio/Gallery Section */
+body:not(.dark-mode) #portfolio {
+  background: #fff !important;
+}
+
+/* Team Section */
+body:not(.dark-mode) #team {
+  background: #fff !important;
+}
+
+body:not(.dark-mode) #team h4 {
+  color: #1565C0 !important;
+}
+
+/* Contact Section */
+body:not(.dark-mode) #contact {
+  background: linear-gradient(to right, #4e54c8, #8f94fb) !important;
+  color: #ffffff !important;
+}
+
+/* Custom Button Style in Light Mode */
+body:not(.dark-mode) .btn-custom {
+  background-color: #5ca9fb !important;
+  background-image: linear-gradient(to right, #5ca9fb 0%, #6372ff 100%) !important;
+  color: #fff !important;
+}
+
+body:not(.dark-mode) .btn-custom:hover {
+  background-image: none !important;
+  background-color: #6372ff !important;
+}
+
+/* Section titles in light mode */
+body:not(.dark-mode) .section-title h2::after {
+  background: linear-gradient(to right, #5ca9fb 0%, #6372ff 100%) !important;
+}
+
+/* Portfolio hover effects */
+body:not(.dark-mode) .hover-bg .hover-text {
+  background: linear-gradient(
+    to right,
+    rgba(99, 114, 255, 0.8) 0%,
+    rgba(92, 169, 251, 0.8) 100%
+  ) !important;
+}
+
+/* Dark mode high contrast styles */
+body.dark-mode {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+body.dark-mode #features,
+body.dark-mode #about,
+body.dark-mode #services,
+body.dark-mode #portfolio,
+body.dark-mode #testimonials,
+body.dark-mode #team,
+body.dark-mode #contact {
+  background-color: #000000 !important;
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6,
+body.dark-mode p,
+body.dark-mode span,
+body.dark-mode div,
+body.dark-mode li {
+  color: #ffffff !important;
+}
+
+body.dark-mode .card,
+body.dark-mode .thumbnail,
+body.dark-mode .service-item,
+body.dark-mode .team-item {
+  background-color: #1a1a1a !important;
+  border: 1px solid #333 !important;
+}
+
+/* Make sure buttons in dark mode are visible */
+body.dark-mode .btn-custom {
+  background: #90caf9 !important;
+  color: #000000 !important;
+}
+
+body.dark-mode .btn-custom:hover {
+  background: #42a5f5 !important;
+}

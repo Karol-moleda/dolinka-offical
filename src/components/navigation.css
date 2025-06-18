@@ -1,0 +1,152 @@
+/* Navigation.css - Additional styling for the navigation component */
+
+/* Ensure the body has proper padding to accommodate fixed navbar */
+body {
+  padding-top: 80px;
+}
+
+/* Fix for section IDs to account for fixed navbar */
+section[id], div[id] {
+  scroll-margin-top: 80px;
+}
+
+/* Smoother transitions for hover effects */
+a {
+  transition: all 0.3s ease !important;
+}
+
+/* Custom styling for the toggle component */
+.react-toggle {
+  transform: scale(1.1) !important;
+  margin: 0 5px;
+  vertical-align: middle;
+}
+
+.react-toggle-track {
+  background-color: #4D4D4D;
+  border-radius: 30px;
+  border: 2px solid #fff !important;
+  opacity: 0.9;
+}
+
+.react-toggle--checked .react-toggle-track {
+  background-color: #2693e6;
+  opacity: 0.9;
+}
+
+.react-toggle-thumb {
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  border: 1px solid #fff !important;
+}
+
+/* Navigation specific styles */
+.nav-container {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Accessibility controls styling - Enhanced */
+.accessibility-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 30px;
+  padding: 8px 15px;
+  margin-left: 20px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+}
+
+.accessibility-container:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  transform: translateY(-2px);
+}
+
+.accessibility-label {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 14px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+}
+
+@media (min-width: 992px) {
+  .accessibility-container {
+    height: auto;
+    position: relative;
+    z-index: 10;
+  }
+}
+
+@media (max-width: 991px) {
+  .accessibility-container {
+    margin: 25px auto 5px;
+    width: fit-content;
+    justify-content: center;
+    padding: 10px 20px;
+    border-radius: 40px;
+  }
+  
+  .accessibility-label {
+    font-size: 16px;
+  }
+}
+
+/* Animation for mobile menu */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* Enhance mobile menu items with animations */
+@media (max-width: 991px) {
+  .nav-menu {
+    animation: fadeIn 0.3s ease;
+  }
+  
+  .nav-item {
+    animation: slideIn 0.3s ease forwards;
+    opacity: 0;
+  }
+  
+  .nav-item:nth-child(1) { animation-delay: 0.1s; }
+  .nav-item:nth-child(2) { animation-delay: 0.2s; }
+  .nav-item:nth-child(3) { animation-delay: 0.3s; }
+  .nav-item:nth-child(4) { animation-delay: 0.4s; }
+  .nav-item:nth-child(5) { animation-delay: 0.5s; }
+}
+
+/* Theme toggle and font size controls */
+.controls-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+@media (max-width: 991px) {
+  .controls-container {
+    margin-top: 20px;
+    justify-content: center;
+  }
+}
+
+/* Active link styling */
+.nav-link.active {
+  color: #3498db !important;
+}
+
+.nav-link.active:after {
+  width: 100% !important;
+}

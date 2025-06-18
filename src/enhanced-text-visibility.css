@@ -1,0 +1,83 @@
+/* enhanced-text-visibility.css - Comprehensive text visibility improvements for all sections */
+
+/* Global text visibility enhancements */
+body:not(.dark-mode) h1, 
+body:not(.dark-mode) h2, 
+body:not(.dark-mode) h3, 
+body:not(.dark-mode) h4 {
+  color: #222222 !important; /* Darker text for better contrast in light mode */
+}
+
+body:not(.dark-mode) p, 
+body:not(.dark-mode) span, 
+body:not(.dark-mode) li {
+  color: #333333 !important; /* Slightly darker text for better contrast in light mode */
+}
+
+/* Services section - special treatment for blue gradient background */
+body:not(.dark-mode) #services h1, 
+body:not(.dark-mode) #services h2, 
+body:not(.dark-mode) #services h3, 
+body:not(.dark-mode) #services h4,
+body:not(.dark-mode) #services span {
+  color: #ffffff !important; /* Pure white text */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6) !important; /* Strong shadow for readability */
+  font-weight: 700 !important; /* Bold text */
+}
+
+body:not(.dark-mode) #services p,
+body:not(.dark-mode) #services li {
+  color: #ffffff !important; /* Pure white text */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5) !important; /* Strong shadow for readability */
+  font-weight: 500 !important; /* Slightly bolder for readability */
+}
+
+/* Exception for service description cards that have white background */
+body:not(.dark-mode) #services .service-desc h3 {
+  color: #1a2a3a !important; /* Darker color for better contrast on white background */
+  text-shadow: none !important; /* No shadow needed on white background */
+}
+
+body:not(.dark-mode) #services .service-desc p {
+  color: #333333 !important; /* Dark text on white background */
+  text-shadow: none !important; /* No shadow needed on white background */
+}
+
+/* Apply stronger text shadows to white text on any colored/gradient backgrounds */
+body:not(.dark-mode) [style*="background"], 
+body:not(.dark-mode) [class*="bg-"] {
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Make links more visible in light mode regardless of background */
+body:not(.dark-mode) a:not(.btn) {
+  color: #1e5bb0 !important; /* Darker blue for better visibility */
+  font-weight: 500 !important;
+  text-decoration: underline !important;
+}
+
+body:not(.dark-mode) a:not(.btn):hover {
+  color: #0d3c7e !important; /* Even darker on hover */
+}
+
+/* Better visibility for dark mode text */
+body.dark-mode h1, 
+body.dark-mode h2, 
+body.dark-mode h3, 
+body.dark-mode h4 {
+  color: #ffffff !important;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5) !important;
+}
+
+body.dark-mode p, 
+body.dark-mode span, 
+body.dark-mode li {
+  color: #f0f0f0 !important;
+}
+
+/* Make links more visible in dark mode */
+body.dark-mode a:not(.btn) {
+  color: #90caf9 !important;
+  text-decoration: underline !important;
+  font-weight: 500 !important;
+}

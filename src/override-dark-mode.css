@@ -1,0 +1,84 @@
+/* More targeted dark mode overrides that preserve background images */
+body.dark-mode {
+  color: #ffffff !important;
+}
+
+/* Apply dark mode to elements without affecting background images */
+body.dark-mode #about,
+body.dark-mode #features,
+body.dark-mode #services,
+body.dark-mode #team,
+body.dark-mode #portfolio,
+body.dark-mode #contact {
+  background-color: #000000 !important;
+}
+
+/* Preserve pseudo-elements which might contain background images */
+body.dark-mode *::before,
+body.dark-mode *::after {
+  background-color: initial !important;
+}
+
+/* Exceptions for certain elements */
+body.dark-mode .thumbnail,
+body.dark-mode .service-item,
+body.dark-mode .contact-item,
+body.dark-mode .form-control {
+  background-color: #1a1a1a !important;
+  border-color: #333 !important;
+}
+
+body.dark-mode button,
+body.dark-mode .btn {
+  background-color: #90caf9 !important;
+  color: #000000 !important;
+}
+
+/* Fix for links */
+body.dark-mode a {
+  color: #90caf9 !important;
+}
+
+/* Fix for navigation */
+body.dark-mode .navbar-default {
+  background-color: rgba(0, 0, 0, 0.95) !important;
+}
+
+/* Fix for headings */
+body.dark-mode h1, 
+body.dark-mode h2, 
+body.dark-mode h3, 
+body.dark-mode h4, 
+body.dark-mode h5, 
+body.dark-mode h6 {
+  color: #ffffff !important;
+}
+
+/* Fix for text content */
+body.dark-mode p, 
+body.dark-mode span, 
+body.dark-mode li, 
+body.dark-mode label {
+  color: #ffffff !important;
+}
+
+/* Target specific issues in the about section */
+body.dark-mode #about,
+body.dark-mode #about .container,
+body.dark-mode #about .row,
+body.dark-mode #about .col-md-6,
+body.dark-mode #about .col-xs-12 {
+  background-color: #000000 !important;
+}
+
+/* Preserve background images in header */
+body.dark-mode header::before {
+  background-color: transparent !important;
+}
+
+/* Additional exceptions for elements with backgrounds */
+body.dark-mode [style*="background-image"],
+body.dark-mode [style*="background:url"],
+body.dark-mode [style*="background-color"] {
+  background-color: initial !important;
+}

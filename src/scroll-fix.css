@@ -1,0 +1,67 @@
+/* Scroll fix for better navigation targeting */
+
+/* Apply scroll margin to all sections to account for fixed navbar */
+#features, #about, #services, #portfolio, #team, #calendar, #contact {
+  scroll-margin-top: 80px !important;
+  padding-top: 80px !important;
+  margin-top: -10px !important; /* Negative margin to offset the padding */
+}
+
+/* Ensure section titles are properly positioned */
+.section-title {
+  position: relative;
+  display: block;
+  margin-bottom: 50px;
+  padding-top: 0;
+}
+
+/* Make sure section titles are at the top of their container */
+#features .section-title,
+#about .about-text h2,
+#services .section-title,
+#portfolio .section-title,
+#team .section-title,
+#calendar .section-title,
+#contact .section-title {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+/* Add visual anchor for scrolling */
+#features:before, #about:before, #services:before, 
+#portfolio:before, #team:before, #calendar:before, #contact:before {
+  content: "";
+  display: block;
+  height: 80px;
+  margin-top: -80px;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Fix for section titles to ensure they're visible after scroll */
+.section-title h2 {
+  padding-top: 0;
+  margin-top: 0;
+}
+
+/* Target the row inside #team to ensure content isn't hidden */
+#team #row {
+  margin-top: 30px;
+}
+
+/* Special handling for Team section which has header and images */
+#team {
+  padding-top: 120px !important;
+}
+
+#team .section-title {
+  margin-top: -20px;
+}
+
+/* Make header sticky position with proper z-index */
+#menu {
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+  top: 0;
+}

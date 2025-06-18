@@ -18,11 +18,28 @@
       "Działamy na rzecz Osiedla"
     ]
   },
+  "Features": [
+    {
+      "title": "Skalniak w Dolince",
+      "text": "Nowa atrakcja w naszej okolicy - skalniak, który został utworzony dzięki wspólnym wysiłkom mieszkańców.",
+      "img": "img/akt/skalniak.jpg"
+    },
+    {
+      "title": "Akcja sprzątania",
+      "text": "Wspólna inicjatywa mieszkańców na rzecz czystszego środowiska. Razem możemy więcej!",
+      "img": "img/akt/smieci.jpg"
+    },
+    {
+      "title": "Zajęcia taneczne",
+      "text": "Regularne zajęcia taneczne dla wszystkich grup wiekowych. Dołącz do nas i baw się świetnie!",
+      "img": "img/akt/tance.jpg"
+    }
+  ],
   "Gallery": [
         {
       "title": "Festyn W SP10",
-      "largeImage": "img/event/sp/1.jpg",
-      "smallImage": "img/event/sp/1.jpg"
+      "largeImage": "/img/event/sp/1.jpg",
+      "smallImage": "/img/event/sp/1.jpg"
     },
             {
       "title": "Festyn W SP10",
@@ -430,32 +447,5 @@
     "address": "Osiedla Młodych, 32-300 Olkusz",
     "email": "dolinka.olkusz@gmail.com",
     "facebook": "https://www.facebook.com/profile.php?id=61563485266766"
-  },
-  "Features": [
-        {
-      "image": "img/akt/tance.jpg",
-      "title": "Potańcówkę w Dolince",
-      "text": "18 czerwca zapraszamy Was do wspólnej zabawy!<br> O 18:00- tradycyjnie- rozpoczniemy zabawą dla dzieci.<br>Od 19:30 na 'parkiet' zapraszamy dorosłych! <br> Nie zabraknie ogniska oraz innych atrakcji 😊"
-    },
-            {
-      "icon": "fa fa-bullhorn",
-      "title": "Festyn Szkolny za nami",
-      "text": "Wspaniały Piknik Rodzinny za nami 👏❤️ gratulujemy Radzie Rodziców oraz Dyrekcji Szkoły fantastycznego wydarzenia  😊<br> Zapraszamy do galerii do ogladania zdjęć"
-    },
-    {
-      "image": "img/akt/skalniak.jpg",
-      "title": "Mamy piękny ogród skalny!",
-      "text": "Wykorzystaliśmy do tego kamienie z prac, które wykonywaliśmy w ostatnim tygodniu w naszym parku, a także rośliny otrzymane od Powiat Olkuski i Olkusz Srebrne Miasto.<br> Chciałbym serdecznie podziękować pani Dyrektor Aldonie Nowickiej z ZS Nr 1 w Olkuszu za pomoc uczennic z klasy 2a oraz ich opiekunowi pani Patrycji Gamrat. Dziewczyny wykonały świetna pracę i mam nadzieję, że nasi mieszkańcy docenią ich starania dbając o rośliny \uD83D\uDC4D\n <br> Dziękuję staroście olkuskiemu panu Bogumiłowi Sobczykowi za wsparcie w przygotowaniu tak pięknego ogrodu i dbanie o bioróżnorodność w naszym powiecie. Dzisiejsza akcja była wspierana przez Dyrektora Wydziału Ochrony Środowiska, Leśnictwa i Rolnictwa p. Jana Książka i powiatowego ekodoradcę p. Łukasza Zarzyckiego, który osobiście dobierał gatunki roślin. Akcję zrealizowano w ramach Projektu LIFE-IP EKOMAŁOPOLSKA \"Wdrażanie Regionalnego Planu \uD83C\uDF43  Działań dla Klimatu i Energii dla województwa małopolskiego\" (LIFE-IP EKOMALOPOLSKA/LIFE19 IPC/PL/000005) \n <br> Dziękuję panu burmistrzowi Marcinowi Wierciochowi oraz Wydziałowi Ochrony Środowiska z UMiG z panią Anną Biały i Renata Gęgotek na czele- za zgodę na stworzenie nowego pięknego miejsca na mapie Dolinki oraz za fachową pomoc w przygotowaniu naszego skalniaka. \nJak widzicie sami- wiele osób było mocno zaangażowanych w przygotowanie i realizację dzisiejszej akcji. Jeszcze raz proszę wszystkich o zadbanie o nowostworzony ogródek. Proszę nie wyrywać (mamy monitoring) ani nie deptać roślin \uD83D\uDE42"
-    },
-    {
-      "image": "img/akt/smieci.jpg",
-      "title": "Osiedle posprzątane!",
-      "text": "Podczas dzisiejszej akcji sprzątania naszego Osiedla zebraliśmy kilkadziesiąt worków śmieci \uD83D\uDDD1\uFE0F\n <br> Dziękujemy członkom Zarządu : Wojciech Ozdoba dla Olkusza Henryka Foryś Karol Molęda  Zofia Stachurska Patrykiewicz członkom obu klubów seniora oraz Armia Wisły Olkusz  za wspólną pracę \uD83D\uDC4F\n <br> Dziękujemy Olkusz Srebrne Miasto za worki i rękawiczki \uD83D\uDC4D\n <br> Mamy nadzieję, że podczas kolejnego sprzątania nie będziemy musieli dźwigać aż tylu śmieci..."
-    },
-    {
-      "icon": "fa fa-bullhorn",
-      "title": "Witamy na naszej stronie",
-      "text": "Witamy na stronie Zarządu Osiedla Młodych! Zachęcamy do śledzenia aktualności, wydarzeń i informacji dotyczących naszego osiedla. Miłego oglądania!"
-    }
-  ]
+  }
 }

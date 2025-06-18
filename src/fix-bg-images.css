@@ -1,0 +1,36 @@
+/* Fix for background images at the highest level */
+body.dark-mode div[id][style*="background"],
+body.dark-mode section[style*="background"],
+body.dark-mode header[style*="background"],
+body.dark-mode *[class*="image"][style*="background"],
+body.dark-mode *[class*="img"][style*="background"],
+body.dark-mode *[class*="photo"][style*="background"],
+body.dark-mode *[class*="banner"][style*="background"],
+body.dark-mode *[class*="hero"][style*="background"] {
+  background-color: transparent !important;
+}
+
+/* Override backgrounds while preserving images */
+body.dark-mode {
+  --dark-bg: #000000;
+  --dark-text: #ffffff;
+  --dark-secondary-bg: #1a1a1a;
+}
+
+body.dark-mode .bg-white,
+body.dark-mode .bg-light {
+  background-color: var(--dark-bg) !important;
+}
+
+/* Apply proper styling to background overlays */
+body.dark-mode .overlay {
+  background-color: rgba(0,0,0,0.5) !important;
+}
+
+/* Fix bootstrap backgrounds */
+body.dark-mode .bg-white,
+body.dark-mode .bg-light,
+body.dark-mode .bg-primary,
+body.dark-mode .bg-secondary {
+  background-color: var(--dark-bg) !important;
+}

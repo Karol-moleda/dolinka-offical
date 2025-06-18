@@ -1,0 +1,59 @@
+/* Fix for section backgrounds */
+
+/* Features Section */
+#features {
+  background: #f6f6f6 !important;
+  padding: 100px 0 80px;
+  scroll-margin-top: 80px;
+}
+
+/* About Section */
+#about {
+  padding: 100px 0 80px;
+  scroll-margin-top: 80px;
+}
+
+/* Services Section */
+#services {
+  padding: 100px 0 80px;
+  background: linear-gradient(to right, #6372ff 0%, #5ca9fb 100%) !important;
+  color: #fff !important;
+  scroll-margin-top: 80px;
+}
+
+/* Gallery/Portfolio Section */
+#portfolio {
+  padding: 100px 0 80px;
+  scroll-margin-top: 80px;
+}
+
+/* Team Section */
+#team {
+  padding: 100px 0 80px;
+  background: linear-gradient(135deg, #E3F2FD 0%, #90CAF9 100%) !important;
+  scroll-margin-top: 80px;
+}
+
+/* Testimonials Section (if used) */
+#testimonials {
+  padding: 100px 0 80px;
+  background: linear-gradient(to right, #6372ff 0%, #5ca9fb 100%) !important;
+  scroll-margin-top: 80px;
+}
+
+#testimonials h2, #testimonials h4, #testimonials p {
+  color: #fff !important;
+}
+
+/* Contact Section */
+#contact {
+  padding: 100px 0 80px;
+  background: #f6f6f6 !important;
+  scroll-margin-top: 80px;
+}
+
+/* Calendar Section */
+#calendar {
+  padding: 100px 0 80px;
+  scroll-margin-top: 80px;
+}

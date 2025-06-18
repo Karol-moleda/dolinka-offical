@@ -1,0 +1,28 @@
+/* aerial-view-fix.css - Poprawia widoczność tekstu na tle obrazu z lotu ptaka */
+
+/* Poprawka widoczności przycisków na tle zdjęć - wersja minimalna */
+.btn-custom,
+.btn-primary,
+button.btn-primary,
+a.btn-primary,
+.btn {
+  background-color: #3b82f6 !important; /* Jasny niebieski */
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4) !important;
+  border: 2px solid #ffffff !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Dodajemy tylko lekkie zaciemnienie dla tekstu na zdjęciach */
+.intro h1,
+.intro p,
+.header-text h1,
+.header-text h2,
+.header-text p,
+.intro-overlay h1,
+.intro-overlay p {
+  color: #ffffff !important;
+  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6) !important;
+  font-weight: 600 !important;
+}

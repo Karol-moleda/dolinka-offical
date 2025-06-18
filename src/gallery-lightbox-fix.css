@@ -1,0 +1,59 @@
+/* gallery-lightbox-fix.css - Special fixes for the gallery lightbox */
+
+/* Light mode styling */
+body:not(.dark-mode) .nivo-lightbox-overlay {
+  background: rgba(255, 255, 255, 0.9) !important;
+}
+
+body:not(.dark-mode) .nivo-lightbox-prev, 
+body:not(.dark-mode) .nivo-lightbox-next, 
+body:not(.dark-mode) .nivo-lightbox-close {
+  filter: invert(0) !important;
+}
+
+body:not(.dark-mode) .nivo-lightbox-title {
+  color: #333 !important;
+}
+
+/* Dark mode styling for lightbox */
+body.dark-mode .nivo-lightbox-overlay {
+  background: rgba(0, 0, 0, 0.9) !important;
+}
+
+body.dark-mode .nivo-lightbox-prev, 
+body.dark-mode .nivo-lightbox-next, 
+body.dark-mode .nivo-lightbox-close {
+  filter: invert(1) !important; /* Invert icons for better visibility */
+}
+
+body.dark-mode .nivo-lightbox-title {
+  color: #fff !important;
+}
+
+/* For the portfolio items hover text - make sure it keeps the original gradient in light mode */
+body:not(.dark-mode) .hover-bg .hover-text {
+  background: linear-gradient(
+    to right,
+    rgba(99, 114, 255, 0.8) 0%,
+    rgba(92, 169, 251, 0.8) 100%
+  ) !important;
+  color: #fff !important;
+}
+
+body:not(.dark-mode) .hover-bg .hover-text > h4 {
+  color: #fff !important;
+}
+
+/* For dark mode, use a different hover gradient */
+body.dark-mode .hover-bg .hover-text {
+  background: linear-gradient(
+    to right,
+    rgba(66, 165, 245, 0.8) 0%,
+    rgba(144, 202, 249, 0.8) 100%
+  ) !important;
+  color: #000 !important;
+}
+
+body.dark-mode .hover-bg .hover-text > h4 {
+  color: #000 !important;
+}

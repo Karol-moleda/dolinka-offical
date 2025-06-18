@@ -1,0 +1,89 @@
+/* mode-transitions.css - Handle transitions between dark and light mode properly */
+
+/* Base body classes for transitions */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Light mode specific rules that override any dark mode leftovers */
+body:not(.dark-mode) {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+}
+
+/* Ensure all sections go back to white */
+body:not(.dark-mode) section,
+body:not(.dark-mode) div[id],
+body:not(.dark-mode) .container,
+body:not(.dark-mode) header ~ div {
+  background-color: #ffffff !important;
+}
+
+/* Reset heading colors */
+body:not(.dark-mode) h1,
+body:not(.dark-mode) h2,
+body:not(.dark-mode) h3,
+body:not(.dark-mode) h4,
+body:not(.dark-mode) h5,
+body:not(.dark-mode) h6 {
+  color: #2c3e50 !important;
+}
+
+/* Reset paragraph colors */
+body:not(.dark-mode) p,
+body:not(.dark-mode) span,
+body:not(.dark-mode) li,
+body:not(.dark-mode) a:not(.btn) {
+  color: #333333 !important;
+}
+
+/* Reset button colors */
+body:not(.dark-mode) button:not(.btn),
+body:not(.dark-mode) input[type="button"]:not(.btn) {
+  background-color: #f8f9fa !important;
+  color: #333333 !important;
+}
+
+/* Reset gallery specific elements */
+body:not(.dark-mode) #portfolio,
+body:not(.dark-mode) .gallery-section,
+body:not(.dark-mode) .gallery-container,
+body:not(.dark-mode) .gallery-wrapper {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+}
+
+body:not(.dark-mode) .gallery-item {
+  background-color: #ffffff !important;
+}
+
+/* Reset for "About" and other sections */
+body:not(.dark-mode) #about,
+body:not(.dark-mode) #features,
+body:not(.dark-mode) #services,
+body:not(.dark-mode) #team,
+body:not(.dark-mode) #contact {
+  background-color: #ffffff !important;
+}
+
+/* Reset sections even when styled with Styled Components */
+body:not(.dark-mode) [class*="section-"],
+body:not(.dark-mode) [class*="container-"],
+body:not(.dark-mode) [class*="wrapper-"] {
+  background-color: #ffffff !important;
+}
+
+/* Reset UI components */
+body:not(.dark-mode) .card,
+body:not(.dark-mode) .thumbnail,
+body:not(.dark-mode) .panel {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+  border-color: #dee2e6 !important;
+}
+
+/* Reset odd/even rows */
+body:not(.dark-mode) .row:nth-child(odd),
+body:not(.dark-mode) .row:nth-child(even) {
+  background-color: #ffffff !important;
+}

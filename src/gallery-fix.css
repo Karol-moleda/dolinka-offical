@@ -1,0 +1,90 @@
+/* gallery-fix.css - Fix styling issues with gallery in dark/light mode transitions */
+
+/* Reset styles when switching from dark to light mode */
+.gallery-section {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Override any !important styles that might persist */
+body:not(.dark-mode) .gallery-section,
+body:not(.dark-mode) .gallery-container,
+body:not(.dark-mode) .gallery-wrapper,
+body:not(.dark-mode) #portfolio {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+}
+
+body:not(.dark-mode) .section-title h2,
+body:not(.dark-mode) .gallery-heading {
+  color: #2c3e50 !important;
+}
+
+body:not(.dark-mode) .section-title p,
+body:not(.dark-mode) .gallery-message,
+body:not(.dark-mode) .gallery-caption p {
+  color: #333333 !important;
+}
+
+/* Reset pagination styles */
+body:not(.dark-mode) .pagination button,
+body:not(.dark-mode) .pagination span {
+  color: #333333 !important;
+  background-color: #f8f9fa !important;
+}
+
+body:not(.dark-mode) .pagination button.active {
+  background-color: #608dfd !important;
+  color: #ffffff !important;
+}
+
+body:not(.dark-mode) .pagination button:hover {
+  background-color: #e9ecef !important;
+}
+
+/* Gallery image container and captions */
+body:not(.dark-mode) .gallery-item {
+  background-color: #ffffff !important;
+}
+
+body:not(.dark-mode) .image-wrapper {
+  background-color: transparent !important;
+}
+
+/* Lightbox fixes */
+body:not(.dark-mode) .lightbox-content {
+  background-color: #ffffff !important;
+}
+
+body:not(.dark-mode) .lightbox-caption {
+  color: #333333 !important;
+  background-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Fix for background-image elements */
+.image-wrapper img,
+.gallery-item img,
+[style*="background-image"],
+.gallery-item [style*="background"] {
+  background-color: transparent !important;
+}
+
+/* Additional fixes for dark mode */
+body.dark-mode .gallery-item {
+  background-color: #1a1a1a !important;
+}
+
+body.dark-mode .gallery-section,
+body.dark-mode #portfolio,
+body.dark-mode .gallery-container {
+  background-color: #000000 !important;
+}
+
+body.dark-mode .section-title h2 {
+  color: #ffffff !important;
+}
+
+body.dark-mode .section-title p,
+body.dark-mode .gallery-message,
+body.dark-mode .gallery-caption p {
+  color: #ffffff !important;
+}

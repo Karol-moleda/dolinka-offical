@@ -1,0 +1,38 @@
+/* Fix for preserving background images in dark mode */
+
+/* Reset any backgrounds for header elements */
+body.dark-mode header,
+body.dark-mode header.intro {
+  background-color: transparent !important;
+}
+
+/* Ensure the background image pseudo-elements are preserved */
+body.dark-mode header::before,
+body.dark-mode header::after,
+body.dark-mode .intro::before,
+body.dark-mode .intro::after,
+body.dark-mode div[style*="background-image"],
+body.dark-mode section[style*="background-image"] {
+  background-color: transparent !important;
+}
+
+/* Fix for header text in dark mode */
+body.dark-mode header h1,
+body.dark-mode header h2,
+body.dark-mode header p {
+  color: #ffffff !important;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Override background colors that might be hiding images */
+body.dark-mode .intro-text,
+body.dark-mode header .intro-text,
+body.dark-mode header .container {
+  background-color: transparent !important;
+}
+
+/* Special case for header buttons */
+body.dark-mode header .btn {
+  background-color: #90caf9 !important;
+  color: #000000 !important;
+}

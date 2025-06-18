@@ -1,3 +1,89 @@
+/* gallery.css - Nowoczesne style dla galerii */
+
+.gallery-section {
+  position: relative;
+  scroll-margin-top: 80px; /* Zapobiega przewijaniu za blisko górnej krawędzi */
+  padding-top: 20px;
+  padding-bottom: 40px;
+  isolation: isolate; /* Tworzy nowy kontekst stosu dla lepszego zarządzania z-index */
+}
+
+.gallery-container {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto 40px;
+  min-height: 400px;
+}
+
+.gallery-wrapper {
+  position: relative;
+  padding: 10px;
+}
+
+.my-masonry-grid {
+  display: flex;
+  margin-left: -20px;
+  width: auto;
+}
+
+.my-masonry-grid_column {
+  padding-left: 20px;
+  background-clip: padding-box;
+}
+
+.gallery-item {
+  margin-bottom: 25px;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+/* Nowoczesna siatka galerii z CSS Grid */
+.modern-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-auto-rows: auto;
+  grid-gap: 20px;
+  padding: 0;
+  width: 100%;
+}
+
+/* Karty galerii z efektem głębi */
+.gallery-item {
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  margin-bottom: 0;
+}
+
+.gallery-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.gallery-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  aspect-ratio: 16/9;
+  transition: all 0.3s ease;
+}
+
+.gallery-item h4 {
+  padding: 15px;
+  margin: 0;
+  font-size: 16px;
+  color: #555;
+  font-weight: 500;
+  text-align: center;
+  background: linear-gradient(to right, #f8f9fa, #ffffff);
+}
+
 /* Styl dla spinnera ładowania */
 .spinner {
   display: inline-block;
@@ -14,18 +100,6 @@
   to {
     transform: rotate(360deg);
   }
-}
-
-/* Style dla karuzeli */
-.my-masonry-grid {
-  display: flex;
-  margin-left: -20px; /* Odstęp między kolumnami */
-  width: auto;
-}
-
-.my-masonry-grid_column {
-  padding-left: 20px; /* Odstęp między kolumnami */
-  background-clip: padding-box;
 }
 
 /* Style dla elementów galerii */
@@ -152,6 +226,21 @@
   border-left: 4px solid #d32f2f;
 }
 
+.error-message {
+  text-align: center;
+  padding: 30px;
+  margin: 20px auto;
+  max-width: 600px;
+  background-color: #fff3f3;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.error-message p {
+  color: #d32f2f;
+  margin-bottom: 20px;
+}
+
 /* Styl dla informacji o liczbie załadowanych zdjęć */
 .gallery-info {
   font-size: 16px;
@@ -168,4 +257,369 @@
 
 .mb-4 {
   margin-bottom: 2rem;
+}
+
+/* Lightbox */
+.lightbox-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1100;
+  padding: 30px;
+}
+
+.lightbox-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-content img {
+  max-width: 100%;
+  max-height: 85vh;
+  border-radius: 8px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+  object-fit: contain;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  z-index: 1110;
+}
+
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  width: 50px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 30px;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+  z-index: 1110;
+}
+
+.lightbox-nav:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.lightbox-nav.prev {
+  left: -70px;
+}
+
+.lightbox-nav.next {
+  right: -70px;
+}
+
+.lightbox-caption {
+  position: absolute;
+  bottom: -40px;
+  left: 0;
+  width: 100%;
+  color: white;
+  text-align: center;
+}
+
+.lightbox-caption h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: white !important;
+}
+
+/* Styles for gallery pagination */
+.gallery-pagination {
+  display: flex;
+  justify-content: center;
+  margin: 2rem auto 1rem;
+  padding: 1rem 0;
+  position: sticky; /* Używamy sticky zamiast relative */
+  bottom: 20px;
+  width: 100%;
+  z-index: 10;
+  pointer-events: all; /* Upewniamy się, że kliknięcia są przechwytywane */
+}
+
+.pagination {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-radius: 50px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 2px solid rgba(108, 99, 255, 0.2);
+  padding: 3px;
+}
+
+.page-item {
+  margin: 0;
+}
+
+.page-item.active .page-link {
+  background: linear-gradient(to right, #5ca9fb, #6372ff);
+  color: white;
+  border-color: transparent;
+  font-weight: bold;
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(108, 99, 255, 0.25);
+}
+
+.page-item.disabled .page-link {
+  color: #aaa;
+  pointer-events: none;
+  background-color: #f8f8f8;
+}
+
+.page-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 42px;
+  height: 42px;
+  padding: 0 15px;
+  border: 1px solid #eee;
+  background-color: white;
+  color: #444;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+  pointer-events: auto; /* Upewniamy się, że kliknięcia są przechwytywane */
+  user-select: none; /* Zapobiegamy zaznaczeniu tekstu */
+  touch-action: manipulation; /* Lepsze zachowanie na urządzeniach dotykowych */
+}
+
+.page-link:hover:not([disabled]) {
+  background-color: #f0f8ff;
+  color: #6372ff;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* Dodajemy animację podczas przejść między stronami */
+.gallery-pagination .pagination {
+  transition: transform 0.3s ease;
+}
+
+.gallery-pagination:hover .pagination {
+  transform: translateY(-3px);
+}
+
+/* Styles for the loading indicator */
+.gallery-loading-indicator {
+  position: fixed;
+  bottom: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 8px 20px;
+  border-radius: 30px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.gallery-loading-indicator.visible {
+  opacity: 1;
+}
+
+.loading-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #6372ff;
+  border-radius: 50%;
+  margin: 0 3px;
+  display: inline-block;
+  animation: dot-pulse 1.5s infinite ease-in-out;
+}
+
+.loading-dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.loading-dot:nth-child(2) {
+  animation-delay: 0.3s;
+}
+
+.loading-dot:nth-child(3) {
+  animation-delay: 0.6s;
+}
+
+@keyframes dot-pulse {
+  0%, 100% {
+    transform: scale(0.7);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 576px) {
+  .page-link {
+    min-width: 38px;
+    height: 38px;
+    padding: 0 10px;
+    font-size: 14px;
+  }
+  
+  .gallery-pagination {
+    bottom: 10px;
+  }
+}
+
+/* Responsywność */
+@media (max-width: 991px) {
+  .my-masonry-grid {
+    margin-left: -15px;
+  }
+  .my-masonry-grid_column {
+    padding-left: 15px;
+  }
+  .gallery-item {
+    margin-bottom: 20px;
+  }
+  .lightbox-nav {
+    width: 40px;
+    height: 60px;
+    font-size: 24px;
+  }
+  .lightbox-nav.prev {
+    left: -50px;
+  }
+  .lightbox-nav.next {
+    right: -50px;
+  }
+}
+
+@media (max-width: 767px) {
+  .lightbox-content {
+    max-width: 95%;
+  }
+  .lightbox-nav {
+    background: rgba(0, 0, 0, 0.7);
+    width: 40px;
+    height: 60px;
+  }
+  .lightbox-nav.prev {
+    left: 10px;
+  }
+  .lightbox-nav.next {
+    right: 10px;
+  }
+  .lightbox-close {
+    top: -30px;
+    right: 10px;
+  }
+}
+
+/* Animacje */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.gallery-item {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Ulepszenia dostępności */
+.gallery-image:focus {
+  outline: 3px solid #4d90fe;
+}
+
+.lightbox-nav:focus, .lightbox-close:focus {
+  outline: 2px solid white;
+}
+
+/* Dark mode styles */
+body.dark-mode .gallery-section {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+body.dark-mode .section-title h2,
+body.dark-mode .section-title p,
+body.dark-mode .gallery-caption,
+body.dark-mode .gallery-message,
+body.dark-mode .pagination {
+  color: #ffffff;
+}
+
+body.dark-mode .pagination button {
+  background-color: #1a1a1a;
+  color: #ffffff;
+  border: 1px solid #333;
+}
+
+body.dark-mode .pagination button.active {
+  background-color: #42a5f5;
+  color: #000000;
+}
+
+body.dark-mode .lightbox {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+body.dark-mode .lightbox-content {
+  background-color: #000000;
+}
+
+body.dark-mode .lightbox-caption {
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+body.dark-mode .lightbox-close,
+body.dark-mode .lightbox-prev,
+body.dark-mode .lightbox-next {
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .lightbox-close:hover,
+body.dark-mode .lightbox-prev:hover,
+body.dark-mode .lightbox-next:hover {
+  background-color: rgba(50, 50, 50, 0.8);
 }

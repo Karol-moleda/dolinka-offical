@@ -1,0 +1,14 @@
+/* services-contrast-fix.css - Minimal contrast enhancement for text in services section */
+
+/* Poprawka samego tekstu, bez zmieniania wyglądu całej sekcji */
+#services .section-title h2 {
+  color: #ffffff !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5) !important; 
+  font-weight: 700 !important;
+}
+
+#services .section-title p {
+  color: #ffffff !important;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4) !important;
+  font-weight: 500 !important;
+}

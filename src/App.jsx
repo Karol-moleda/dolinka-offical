@@ -1,107 +1,278 @@
 // App.jsx
-import React, { useState, useEffect } from "react";
-import { Navigation } from "./components/navigation";
-import { Header } from "./components/header";
-import { Features } from "./components/features";
-import { About } from "./components/about";
-import { Services } from "./components/services";
-import { Gallery } from "./components/gallery";
-import { Testimonials } from "./components/testimonials";
-import { Team } from "./components/Team";
-import { Contact } from "./components/contact";
-import JsonData from "./data/data.json";
-import SmoothScroll from "smooth-scroll";
-import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
+import React, { useState, useEffect, createContext } from "react";
+import Navigation from "./components/navigation";
+import Header from "./components/header";
+import About from "./components/about";
+import Services from "./components/services";
+import Features from "./components/features";
+import Gallery from "./components/gallery";
+import Team from "./components/Team";
+import Contact from "./components/contact";
+import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import "./App.css";
-import Calendar from "./components/calendar";
+// Import restore original styling (restores original look while keeping dark mode feature)
+import "./restore-original-styling.css";
+// Import CSS to ensure original colorful backgrounds
+import "./colorful-original.css";
+// Import gallery and lightbox fixes
+import "./gallery-lightbox-fix.css";
+// Import final fixes
+import "./final-fixes.css";
+// Import contact section specific fixes
+import "./contact-contrast-fix.css";
+// Import enhanced contrast for contact section
+import "./contact-enhanced-contrast.css";
+// Import services section contrast fix
+import "./services-contrast-fix.css";
+// Import services light mode fix
+import "./services-light-mode-fix.css";
+// Import aerial view text fix
+import "./aerial-view-fix.css";
+import JsonData from "./data/data.json";
 
-export const scroll = new SmoothScroll('a[href*="#"]', {
-  speed: 1000,
-  speedAsDuration: true,
-});
+// Theme context
+export const AppContext = createContext();
 
+// Theme definitions - Fully preserve original look in light mode, high contrast in dark mode
+const themes = {
+  light: {
+    primary: '#608dfd',
+    primaryHover: '#4a6fd7',
+    backgroundColor: 'transparent',  // Transparent to preserve original backgrounds
+    color: '#777',  // Original text color
+    headingColor: '#333',  // Original heading color
+    sectionBackground: 'transparent', // Transparent to preserve original section backgrounds
+    altSectionBackground: 'transparent', // Transparent to preserve original alternating sections
+    cardBackground: '#ffffff',
+    buttonBackground: '#608dfd',
+    buttonColor: '#ffffff',
+    buttonHoverBackground: '#4a6fd7',
+    navbarBackground: '#ffffff',
+    navbarTextColor: '#555',
+    linkColor: '#608dfd',
+    linkHoverColor: '#4a6fd7',
+    borderColor: '#e9ecef',
+    boxShadow: '0 2px 15px rgba(0,0,0,0.1)',
+    success: '#28a745',
+    error: '#dc3545',
+    warning: '#ffc107',
+    // Specific section colors for light mode
+    servicesBackground: 'linear-gradient(to right, #6372ff 0%, #5ca9fb 100%)',
+    servicesTextColor: '#ffffff',
+    featuresBackground: '#f6f6f6',
+    teamTitleColor: '#1565C0'
+  },
+  dark: {
+    primary: '#90caf9',
+    primaryHover: '#42a5f5',
+    backgroundColor: '#000000', // Pure black background for maximum contrast
+    color: '#ffffff', // White text for maximum contrast
+    headingColor: '#ffffff',
+    sectionBackground: '#000000', // Black background for maximum contrast
+    altSectionBackground: '#121212', // Very dark gray for alternating sections
+    cardBackground: '#1a1a1a', // Dark card background
+    buttonBackground: '#90caf9',
+    buttonColor: '#000000',
+    buttonHoverBackground: '#42a5f5',
+    navbarBackground: '#000000',
+    navbarTextColor: '#ffffff',
+    linkColor: '#90caf9',
+    linkHoverColor: '#42a5f5',
+    borderColor: '#404040',
+    boxShadow: '0 2px 15px rgba(0,0,0,0.2)',
+    success: '#4caf50',
+    error: '#f44336',
+    warning: '#ff9800',
+    // Specific section colors for dark mode
+    servicesBackground: '#000000',
+    servicesTextColor: '#ffffff',
+    featuresBackground: '#000000',
+    teamTitleColor: '#90caf9'
+  }
+};
+
+// Global styles
 const GlobalStyle = createGlobalStyle`
+  :root {
+    --primary: ${props => props.theme.primary};
+    --primary-hover: ${props => props.theme.primaryHover};
+    --font-size-base: ${props => props.fontSize}px;
+  }
+
+  * {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  html {
+    font-size: ${props => props.fontSize}px;
+  }
+
   body {
-    background-color: ${(props) => props.theme.backgroundColor} !important;
-    color: ${(props) => props.theme.color} !important;
-    transition: all 0.3s ease;
+    background-color: ${props => props.theme.backgroundColor};
+    color: ${props => props.theme.color};
+    font-family: 'Open Sans', sans-serif;
+    font-size: ${props => props.fontSize}px;
+    line-height: 1.6;
   }
 
-  h1, h2, h3, h4, h5, h6, p, a, li, span, div, a {
-    color: ${(props) => props.theme.color} !important;
-    transition: all 0.3s ease;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    color: ${props => props.theme.headingColor};
   }
 
-  .navbar, .navbar-default, .navbar-brand, .navbar-nav > li > a, #features, #services, #contact, .intro {
-    background-color: ${(props) => props.theme.backgroundColor} !important;
-    background: ${(props) => props.theme.backgroundColor} !important;
-    color: ${(props) => props.theme.color} !important;
-    transition: all 0.3s ease;
+  /* Don't use global overrides for sections, let original CSS work in light mode */
+  body.dark-mode section {
+    background-color: ${props => props.theme.sectionBackground};
+    
+    &:nth-child(even) {
+      background-color: ${props => props.theme.altSectionBackground};
+    }
   }
 
-  .page-scroll {
+  /* Only apply container styling for dark mode */
+  body.dark-mode .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* Only style section titles in dark mode */
+  body.dark-mode .section-title {
+    text-align: center;
+    margin-bottom: 60px;
+
+    h2 {
+      font-weight: 700;
+      color: ${props => props.theme.headingColor};
+      margin-bottom: 20px;
+    }
+    
+    p {
+      color: ${props => props.theme.color};
+    }
+  }
+
+  /* Button styling for both modes */
+  .btn-custom {
+    background: ${props => props.theme.buttonBackground};
+    color: ${props => props.theme.buttonColor} !important;
     transition: all 0.3s ease;
+
+    &:hover {
+      background: ${props => props.theme.buttonHoverBackground};
+    }
+  }
+  
+  /* Card styling only for dark mode */
+  body.dark-mode .card, 
+  body.dark-mode .box, 
+  body.dark-mode .portfolio-item, 
+  body.dark-mode .team-member {
+    background-color: ${props => props.theme.cardBackground};
+    color: ${props => props.theme.color};
+  }
+  
+  /* Link styling for both modes */
+  a {
+    color: ${props => props.theme.linkColor};
+    &:hover {
+      color: ${props => props.theme.linkHoverColor};
+    }
+  }
+  
+  /* Apply dark mode to services section */
+  body.dark-mode #services {
+    background: ${props => props.theme.servicesBackground};
+    color: ${props => props.theme.servicesTextColor};
+  }
+  
+  /* Apply dark mode to features section */
+  body.dark-mode #features {
+    background: ${props => props.theme.featuresBackground};
+  }
+  
+  /* Team titles in dark mode */
+  body.dark-mode #team h4 {
+    color: ${props => props.theme.teamTitleColor};
   }
 `;
 
-const lightTheme = {
+// Loading component removed as it was not being used
 
-};
-
-const darkTheme = {
-  backgroundColor: '#000000',
-  color: '#ffffff',
-};
-
-
-const App = () => {
+function App() {
   const [landingPageData, setLandingPageData] = useState({});
-  const [theme, setTheme] = useState(lightTheme);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [fontSize, setFontSize] = useState(16); // Default font size
 
   useEffect(() => {
     setLandingPageData(JsonData);
+    
+    // Load saved preferences from localStorage if available
+    const savedTheme = localStorage.getItem('dolinka-theme');
+    const savedFontSize = localStorage.getItem('dolinka-font-size');
+    
+    if (savedTheme) {
+      setIsDarkMode(savedTheme === 'dark');
+    }
+    
+    if (savedFontSize) {
+      setFontSize(parseInt(savedFontSize, 10));
+    }
   }, []);
 
+  // Effect to update body class when theme changes
+  useEffect(() => {
+    if (isDarkMode) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+  }, [isDarkMode]);
+
   const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === lightTheme ? darkTheme : lightTheme));
+    const newThemeValue = !isDarkMode;
+    setIsDarkMode(newThemeValue);
+    localStorage.setItem('dolinka-theme', newThemeValue ? 'dark' : 'light');
   };
-
-  const changeFontSize = (newFontSize) => {
-    document.body.style.fontSize = `${newFontSize}px`;
-    const elements = document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, a, li, span, div, .navbar, .navbar-default, .navbar-brand, .navbar-nav > li > a, #features, #services, #contact, .intro, .page-scroll');
-    elements.forEach(element => {
-      element.style.fontSize = `${newFontSize}px`;
-    });
-  };
-
+  
   const increaseFontSize = () => {
-    changeFontSize(parseInt(getComputedStyle(document.body).fontSize) + 2);
-  };
-
-  const decreaseFontSize = () => {
-    const currentFontSize = parseInt(getComputedStyle(document.body).fontSize);
-    if (currentFontSize > 10) {
-      changeFontSize(currentFontSize - 2);
+    if (fontSize < 24) {
+      const newSize = fontSize + 2;
+      setFontSize(newSize);
+      localStorage.setItem('dolinka-font-size', newSize.toString());
     }
   };
-
-  return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <div>
-        <Navigation toggleTheme={toggleTheme} increaseFontSize={increaseFontSize} decreaseFontSize={decreaseFontSize} />
-        <Header data={landingPageData.Header} />
-        <Features data={landingPageData.Features} />
-        <About data={landingPageData.About} />
-        <Services data={landingPageData.Services} />
-        <Gallery data={landingPageData.Gallery} />
-        {/* <Testimonials data={landingPageData.Testimonials} /> */}
-        <Team data={landingPageData.Team} />
-        <Calendar data={landingPageData.Calendar} />
-        <Contact data={landingPageData.Contact} />
-      </div>
+  
+  const decreaseFontSize = () => {
+    if (fontSize > 12) {
+      const newSize = fontSize - 2;
+      setFontSize(newSize);
+      localStorage.setItem('dolinka-font-size', newSize.toString());
+    }
+  };  return (
+    <ThemeProvider theme={themes[isDarkMode ? 'dark' : 'light']}>
+      <AppContext.Provider value={{ 
+        isDarkMode, 
+        toggleTheme,
+        fontSize,
+        increaseFontSize,
+        decreaseFontSize
+      }}>
+        <GlobalStyle fontSize={fontSize} />
+        <div>
+          <Navigation />
+          <Header data={landingPageData.Header} />
+          <Features data={landingPageData.Features} />
+          <About data={landingPageData.About} />
+          <Services data={landingPageData.Services} />
+          <Gallery data={landingPageData.Gallery}/>
+          <Team data={landingPageData.Team} />
+          <Contact data={landingPageData.Contact} />
+        </div>
+      </AppContext.Provider>
     </ThemeProvider>
   );
-};
+}
 
 export default App;

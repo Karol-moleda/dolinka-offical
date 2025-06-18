@@ -1,0 +1,171 @@
+/* final-fixes.css - Final adjustments for both modes */
+
+/* Services section in light mode */
+body:not(.dark-mode) #services {
+  background: linear-gradient(to right, #6372ff 0%, #5ca9fb 100%) !important;
+  color: #fff !important;
+}
+
+body:not(.dark-mode) #services h2,
+body:not(.dark-mode) #services h3,
+body:not(.dark-mode) #services span {
+  color: #fff !important;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4) !important; /* Enhanced shadow for readability */
+  font-weight: 700 !important;
+}
+
+body:not(.dark-mode) #services p {
+  color: #ffffff !important; /* Full white for better contrast */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3) !important; /* Shadow for text separation from background */
+  font-weight: 500 !important;
+}
+
+body:not(.dark-mode) #services .section-title h2::after {
+  background: rgba(255, 255, 255, 0.5) !important; /* Slightly more visible divider */
+}
+
+/* Original hover effects for buttons */
+body:not(.dark-mode) .btn-custom:hover,
+body:not(.dark-mode) .btn-custom:focus,
+body:not(.dark-mode) .btn-custom.focus,
+body:not(.dark-mode) .btn-custom:active,
+body:not(.dark-mode) .btn-custom.active {
+  color: #fff !important;
+  background-image: none !important;
+  background-color: #6372ff !important;
+}
+
+/* Navigation menu in light mode */
+body:not(.dark-mode) #menu.navbar-default {
+  background-color: #fff !important;
+  border-color: rgba(231, 231, 231, 0) !important;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15) !important;
+}
+
+body:not(.dark-mode) #menu a.navbar-brand {
+  color: #333 !important;
+}
+
+body:not(.dark-mode) #menu.navbar-default .navbar-nav > li > a {
+  color: #555 !important;
+}
+
+body:not(.dark-mode) #menu.navbar-default .navbar-nav > li > a:after {
+  background: linear-gradient(to right, #6372ff 0%, #5ca9fb 100%) !important;
+}
+
+/* Navigation menu in dark mode */
+body.dark-mode #menu.navbar-default {
+  background-color: #000 !important;
+  border-color: #333 !important;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) !important;
+}
+
+body.dark-mode #menu a.navbar-brand {
+  color: #fff !important;
+}
+
+body.dark-mode #menu.navbar-default .navbar-nav > li > a {
+  color: #fff !important;
+}
+
+body.dark-mode #menu.navbar-default .navbar-nav > li > a:after {
+  background: linear-gradient(to right, #42a5f5 0%, #90caf9 100%) !important;
+}
+
+/* Fix for specific section titles */
+body:not(.dark-mode) .section-title h2 {
+  color: #333 !important;
+}
+
+body:not(.dark-mode) #services .section-title h2 {
+  color: #fff !important;
+}
+
+/* About section specific */
+body:not(.dark-mode) #about h2::after {
+  background: linear-gradient(to right, #5ca9fb 0%, #6372ff 100%) !important;
+}
+
+body:not(.dark-mode) #about .about-text li:before {
+  color: #5ca9fb !important;
+}
+
+/* Team section specific */
+body:not(.dark-mode) #team h4 {
+  color: #1565C0 !important;
+}
+
+/* Contact form in light mode */
+body:not(.dark-mode) #contact .form-control {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  color: #333 !important;
+}
+
+/* Contact section in light mode */
+body:not(.dark-mode) #contact {
+  background: linear-gradient(to right, #4e54c8, #8f94fb) !important;
+  color: #fff !important;
+}
+
+body:not(.dark-mode) #contact .section-title h2,
+body:not(.dark-mode) #contact h3,
+body:not(.dark-mode) #contact p,
+body:not(.dark-mode) #contact span {
+  color: #fff !important;
+}
+
+body:not(.dark-mode) #contact .contact-info {
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(10px);
+}
+
+body:not(.dark-mode) #contact a {
+  color: #ffffff !important;
+}
+
+body:not(.dark-mode) #contact a:hover {
+  color: #ffd700 !important;
+}
+
+body:not(.dark-mode) #contact .contact-info i {
+  color: #ffd700 !important;
+}
+
+/* Contact section in dark mode */
+body.dark-mode #contact {
+  background: #000000 !important;
+  color: #fff !important;
+}
+
+body.dark-mode #contact .section-title h2,
+body.dark-mode #contact h3,
+body.dark-mode #contact p,
+body.dark-mode #contact span {
+  color: #fff !important;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8) !important;
+}
+
+body.dark-mode #contact .contact-info {
+  background: rgba(26, 26, 26, 0.95) !important;
+  border: 1px solid #333 !important;
+}
+
+body.dark-mode #contact a {
+  color: #90caf9 !important;
+}
+
+body.dark-mode #contact a:hover {
+  color: #42a5f5 !important;
+}
+
+body.dark-mode #contact .contact-info i {
+  color: #90caf9 !important;
+}
+
+/* Contact form in dark mode */
+body.dark-mode #contact .form-control {
+  background-color: rgba(26, 26, 26, 0.8) !important;
+  color: #fff !important;
+  border: 1px solid #444 !important;
+}

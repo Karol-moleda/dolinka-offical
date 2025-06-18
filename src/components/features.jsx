@@ -1,70 +1,77 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './features.css';
+import { AppContext } from '../App';
+import styled from 'styled-components';
 
-export const Features = (props) => {
+const FeaturesContainer = styled.div`
+  background-color: ${props => props.isDarkMode ? '#000000' : '#ffffff'};
+  
+  .section-title h2 {
+    font-size: calc(${props => props.fontSize}px * 1.5);
+    color: ${props => props.isDarkMode ? '#ffffff' : '#2c3e50'};
+  }
+  
+  .section-title p {
+    font-size: inherit;
+    color: ${props => props.isDarkMode ? '#ffffff' : '#333333'};
+  }
+  
+  .text-box {
+    background-color: ${props => props.isDarkMode ? '#1a1a1a' : '#ffffff'};
+    border: 1px solid ${props => props.isDarkMode ? '#333' : '#e9ecef'};
+  }
+  
+  .text-box h3 {
+    font-size: calc(${props => props.fontSize}px * 1.3);
+    color: ${props => props.isDarkMode ? '#ffffff' : '#333333'};
+  }
+  
+  .text-box p {
+    font-size: inherit;
+    color: ${props => props.isDarkMode ? '#ffffff' : '#333333'};
+  }
+`;
+
+const Features = ({ data }) => {
+  const { fontSize, isDarkMode } = useContext(AppContext);
+  
+  if (!data) return <div>Ładowanie...</div>;
+  
   return (
-    <div id="features" className="text-center">
+    <FeaturesContainer fontSize={fontSize} isDarkMode={isDarkMode} id="features" className="text-center">
       <div className="container">
-        <div className="col-md-10 col-md-offset-1 section-title">
-          <h2>Aktualności</h2>
+        <div className="section-title">
+          <h2>AKTUALNOŚCI</h2>
+          <p>Najnowsze wydarzenia i inicjatywy w naszej społeczności</p>
         </div>
-        <div className="carousel-wrapper">
-          <Carousel 
-            autoPlay 
-            infiniteLoop 
-            showThumbs={false}
-            showIndicators={false}
-            showStatus={false} 
-            interval={7000}
-            transitionTime={1000}
-            useKeyboardArrows={true}
+        <div className="carousel-container">
+          <Carousel
             showArrows={true}
-            renderArrowPrev={(onClickHandler, hasPrev) =>
-              hasPrev && (
-                <button
-                  onClick={onClickHandler}
-                  className="nav-arrow nav-arrow-prev"
-                  aria-label="Poprzedni slajd"
-                >
-                  &lt;
-                </button>
-              )
-            }
-            renderArrowNext={(onClickHandler, hasNext) =>
-              hasNext && (
-                <button
-                  onClick={onClickHandler}
-                  className="nav-arrow nav-arrow-next"
-                  aria-label="Następny slajd"
-                >
-                  &gt;
-                </button>
-              )
-            }
+            showStatus={false}
+            showThumbs={false}
+            infiniteLoop={true}
+            autoPlay={true}
+            interval={5000}
+            stopOnHover={true}
+            emulateTouch={true}
+            swipeable={true}
           >
-            {props.data
-              ? props.data.map((d, i) => (
-                  <div key={`${d.title}-${i}`} className="carousel-item">
-                    {d.icon ? (
-                      <i className={d.icon}></i>
-                    ) : d.image ? (
-                      <div className="carousel-image-box">
-                        <img 
-                          src={process.env.PUBLIC_URL + '/' + d.image} 
-                          alt={d.title}
-                        />
-                      </div>
-                    ) : null}
-                    <h3>{d.title}</h3>
-                      <p dangerouslySetInnerHTML={{__html: d.text}}></p>
-                  </div>
-                ))
-                : "Loading..."}
+            {data.map((item, i) => (
+              <div key={`${item.title}-${i}`} className="slide-item">
+                <img src={item.img} alt={item.title} />
+                <div className="text-box">
+                  <h3>{item.title}</h3>
+                  <p>{item.text}</p>
+                </div>
+              </div>
+            ))}
           </Carousel>
         </div>
       </div>
-    </div>
+    </FeaturesContainer>
   );
 };
+
+export default Features;

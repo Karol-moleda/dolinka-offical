@@ -1,0 +1,94 @@
+/* Enhanced styling for the Services/Events section */
+
+#services {
+  background: linear-gradient(to right, #6372ff 0%, #5ca9fb 100%) !important;
+  color: #fff !important;
+  padding: 100px 0 80px;
+  position: relative;
+  z-index: 1;
+}
+
+#services::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to right, #6372ff 0%, #5ca9fb 100%);
+  z-index: -1;
+}
+
+#services .section-title h2 {
+  color: #fff !important;
+  position: relative;
+  margin-bottom: 30px;
+}
+
+#services .section-title h2::after {
+  position: absolute;
+  content: "";
+  background: rgba(255, 255, 255, 0.5) !important;
+  height: 4px;
+  width: 60px;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#services .section-title p {
+  color: #ffffff !important; /* Full white instead of semi-transparent */
+  font-size: 18px;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto 40px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Add text shadow for better readability */
+  font-weight: 500; /* Slightly bolder text */
+}
+
+#services .service-img {
+  max-height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#services .service-img:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+#services .service-desc {
+  padding: 15px;
+  margin: 15px 0;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 5px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+#services .service-desc h3 {
+  color: #1a2a3a !important;
+  font-weight: 700;
+  font-size: 20px;
+  margin: 15px 0;
+}
+
+#services .service-desc p {
+  color: #333333 !important;
+  font-size: 15px;
+  line-height: 1.6;
+  font-weight: 500;
+  text-shadow: none;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  #services .col-md-4 {
+    margin-bottom: 30px;
+  }
+  
+  #services .service-img {
+    max-height: 200px;
+  }
+}
