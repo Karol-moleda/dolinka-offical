@@ -1,11 +1,10 @@
-/* gallery.css - Nowoczesne style dla galerii */
-
+/* Zoptymalizowane style dla galerii */
 .gallery-section {
   position: relative;
-  scroll-margin-top: 80px; /* Zapobiega przewijaniu za blisko górnej krawędzi */
+  scroll-margin-top: 80px;
   padding-top: 20px;
   padding-bottom: 40px;
-  isolation: isolate; /* Tworzy nowy kontekst stosu dla lepszego zarządzania z-index */
+  contain: content; /* Optymalizuje renderowanie */
 }
 
 .gallery-container {
@@ -15,54 +14,31 @@
   min-height: 400px;
 }
 
-.gallery-wrapper {
-  position: relative;
-  padding: 10px;
-}
-
-.my-masonry-grid {
-  display: flex;
-  margin-left: -20px;
-  width: auto;
-}
-
-.my-masonry-grid_column {
-  padding-left: 20px;
-  background-clip: padding-box;
-}
-
-.gallery-item {
-  margin-bottom: 25px;
-  position: relative;
-  border-radius: 12px;
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
-
 /* Nowoczesna siatka galerii z CSS Grid */
 .modern-gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-auto-rows: auto;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   grid-gap: 20px;
   padding: 0;
   width: 100%;
+  contain: layout style; /* Optymalizuje renderowanie */
 }
 
-/* Karty galerii z efektem głębi */
+/* Karty galerii */
 .gallery-item {
   background-color: #fff;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease-out;
   position: relative;
   margin-bottom: 0;
+  will-change: transform; /* Optymalizacja dla GPU */
 }
 
 .gallery-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 }
 
 .gallery-image {
@@ -71,17 +47,15 @@
   display: block;
   object-fit: cover;
   aspect-ratio: 16/9;
-  transition: all 0.3s ease;
 }
 
 .gallery-item h4 {
-  padding: 15px;
+  padding: 12px;
   margin: 0;
   font-size: 16px;
   color: #555;
   font-weight: 500;
   text-align: center;
-  background: linear-gradient(to right, #f8f9fa, #ffffff);
 }
 
 /* Styl dla spinnera ładowania */
@@ -272,6 +246,7 @@
   justify-content: center;
   z-index: 1100;
   padding: 30px;
+  backdrop-filter: blur(5px);
 }
 
 .lightbox-content {
@@ -320,7 +295,7 @@
   cursor: pointer;
   font-size: 30px;
   border-radius: 8px;
-  transition: background 0.3s ease;
+  transition: background 0.2s ease;
   z-index: 1110;
 }
 
@@ -357,11 +332,6 @@
   justify-content: center;
   margin: 2rem auto 1rem;
   padding: 1rem 0;
-  position: sticky; /* Używamy sticky zamiast relative */
-  bottom: 20px;
-  width: 100%;
-  z-index: 10;
-  pointer-events: all; /* Upewniamy się, że kliknięcia są przechwytywane */
 }
 
 .pagination {
@@ -371,9 +341,9 @@
   margin: 0;
   border-radius: 50px;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   background-color: rgba(255, 255, 255, 0.95);
-  border: 2px solid rgba(108, 99, 255, 0.2);
+  border: 1px solid rgba(108, 99, 255, 0.2);
   padding: 3px;
 }
 
@@ -386,8 +356,6 @@
   color: white;
   border-color: transparent;
   font-weight: bold;
-  transform: scale(1.1);
-  box-shadow: 0 2px 8px rgba(108, 99, 255, 0.25);
 }
 
 .page-item.disabled .page-link {
@@ -400,154 +368,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 42px;
-  height: 42px;
-  padding: 0 15px;
-  border: 1px solid #eee;
-  background-color: white;
-  color: #444;
-  font-size: 15px;
-  font-weight: 500;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  position: relative;
-  pointer-events: auto; /* Upewniamy się, że kliknięcia są przechwytywane */
-  user-select: none; /* Zapobiegamy zaznaczeniu tekstu */
-  touch-action: manipulation; /* Lepsze zachowanie na urządzeniach dotykowych */
-}
-
-.page-link:hover:not([disabled]) {
-  background-color: #f0f8ff;
-  color: #6372ff;
-  transform: translateY(-2px);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-}
-
-/* Dodajemy animację podczas przejść między stronami */
-.gallery-pagination .pagination {
-  transition: transform 0.3s ease;
-}
-
-.gallery-pagination:hover .pagination {
-  transform: translateY(-3px);
-}
-
-/* Styles for the loading indicator */
-.gallery-loading-indicator {
-  position: fixed;
-  bottom: 70px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: rgba(255, 255, 255, 0.9);
-  padding: 8px 20px;
-  border-radius: 30px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-  z-index: 20;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  font-weight: 500;
-  color: #555;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-
-.gallery-loading-indicator.visible {
-  opacity: 1;
-}
-
-.loading-dot {
-  width: 8px;
-  height: 8px;
-  background-color: #6372ff;
+  min-width: 35px;
+  height: 35px;
+  margin: 0 2px;
+  text-align: center;
   border-radius: 50%;
-  margin: 0 3px;
-  display: inline-block;
-  animation: dot-pulse 1.5s infinite ease-in-out;
+  border: none;
+  background-color: white;
+  color: #555;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
-.loading-dot:nth-child(1) {
-  animation-delay: 0s;
-}
-
-.loading-dot:nth-child(2) {
-  animation-delay: 0.3s;
-}
-
-.loading-dot:nth-child(3) {
-  animation-delay: 0.6s;
-}
-
-@keyframes dot-pulse {
-  0%, 100% {
-    transform: scale(0.7);
-    opacity: 0.5;
-  }
-  50% {
-    transform: scale(1.2);
-    opacity: 1;
-  }
-}
-
-@media (max-width: 576px) {
-  .page-link {
-    min-width: 38px;
-    height: 38px;
-    padding: 0 10px;
-    font-size: 14px;
-  }
-  
-  .gallery-pagination {
-    bottom: 10px;
-  }
-}
-
-/* Responsywność */
-@media (max-width: 991px) {
-  .my-masonry-grid {
-    margin-left: -15px;
-  }
-  .my-masonry-grid_column {
-    padding-left: 15px;
-  }
-  .gallery-item {
-    margin-bottom: 20px;
-  }
-  .lightbox-nav {
-    width: 40px;
-    height: 60px;
-    font-size: 24px;
-  }
-  .lightbox-nav.prev {
-    left: -50px;
-  }
-  .lightbox-nav.next {
-    right: -50px;
-  }
-}
-
-@media (max-width: 767px) {
-  .lightbox-content {
-    max-width: 95%;
-  }
-  .lightbox-nav {
-    background: rgba(0, 0, 0, 0.7);
-    width: 40px;
-    height: 60px;
-  }
-  .lightbox-nav.prev {
-    left: 10px;
-  }
-  .lightbox-nav.next {
-    right: 10px;
-  }
-  .lightbox-close {
-    top: -30px;
-    right: 10px;
-  }
+.page-link:hover:not(:disabled) {
+  background-color: #f0f0f0;
 }
 
 /* Animacje */

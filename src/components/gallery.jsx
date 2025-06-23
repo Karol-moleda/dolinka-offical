@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import LazyImage from "./LazyImage";
 import './gallery.css';
 import styled from "styled-components";
@@ -58,29 +58,34 @@ const GalleryContainer = styled.div`
 const Gallery = (props) => {
   const { fontSize, isDarkMode } = useTheme();
   const [currentPage, setCurrentPage] = useState(1);
-  const imagesPerPage = 12;
+  const imagesPerPage = 8; // Zmniejszenie liczby obrazów na stronę
   const [selectedImage, setSelectedImage] = useState(null);
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
-  // Obliczanie stron i widocznych obrazów
-  const totalPages = props.data ? Math.ceil(props.data.length / imagesPerPage) : 1;
-  const visibleImages = props.data ? props.data.slice((currentPage - 1) * imagesPerPage, currentPage * imagesPerPage) : [];
+  // Memoizacja obliczeń stron i widocznych obrazów
+  const { totalPages, visibleImages } = useMemo(() => {
+    const total = props.data ? Math.ceil(props.data.length / imagesPerPage) : 1;
+    const visible = props.data ? props.data.slice((currentPage - 1) * imagesPerPage, currentPage * imagesPerPage) : [];
+    return { totalPages: total, visibleImages: visible };
+  }, [props.data, currentPage, imagesPerPage]);
 
   // Helper do ścieżek
-  const getImagePath = (path) => {
+  const getImagePath = useCallback((path) => {
     if (!path) return '';
     const cleanPath = path.startsWith('/') ? path.slice(1) : path;
     return process.env.PUBLIC_URL + '/' + cleanPath;
-  };
+  }, []);
 
   // Lightbox
-  const openLightbox = (image) => {
+  const openLightbox = useCallback((image) => {
     setSelectedImage(image);
     setLightboxOpen(true);
-  };
-  const closeLightbox = () => {
+  }, []);
+
+  const closeLightbox = useCallback(() => {
     setLightboxOpen(false);
-  };
+  }, []);
+
   const navigateImage = useCallback((direction) => {
     if (!selectedImage || !props.data) return;
     const currentIndex = props.data.findIndex(img => img.largeImage === selectedImage.largeImage);
@@ -95,8 +100,9 @@ const Gallery = (props) => {
 
   // Obsługa klawiszy w lightboxie
   useEffect(() => {
+    if (!lightboxOpen) return;
+    
     const handleKeyPress = (e) => {
-      if (!lightboxOpen) return;
       switch (e.key) {
         case 'Escape': closeLightbox(); break;
         case 'ArrowLeft': navigateImage('prev'); break;
@@ -104,9 +110,10 @@ const Gallery = (props) => {
         default: break;
       }
     };
+    
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [lightboxOpen, navigateImage]);
+  }, [lightboxOpen, navigateImage, closeLightbox]);
 
   // Render
   if (!props.data) {
@@ -129,6 +136,7 @@ const Gallery = (props) => {
                   alt={image.title || `Zdjęcie ${index + 1}`}
                   className="gallery-image"
                   onClick={() => openLightbox(image)}
+                  priority={index < 4} // Priorytetowe ładowanie tylko pierwszych 4 obrazków
                 />
                 {image.title && <h4>{image.title}</h4>}
               </div>
