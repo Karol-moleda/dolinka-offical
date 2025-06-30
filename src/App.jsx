@@ -17,6 +17,8 @@ const Services = lazy(() => import("./components/services"));
 const Features = lazy(() => import("./components/features"));
 const Gallery = lazy(() => import("./components/gallery"));
 const Team = lazy(() => import("./components/Team"));
+const Calendar = lazy(() => import("./components/calendar"));
+const Inne = lazy(() => import("./components/inne"));
 const Contact = lazy(() => import("./components/contact"));
 const AccessibilityPanel = lazy(() => import("./components/AccessibilityPanel"));
 
@@ -38,10 +40,12 @@ function App() {
                 <Navigation />
                 <Header data={landingPageData.Header} />
                 <Features data={landingPageData.Features} />
+                <Calendar />
                 <About data={landingPageData.About} />
                 <Services data={landingPageData.Services} />
                 <Gallery data={landingPageData.Gallery}/>
                 <Team data={landingPageData.Team} />
+                <Inne />
                 <Contact data={landingPageData.Contact} />
                 <AccessibilityPanel />
               </div>

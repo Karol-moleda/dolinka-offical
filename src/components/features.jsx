@@ -8,6 +8,7 @@ import styled from 'styled-components';
 
 const FeaturesContainer = styled.div`
   background-color: ${props => props.isDarkMode ? '#000000' : '#ffffff'};
+  transition: all 0.3s ease;
   
   .section-title h2 {
     font-size: calc(${props => props.fontSize}px * 1.5);
@@ -20,7 +21,13 @@ const FeaturesContainer = styled.div`
   }
     .carousel-container {
     position: relative;
-    padding-bottom: 60px;  /* Zwiększona wartość dla większego odstępu */
+    padding-bottom: 80px;  /* Zwiększona wartość dla większego odstępu na kropki */
+    min-height: 500px;     /* Minimalna wysokość kontenera */
+    background-color: ${props => props.isDarkMode ? '#1a1a1a' : '#ffffff'};
+    border-radius: 12px;
+    overflow: visible;     /* Pozwala kropkom być widocznymi poza kontenerem */
+    box-shadow: ${props => props.isDarkMode ? '0 0 20px rgba(255, 255, 255, 0.1)' : '0 0 20px rgba(0, 0, 0, 0.1)'};
+    transition: all 0.3s ease;
   }
   
   .text-box {
@@ -44,7 +51,20 @@ const FeaturesContainer = styled.div`
   }
   
   .carousel .control-dots .dot.selected {
-    background: ${props => props.theme.primary} !important;
+    background: ${props => props.isDarkMode ? '#ffffff' : '#608dfd'} !important;
+  }
+  
+  /* Dodatkowe style dla stabilnej pozycji kropek */
+  .carousel .control-dots {
+    position: absolute !important;
+    bottom: -20px !important;  /* Przenieś kropki poza kontener */
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    margin: 0 !important;
+    padding: 15px 0 !important;
+    background: transparent !important;
+    width: auto !important;
+    z-index: 10 !important;
   }
 `;
 
@@ -60,7 +80,8 @@ const Features = ({ data }) => {
           <h2>AKTUALNOŚCI</h2>
           <p>Najnowsze wydarzenia i inicjatywy w naszej społeczności</p>
         </div>        <div className="carousel-container">
-          <div className="carousel-wrapper">              <Carousel
+          <div className="carousel-wrapper">
+            <Carousel
               showArrows={true}
               showStatus={false}
               showThumbs={false}

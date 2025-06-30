@@ -195,7 +195,7 @@ const Calendar = () => {
     },
     {
       id: 7,
-      date: "koniec sierpnia/ początek września 2025",
+      date: "6 września 2025",
       title: "VIII Rodzinny Piknik",
       description: "Zapraszamy na ósmą edycję Rodzinnego Pikniku! Czeka na Was mnóstwo atrakcji, zabaw i konkursów dla dzieci i dorosłych. Wspólnie spędźmy radosny dzień pełen uśmiechu, dobrej zabawy i rodzinnej atmosfery! 🎈🎶🍔☀️",
       position: "left"

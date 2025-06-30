@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useTheme } from '../context/ThemeContext';
 import '../styles/components/ToggleSwitch.css';
@@ -11,12 +11,13 @@ const AccessibilityContainer = styled.div`
   display: flex;
   flex-direction: column;
   background-color: ${props => props.theme.cardBackground};
-  padding: 15px;
+  padding: ${props => props.isCollapsed ? '8px' : '15px'};
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   border: 1px solid ${props => props.isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)'};
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
+  width: ${props => props.isCollapsed ? 'auto' : '200px'};
   
   &:hover {
     box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
@@ -24,7 +25,7 @@ const AccessibilityContainer = styled.div`
   
   @media (max-width: 768px) {
     right: 15px;
-    padding: 12px;
+    padding: ${props => props.isCollapsed ? '6px' : '12px'};
   }
 `;
 
@@ -85,6 +86,49 @@ const PanelTitle = styled.h3`
   width: 100%;
 `;
 
+const CollapseButton = styled.button`
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: ${props => props.theme.primary};
+  color: ${props => props.theme.buttonColor};
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: ${props => props.theme.primaryHover};
+    transform: scale(1.1);
+  }
+`;
+
+const CollapsedIcon = styled.div`
+  background: ${props => props.theme.primary};
+  color: ${props => props.theme.buttonColor};
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: ${props => props.theme.primaryHover};
+    transform: scale(1.1);
+  }
+`;
+
 const AccessibilityPanel = () => {
   const { 
     isDarkMode, 
@@ -92,8 +136,32 @@ const AccessibilityPanel = () => {
     fontSize, 
     increaseFontSize, 
     decreaseFontSize 
-  } = useTheme();  return (
-    <AccessibilityContainer isDarkMode={isDarkMode}>
+  } = useTheme();
+  
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  
+  const toggleCollapse = () => {
+    setIsCollapsed(!isCollapsed);
+  };
+
+  if (isCollapsed) {
+    return (
+      <AccessibilityContainer 
+        isDarkMode={isDarkMode} 
+        isCollapsed={true}
+      >
+        <CollapsedIcon onClick={toggleCollapse}>
+          ⚙️
+        </CollapsedIcon>
+      </AccessibilityContainer>
+    );
+  }
+
+  return (
+    <AccessibilityContainer isDarkMode={isDarkMode} isCollapsed={false}>
+      <CollapseButton onClick={toggleCollapse}>
+        ×
+      </CollapseButton>
       <PanelTitle isDarkMode={isDarkMode}>Dostępność</PanelTitle>
       <ToggleContainer>
         <ToggleLabel>Tryb ciemny:</ToggleLabel>

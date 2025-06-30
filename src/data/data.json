@@ -19,6 +19,11 @@
     ]
   },
   "Features": [
+        {
+      "title": "Zapraszamy na V turniej w siatkoówki w Dolince ! ",
+      "text": "Szykujcie formę i drużynę – już niebawem rozegramy piątą edycję siatkarskich zmagań na boisku w Dolince! Czeka Was świetna sportowa atmosfera, rywalizacja fair play i nagrody dla najlepszych! Potrzebne Dokumnety do zgłoszenia drużyny w zakładce  dokumenty",
+      "img": "img/akt/siatkowka.png"
+    },
     {
       "title": "Skalniak w Dolince",
       "text": "Nowa atrakcja w naszej okolicy - skalniak, który został utworzony dzięki wspólnym wysiłkom mieszkańców.",
@@ -28,14 +33,39 @@
       "title": "Akcja sprzątania",
       "text": "Wspólna inicjatywa mieszkańców na rzecz czystszego środowiska. Razem możemy więcej!",
       "img": "img/akt/smieci.jpg"
-    },
-    {
-      "title": "Potańcówkę w Dolince",
-      "text": "Już dzisiaj. Zapraszamy na potańcówkę w Dolince! To świetna okazja, by spotkać się z sąsiadami i wspólnie bawić się w rytmie muzyki.",
-      "img": "img/akt/tance.jpg"
     }
   ],
   "Gallery": [
+            {
+      "title": "Potańcówka w Dolince",
+      "largeImage": "/img/event/tance/1.jpg",
+      "smallImage": "/img/event/tance/1.jpg"
+    },
+                {
+      "title": "Potańcówka w Dolince",
+      "largeImage": "/img/event/tance/2.jpg",
+      "smallImage": "/img/event/tance/2.jpg"
+    },
+                {
+      "title": "Potańcówka w Dolince",
+      "largeImage": "/img/event/tance/3.jpg",
+      "smallImage": "/img/event/tance/3.jpg"
+    },
+                    {
+      "title": "Potańcówka w Dolince",
+      "largeImage": "/img/event/tance/4.jpg",
+      "smallImage": "/img/event/tance/4.jpg"
+    },
+                        {
+      "title": "Potańcówka w Dolince",
+      "largeImage": "/img/event/tance/5.jpg",
+      "smallImage": "/img/event/tance/5.jpg"
+    },
+                            {
+      "title": "Potańcówka w Dolince",
+      "largeImage": "/img/event/tance/6.jpg",
+      "smallImage": "/img/event/tance/6.jpg"
+    },
         {
       "title": "Festyn W SP10",
       "largeImage": "/img/event/sp/1.jpg",

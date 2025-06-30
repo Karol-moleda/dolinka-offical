@@ -33,17 +33,21 @@
 
 /* Ensure proper spacing between content and navigation dots */
 .event-content {
-  margin-bottom: 40px !important;
-  padding-bottom: 10px !important;
+  margin-bottom: 40px !important; /* Powrót do oryginalnej wartości */
+  padding-bottom: 15px !important;
   position: relative !important;
 }
 
-/* Position dots properly */
+/* Position dots properly - nie konfliktuje teraz */
 .react-responsive-carousel .carousel .control-dots {
-  bottom: -30px !important;
+  bottom: -35px !important; /* Zgodne z głównymi stylami */
   background-color: transparent !important;
-  padding: 10px 0 !important;
-  z-index: 1 !important;
+  padding: 15px 0 !important;
+  z-index: 10 !important;
+  position: absolute !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: auto !important;
 }
 
 /* Style dots for better visibility */

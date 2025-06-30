@@ -18,15 +18,20 @@
 .carousel-wrapper {
   position: relative;
   margin: 0 auto 20px;
-  padding: 0 40px;
+  padding: 0 40px 40px 40px; /* Zmniejszony padding-bottom, kropki są teraz poza kontenerem */
   max-width: 800px; /* Zmniejszona maksymalna szerokość */
   margin-top: 30px;
 }
 
 .carousel-container {
   max-width: 1000px;
-  margin: 0 auto;
+  margin: 0 auto 40px auto; /* Dodany margin-bottom dla miejsca na kropki */
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  position: relative;
+  min-height: 500px; /* Minimalna wysokość */
+  border-radius: 12px;
+  overflow: visible; /* Pozwala kropkom być widocznymi */
+  background: #ffffff;
 }
 
 /* Style dla slajdów */
@@ -120,23 +125,35 @@
   margin: 0 10px !important;
 }
 
-/* Kropki nawigacji */
+/* Kropki nawigacji - poprawione pozycjonowanie */
 .carousel .control-dots {
-  margin: 20px 0 0 !important;
-  position: relative !important;
-  bottom: 0 !important;
-  padding: 10px 0 !important;
+  margin: 0 !important;
+  position: absolute !important;
+  bottom: -35px !important;  /* Poza kontenerem */
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  padding: 15px 0 !important;
+  background: transparent !important;
+  width: auto !important;
+  z-index: 10 !important;
 }
 
 .carousel .control-dots .dot {
-  box-shadow: none !important;
-  background: #fff !important;
-  opacity: 0.5 !important;
-  margin: 0 6px !important;
+  width: 12px !important;
+  height: 12px !important;
+  background: rgba(0, 0, 0, 0.4) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+  opacity: 1 !important;
+  margin: 0 8px !important;
+  transition: all 0.3s ease !important;
 }
 
 .carousel .control-dots .dot.selected {
-  opacity: 1 !important;
+  background: #608dfd !important;
+  transform: scale(1.3) !important;
+  box-shadow: 0 0 8px rgba(96, 141, 253, 0.6) !important;
+  border: 2px solid #ffffff !important;
 }
 
 /* Animacje */
@@ -155,45 +172,7 @@
   animation: slideIn 0.5s ease forwards;
 }
 
-/* Wysoki kontrast dla lepszej dostępności */
-.carousel .slide {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 400px;
-}
-
-.carousel .slide img {
-  border: 2px solid rgba(96, 141, 253, 0.5);
-  border-radius: 8px;
-}
-
-.carousel .control-dots {
-  margin: 30px 0 0 !important;
-  display: flex !important;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  position: relative !important;
-  bottom: 0 !important;
-  padding: 10px 0 !important;
-}
-
-.carousel .control-dots .dot {
-  width: 10px !important;
-  height: 10px !important;
-  background: rgba(0, 0, 0, 0.5) !important;
-  box-shadow: none !important;
-  border: 2px solid transparent !important;
-  transition: all 0.3s ease !important;
-  opacity: 1 !important;
-  margin: 0 6px !important;
-}
-
-.carousel .control-dots .dot.selected {
-  background: #608dfd !important;
-  transform: scale(1.2);
-}
+/* Usunięto duplikaty stylów kropek - zostają tylko te główne na górze */
 
 .carousel .control-arrow {
   display: none;
@@ -241,11 +220,15 @@ a:focus-visible {
   animation: fadeIn 0.6s ease-out forwards;
 }
 
-/* Responsywność */
+/* Responsywność - poprawiony */
 @media (max-width: 768px) {
   .carousel-wrapper {
-    padding: 0 35px;
+    padding: 0 35px 30px 35px; /* Zmniejszony padding-bottom */
     max-width: 100%;
+  }
+  
+  .carousel-container {
+    margin-bottom: 30px; /* Mniejszy margin dla mobilnych */
   }
   
   .carousel-item {
@@ -275,9 +258,14 @@ a:focus-visible {
     right: 10px !important;
   }
 
+  .carousel .control-dots {
+    bottom: -25px !important; /* Bliżej dla mobilnych */
+  }
+
   .carousel .control-dots .dot {
-    width: 8px !important;
-    height: 8px !important;
+    width: 10px !important;
+    height: 10px !important;
+    margin: 0 6px !important;
   }
   
   .carousel .slide img {
@@ -391,75 +379,13 @@ a:focus-visible {
   border-color: white !important;
 }
 
-.carousel .control-dots {
-  position: relative !important;
-  bottom: -10px !important;
-  margin: 15px 0 10px !important;
-  background-color: rgba(0, 0, 0, 0.05);
-  padding: 8px 0;
-  border-radius: 20px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.carousel .control-dots .dot {
-  width: 12px !important;
-  height: 12px !important;
-  background: rgba(0, 0, 0, 0.3) !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
-  margin: 0 8px !important;
-  opacity: 1 !important;
-  transition: all 0.3s ease;
-}
-
-.carousel .control-dots .dot.selected {
-  background: #608dfd !important;
-  transform: scale(1.2) !important;
-  box-shadow: 0 0 5px rgba(96, 141, 253, 0.5) !important;
-}
-
-/* Dodatkowa klasa dla zwiększenia odstępu karuzeli */
-.carousel-with-spacing {
-  padding-bottom: 30px !important;
-  margin-bottom: 20px !important;
-  position: relative !important;
-}
-
-.carousel-with-spacing .control-dots {
-  position: absolute !important;
-  bottom: -10px !important;
-  background: transparent !important;
-  width: 100% !important;
-  text-align: center !important;
-  padding: 10px 0 !important;
-  margin: 0 !important;
-  z-index: 5 !important;
-}
-
-.carousel-with-spacing .carousel-slider {
-  padding-bottom: 30px !important;
-}
-
-/* Responsywność */
+/* Responsywność - końcowe style */
 @media (max-width: 768px) {
   .carousel .control-arrow {
     width: 40px !important;
     height: 40px !important;
   }
-  .carousel .control-dots {
-    bottom: -10px !important;
-    padding: 6px 0;
-    margin: 10px 0 5px !important;
-  }
   
-  .carousel .control-dots .dot {
-    width: 10px !important;
-    height: 10px !important;
-    margin: 0 5px !important;
-  }
-
   .carousel .slide img {
     max-height: 350px !important;
   }

@@ -199,10 +199,16 @@ const Navigation = () => {
               <NavLink href="#about" $isDarkMode={isDarkMode} $isScrolled={isScrolled}>O nas</NavLink>
             </NavItem>
             <NavItem>
+              <NavLink href="#calendar" $isDarkMode={isDarkMode} $isScrolled={isScrolled}>Kalendarz</NavLink>
+            </NavItem>
+            <NavItem>
               <NavLink href="#services" $isDarkMode={isDarkMode} $isScrolled={isScrolled}>Nasze działania</NavLink>
             </NavItem>
             <NavItem>
               <NavLink href="#team" $isDarkMode={isDarkMode} $isScrolled={isScrolled}>Zarząd</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="#inne" $isDarkMode={isDarkMode} $isScrolled={isScrolled}>Dokumenty</NavLink>
             </NavItem>
             <NavItem>
               <NavLink href="#contact" $isDarkMode={isDarkMode} $isScrolled={isScrolled}>Kontakt</NavLink>
