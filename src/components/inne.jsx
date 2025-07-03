@@ -168,7 +168,7 @@ const Inne = () => {
           {documents.map((doc, index) => (
             <DocumentCard 
               key={index}
-              href={`/document/${encodeURIComponent(doc.filename)}`}
+              href={`${process.env.PUBLIC_URL}/document/${encodeURIComponent(doc.filename)}`}
               download={doc.filename}
               $isDarkMode={isDarkMode}
             >
