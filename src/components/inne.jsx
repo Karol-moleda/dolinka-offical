@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTheme } from '../context/ThemeContext';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDownload, faFilePdf } from '@fortawesome/free-solid-svg-icons';
+import { faDownload, faFilePdf, faVolleyballBall, faBasketballBall } from '@fortawesome/free-solid-svg-icons';
 
 const InneSection = styled.section`
   padding: 100px 0;
@@ -49,6 +49,49 @@ const Description = styled.p`
   line-height: 1.6;
 `;
 
+const TabsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 40px 0;
+  background: ${props => props.$isDarkMode ? '#34495e' : '#f8f9fa'};
+  border-radius: 15px;
+  padding: 8px;
+  max-width: 500px;
+  margin: 40px auto;
+  box-shadow: ${props => props.$isDarkMode ? '0 4px 15px rgba(0,0,0,0.3)' : '0 4px 15px rgba(0,0,0,0.1)'};
+`;
+
+const Tab = styled.button`
+  flex: 1;
+  padding: 15px 25px;
+  background: ${props => props.$active ? '#3498db' : 'transparent'};
+  color: ${props => props.$active ? '#fff' : (props.$isDarkMode ? '#bdc3c7' : '#666')};
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  
+  &:hover {
+    background: ${props => props.$active ? '#2980b9' : (props.$isDarkMode ? '#2c3e50' : '#e9ecef')};
+    color: ${props => props.$active ? '#fff' : (props.$isDarkMode ? '#fff' : '#333')};
+    transform: translateY(-2px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+`;
+
+const TabIcon = styled(FontAwesomeIcon)`
+  font-size: 18px;
+`;
+
 const ContentGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -56,7 +99,7 @@ const ContentGrid = styled.div`
   margin-top: 60px;
 `;
 
-const DocumentCard = styled.a`
+const DocumentCard = styled.div`
   display: block;
   background: ${props => props.$isDarkMode ? '#34495e' : '#fff'};
   padding: 30px 25px;
@@ -66,6 +109,7 @@ const DocumentCard = styled.a`
   text-decoration: none;
   color: inherit;
   border: 2px solid transparent;
+  cursor: pointer;
   
   &:hover {
     transform: translateY(-5px);
@@ -130,29 +174,83 @@ const CardText = styled.p`
 
 const Inne = () => {
   const { isDarkMode } = useTheme();
+  const [activeTab, setActiveTab] = useState('volleyball');
 
-  const documents = [
+  // Funkcja pobierania dokumentu
+  const handleDownload = (doc, tournament) => {
+    const filename = doc.filename;
+    const originalFilename = doc.originalFilename || doc.filename;
+    const folderPath = tournament === 'basketball' ? '/document/kosz/' : '/document/';
+    const fileURL = `${window.location.origin}${folderPath}${filename}`;
+    
+    try {
+      // Tworzymy tymczasowy link, klikamy go i usuwamy
+      const link = document.createElement('a');
+      link.href = fileURL;
+      link.setAttribute('download', originalFilename);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error('Błąd podczas pobierania:', error);
+    }
+  };
+
+  const volleyballDocuments = [
     {
       name: "Kwestionariusz drużyny 2025",
-      filename: "Kwestionariusz drużyny 2025.pdf",
-      description: "Formularz rejestracyjny dla drużyn uczestniczących w turnieju"
+      filename: "Kwe_2025.pdf",
+      originalFilename: "Kwestionariusz drużyny 2025.pdf",
+      description: "Formularz rejestracyjny dla drużyn uczestniczących w turnieju siatkówki"
     },
     {
       name: "Regulamin Turnieju w Dolince 2025",
-      filename: "Regulamin Turnieju_w_Dolince_2025.pdf",
-      description: "Oficjalny regulamin turnieju organizowanego w Dolince"
+      filename: "Regulamin_2025.pdf",
+      originalFilename: "Regulamin Turnieju w Dolince 2025.pdf",
+      description: "Oficjalny regulamin turnieju siatkówki organizowanego w Dolince"
     },
     {
       name: "Zgłoszenie dla osoby niepełnoletniej",
-      filename: "Zgłoszenie i ośw. dla osoby niepełnoletniej.pdf",
+      filename: "Niepelnoletnia_2025.pdf",
+      originalFilename: "Zgłoszenie dla osoby niepełnoletniej.pdf",
       description: "Formularz zgłoszeniowy wraz z oświadczeniem dla osób niepełnoletnich"
     },
     {
       name: "Zgłoszenie dla osoby pełnoletniej",
-      filename: "Zgłoszenie i ośw. dla osoby pełnoletniej.pdf",
+      filename: "Pelnoletnia_2025.pdf",
+      originalFilename: "Zgłoszenie dla osoby pełnoletniej.pdf",
       description: "Formularz zgłoszeniowy wraz z oświadczeniem dla osób pełnoletnich"
     }
   ];
+
+  const basketballDocuments = [
+    {
+      name: "Kwestionariusz drużyny 2025",
+      filename: "druzyna-2025.pdf",
+      originalFilename: "Kwestionariusz drużyny koszykówka 2025.pdf",
+      description: "Formularz rejestracyjny dla drużyn uczestniczących w turnieju koszykówki"
+    },
+    {
+      name: "Regulamin Turnieju Koszykówki 2025",
+      filename: "regulamin-2025.pdf",
+      originalFilename: "Regulamin Turnieju Koszykówki 2025.pdf",
+      description: "Oficjalny regulamin turnieju koszykówki organizowanego w Dolince"
+    },
+    {
+      name: "Zgłoszenie dla osoby niepełnoletniej",
+      filename: "niepelnoletni-2025.pdf",
+      originalFilename: "Zgłoszenie dla osoby niepełnoletniej koszykówka.pdf",
+      description: "Formularz zgłoszeniowy wraz z oświadczeniem dla osób niepełnoletnich"
+    },
+    {
+      name: "Zgłoszenie dla osoby pełnoletniej",
+      filename: "pełnoletnia-2025.pdf",
+      originalFilename: "Zgłoszenie dla osoby pełnoletniej koszykówka.pdf",
+      description: "Formularz zgłoszeniowy wraz z oświadczeniem dla osób pełnoletnich"
+    }
+  ];
+
+  const currentDocuments = activeTab === 'volleyball' ? volleyballDocuments : basketballDocuments;
 
   return (
     <InneSection id="inne" $isDarkMode={isDarkMode}>
@@ -164,12 +262,29 @@ const Inne = () => {
           </Description>
         </SectionHeader>
         
+        <TabsContainer $isDarkMode={isDarkMode}>
+          <Tab 
+            $active={activeTab === 'volleyball'} 
+            $isDarkMode={isDarkMode}
+            onClick={() => setActiveTab('volleyball')}
+          >
+            <TabIcon icon={faVolleyballBall} />
+            Siatkówka
+          </Tab>
+          <Tab 
+            $active={activeTab === 'basketball'} 
+            $isDarkMode={isDarkMode}
+            onClick={() => setActiveTab('basketball')}
+          >
+            <TabIcon icon={faBasketballBall} />
+            Koszykówka
+          </Tab>
+        </TabsContainer>
+        
         <ContentGrid>
-          {documents.map((doc, index) => (
+          {currentDocuments.map((doc, index) => (
             <DocumentCard 
               key={index}
-              href={`${process.env.PUBLIC_URL}/document/${encodeURIComponent(doc.filename)}`}
-              download={doc.filename}
               $isDarkMode={isDarkMode}
             >
               <DocumentIcon>
@@ -182,10 +297,15 @@ const Inne = () => {
                 {doc.description}
               </CardText>
               <DocumentMeta $isDarkMode={isDarkMode}>
-                <DownloadButton>
-                  <FontAwesomeIcon icon={faDownload} />
-                  Pobierz
-                </DownloadButton>
+                <div 
+                  onClick={() => handleDownload(doc, activeTab)}
+                  style={{ textDecoration: 'none', cursor: 'pointer' }}
+                >
+                  <DownloadButton>
+                    <FontAwesomeIcon icon={faDownload} />
+                    Pobierz
+                  </DownloadButton>
+                </div>
               </DocumentMeta>
             </DocumentCard>
           ))}

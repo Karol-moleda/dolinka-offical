@@ -20,22 +20,102 @@
   },
   "Features": [
         {
-      "title": "Zapraszamy na V turniej w siatkoówki w Dolince ! ",
-      "text": "Szykujcie formę i drużynę – już niebawem rozegramy piątą edycję siatkarskich zmagań na boisku w Dolince! Czeka Was świetna sportowa atmosfera, rywalizacja fair play i nagrody dla najlepszych! Potrzebne Dokumnety do zgłoszenia drużyny w zakładce  dokumenty",
-      "img": "img/akt/siatkowka.png"
+      "title": "Zapraszamy na X kino plnenerowe w Dolince!",
+      "text": "Już 9 sierpnia zapraszam wspólnie z Zarząd Osiedla Młodych 2024-2029 na X Kino Plenerowe w Dolince! Trzymajcie kciuki za pogodę - resztą się zajmiemy! 🙂🍿🎬",
+      "img": "img/kino.jpg"
+    },
+    {
+      "title": "X turniej w siatkówki w Dolince za nami !",
+      "text": "W dzisiejszym V Turnieju Siatkówki wzięło udział 5 drużyn 🏐🏐🏐🏐🏐 Pierwsze miejsce zajęła drużyna VC Rozrywka - puchar oraz nagrody wręczyłem wspólnie z członkami  Zarząd Osiedla Młodych 2024-2029  Roksana Patrykiewicz oraz Kamil Czopek  Dziękuję MOSiR Olkusz za świetne przygotowanie Turnieju a panu Grzegorzowi Staroście za profesjonalne sędziowanie 👏 mieszkańcom Osiedle Młodych w Olkuszu oraz pozostałym kibicom za świetny doping! 🙂",
+      "img": "img/event/siat/puchar.jpg"
     },
     {
       "title": "Skalniak w Dolince",
       "text": "Nowa atrakcja w naszej okolicy - skalniak, który został utworzony dzięki wspólnym wysiłkom mieszkańców.",
       "img": "img/akt/skalniak.jpg"
-    },
-    {
-      "title": "Akcja sprzątania",
-      "text": "Wspólna inicjatywa mieszkańców na rzecz czystszego środowiska. Razem możemy więcej!",
-      "img": "img/akt/smieci.jpg"
     }
   ],
   "Gallery": [
+                {
+      "title": "X turniej siatkówki w Dolince",
+      "largeImage": "/img/event/siat/1.jpg",
+      "smallImage": "/img/event/siat/1.jpg"
+    },
+                    {
+      "title": "X turniej siatkówki w Dolince",
+      "largeImage": "/img/event/siat/2.jpg",
+      "smallImage": "/img/event/siat/2.jpg"
+    },
+                        {
+      "title": "X turniej siatkówki w Dolince",
+      "largeImage": "/img/event/siat/3.jpg",
+      "smallImage": "/img/event/siat/3.jpg"
+    },
+                            {
+      "title": "X turniej siatkówki w Dolince",
+      "largeImage": "/img/event/siat/4.jpg",
+      "smallImage": "/img/event/siat/4.jpg"
+    },
+                                {
+      "title": "X turniej siatkówki w Dolince",
+      "largeImage": "/img/event/siat/5.jpg",
+      "smallImage": "/img/event/siat/5.jpg"
+    },
+                                    {
+      "title": "X turniej siatkówki w Dolince",
+      "largeImage": "/img/event/siat/6.jpg",
+      "smallImage": "/img/event/siat/6.jpg"
+    },
+                                        {
+      "title": "X turniej siatkówki w Dolince",
+      "largeImage": "/img/event/siat/7.jpg",
+      "smallImage": "/img/event/siat/7.jpg"
+    },
+                                            {
+      "title": "X turniej siatkówki w Dolince",
+      "largeImage": "/img/event/siat/8.jpg",
+      "smallImage": "/img/event/siat/8.jpg"
+    },
+                                                {
+      "title": "X turniej siatkówki w Dolince",
+      "largeImage": "/img/event/siat/9.jpg",
+      "smallImage": "/img/event/siat/9.jpg"
+    },
+                                                    {
+      "title": "X turniej siatkówki w Dolince",
+      "largeImage": "/img/event/siat/10.jpg",
+      "smallImage": "/img/event/siat/10.jpg"
+    },
+                                                        {
+      "title": "X turniej siatkówki w Dolince",
+      "largeImage": "/img/event/siat/11.jpg",
+      "smallImage": "/img/event/siat/11.jpg"
+    },
+                                                            {
+      "title": "X turniej siatkówki w Dolince",
+      "largeImage": "/img/event/siat/12.jpg",
+      "smallImage": "/img/event/siat/12.jpg"
+    },
+                                                                {
+      "title": "X turniej siatkówki w Dolince",
+      "largeImage": "/img/event/siat/13.jpg",
+      "smallImage": "/img/event/siat/13.jpg"
+    },
+                                                                    {
+      "title": "X turniej siatkówki w Dolince",
+      "largeImage": "/img/event/siat/14.jpg",
+      "smallImage": "/img/event/siat/14.jpg"
+    },
+                                                                       {
+      "title": "X turniej siatkówki w Dolince",
+      "largeImage": "/img/event/siat/15.jpg",
+      "smallImage": "/img/event/siat/15.jpg"
+    },
+                                                                           {
+      "title": "X turniej siatkówki w Dolince",
+      "largeImage": "/img/event/siat/16.jpg",
+      "smallImage": "/img/event/siat/16.jpg"
+    },
             {
       "title": "Potańcówka w Dolince",
       "largeImage": "/img/event/tance/1.jpg",
