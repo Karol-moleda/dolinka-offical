@@ -174,7 +174,7 @@ const CardText = styled.p`
 
 const Inne = () => {
   const { isDarkMode } = useTheme();
-  const [activeTab, setActiveTab] = useState('volleyball');
+  const [activeTab, setActiveTab] = useState('basketball');
 
   // Funkcja pobierania dokumentu
   const handleDownload = (doc, tournament) => {
@@ -250,7 +250,7 @@ const Inne = () => {
     }
   ];
 
-  const currentDocuments = activeTab === 'volleyball' ? volleyballDocuments : basketballDocuments;
+  const currentDocuments = activeTab === 'basketball' ? basketballDocuments : volleyballDocuments;
 
   return (
     <InneSection id="inne" $isDarkMode={isDarkMode}>
@@ -264,20 +264,20 @@ const Inne = () => {
         
         <TabsContainer $isDarkMode={isDarkMode}>
           <Tab 
-            $active={activeTab === 'volleyball'} 
-            $isDarkMode={isDarkMode}
-            onClick={() => setActiveTab('volleyball')}
-          >
-            <TabIcon icon={faVolleyballBall} />
-            Siatkówka
-          </Tab>
-          <Tab 
             $active={activeTab === 'basketball'} 
             $isDarkMode={isDarkMode}
             onClick={() => setActiveTab('basketball')}
           >
             <TabIcon icon={faBasketballBall} />
             Koszykówka
+          </Tab>
+          <Tab 
+            $active={activeTab === 'volleyball'} 
+            $isDarkMode={isDarkMode}
+            onClick={() => setActiveTab('volleyball')}
+          >
+            <TabIcon icon={faVolleyballBall} />
+            Siatkówka
           </Tab>
         </TabsContainer>
         
