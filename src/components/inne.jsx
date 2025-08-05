@@ -244,7 +244,7 @@ const Inne = () => {
     },
     {
       name: "Zgłoszenie dla osoby pełnoletniej",
-      filename: "pełnoletnia-2025.pdf",
+      filename: "Pelnoletnia_2025.pdf",
       originalFilename: "Zgłoszenie dla osoby pełnoletniej koszykówka.pdf",
       description: "Formularz zgłoszeniowy wraz z oświadczeniem dla osób pełnoletnich"
     }
