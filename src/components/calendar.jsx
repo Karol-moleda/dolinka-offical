@@ -195,17 +195,24 @@ const Calendar = () => {
     },
     {
       id: 7,
-      date: "6 września 2025",
-      title: "VIII Rodzinny Piknik",
-      description: "Zapraszamy na ósmą edycję Rodzinnego Pikniku! Czeka na Was mnóstwo atrakcji, zabaw i konkursów dla dzieci i dorosłych. Wspólnie spędźmy radosny dzień pełen uśmiechu, dobrej zabawy i rodzinnej atmosfery! 🎈🎶🍔☀️",
+      date: "19 września 2025",
+      title: "Biesiada(potańcówka) zakończenie lata",
+      description: "Czekają na nas pieczone ziemniaki prosto z ogniska, wspólne śpiewanie i radosne spędzenie czasu w gronie sąsiadów i przyjaciół. Niech to będzie wieczór pełen ciepła, muzyki i dobrej zabawy!",
       position: "left"
+    },
+        {
+      id: 8,
+      date: "21 września 2025",
+      title: "Pobiegniemy razem-bieg osiedlowy",
+      description: "Zapraszamy do udziału w sportowej zabawie dla wszystkich – bez względu na wiek i formę! Oprócz samego biegu czeka na Was mnóstwo atrakcji. To doskonała okazja, by spędzić aktywnie czas z rodziną, sąsiadami i przyjaciółmi.",
+      position: "right"
     },
     {
       id: 9,
       date: "grudzień 2025",
       title: "Spotkanie Mikołajkowe",
       description: "Zapraszamy na magiczne Spotkanie Mikołajkowe! Czeka na Was świąteczna atmosfera, moc atrakcji i, oczywiście, wizyta Świętego Mikołaja! Nie zabraknie prezentów, zabaw i wspólnego kolędowania. Spędźmy razem ten wyjątkowy czas! 🎁🎶❄️",
-      position: "right"
+      position: "left"
     },
   ];
 
