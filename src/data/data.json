@@ -19,23 +19,78 @@
     ]
   },
   "Features": [
-        {
-      "title": "X kino plnenerowe w Dolince!",
-      "text": "Razem oglądaliśmy film Siła naszych marzeń – cieszymy się, że spędziliście ten wieczór z nami w tak miłej atmosferze. Do zobaczenia na kolejnych pokazach!🙂🍿🎬",
-      "img": "img/kino.jpg"
+    {
+      "title": "Biesiada w Dolince",
+      "text": "Zapraszamy 19 września (piątek) o godzinie 18:00 do wspólnej zabawy podczas Biesiady w Dolince! 🎤🎹 Czekać na Was będą dania z grilla oraz wspólne śpiewanie przy ognisku 🔥 Zabawę muzyczną poprowadzi zespół Mat- Mix! Trzymajcie kciuki za dobrą pogodę 🙂",
+      "img": "img/akt/biesiada.jpg"
     },
     {
-      "title": "X turniej w siatkówki w Dolince za nami !",
-      "text": "W dzisiejszym V Turnieju Siatkówki wzięło udział 5 drużyn 🏐🏐🏐🏐🏐 Pierwsze miejsce zajęła drużyna VC Rozrywka - puchar oraz nagrody wręczyłem wspólnie z członkami  Zarząd Osiedla Młodych 2024-2029  Roksana Patrykiewicz oraz Kamil Czopek  Dziękuję MOSiR Olkusz za świetne przygotowanie Turnieju a panu Grzegorzowi Staroście za profesjonalne sędziowanie 👏 mieszkańcom Osiedle Młodych w Olkuszu oraz pozostałym kibicom za świetny doping! 🙂",
-      "img": "img/event/siat/puchar.jpg"
-    },
-    {
-      "title": "Skalniak w Dolince",
-      "text": "Nowa atrakcja w naszej okolicy - skalniak, który został utworzony dzięki wspólnym wysiłkom mieszkańców.",
-      "img": "img/akt/skalniak.jpg"
+      "title": "Pobiegnijmy razem",
+      "text": "🏃🏃‍♀️ 20 września (sobota) odbędzie się pierwszy bieg osiedlowy- 'Pobiegnijmy razem' !!!Na uczestników będą czekać trzy dystanse: 👉 3200 metrów dla dorosłych 👉 800 metrów marsz Nordic Walking 👉 400 metrów dla dzieci (różne kategorie wiekowe)",
+      "img": "img/akt/bieg.jpg"
     }
   ],
   "Gallery": [
+                   {
+      "title": "IV turniej koszykówki w Dolince",
+      "largeImage": "/img/event/kosz/1.jpg",
+      "smallImage": "/img/event/kosz/1.jpg"
+    },
+                       {
+      "title": "IV turniej koszykówki w Dolince",
+      "largeImage": "/img/event/kosz/2.jpg",
+      "smallImage": "/img/event/kosz/2.jpg"
+    },
+                       {
+      "title": "IV turniej koszykówki w Dolince",
+      "largeImage": "/img/event/kosz/3.jpg",
+      "smallImage": "/img/event/kosz/3.jpg"
+    },
+                       {
+      "title": "IV turniej koszykówki w Dolince",
+      "largeImage": "/img/event/kosz/4.jpg",
+      "smallImage": "/img/event/kosz/4.jpg"
+    },
+                       {
+      "title": "IV turniej koszykówki w Dolince",
+      "largeImage": "/img/event/kosz/5.jpg",
+      "smallImage": "/img/event/kosz/5.jpg"
+    },
+                       {
+      "title": "IV turniej koszykówki w Dolince",
+      "largeImage": "/img/event/kosz/6.jpg",
+      "smallImage": "/img/event/kosz/6.jpg"
+    },
+                       {
+      "title": "IV turniej koszykówki w Dolince",
+      "largeImage": "/img/event/kosz/6.jpg",
+      "smallImage": "/img/event/kosz/6.jpg"
+    },
+                       {
+      "title": "IV turniej koszykówki w Dolince",
+      "largeImage": "/img/event/kosz/7.jpg",
+      "smallImage": "/img/event/kosz/7.jpg"
+    },
+                       {
+      "title": "IV turniej koszykówki w Dolince",
+      "largeImage": "/img/event/kosz/7.jpg",
+      "smallImage": "/img/event/kosz/7.jpg"
+    },
+                       {
+      "title": "IV turniej koszykówki w Dolince",
+      "largeImage": "/img/event/kosz/8.jpg",
+      "smallImage": "/img/event/kosz/8.jpg"
+    },
+                           {
+      "title": "IV turniej koszykówki w Dolince",
+      "largeImage": "/img/event/kosz/9.jpg",
+      "smallImage": "/img/event/kosz/9.jpg"
+    },
+                               {
+      "title": "IV turniej koszykówki w Dolince",
+      "largeImage": "/img/event/kosz/10.jpg",
+      "smallImage": "/img/event/kosz/10.jpg"
+    },
                 {
       "title": "X turniej siatkówki w Dolince",
       "largeImage": "/img/event/siat/1.jpg",
@@ -380,76 +435,6 @@
       "title": "Festyn Wielkanocny",
       "largeImage": "img/festyn/1.JPG",
       "smallImage": "img/festyn/1.JPG"
-    },
-    {
-      "title": "Spotkanie świąteczne",
-      "largeImage": "img/event/Mikolaj-11.jpg",
-      "smallImage": "img/event/Mikolaj-11.jpg"
-    },
-    {
-      "title": "Spotkanie świąteczne",
-      "largeImage": "img/event/Mikolaj-10.jpg",
-      "smallImage": "img/event/Mikolaj-10.jpg"
-    },
-    {
-      "title": "Spotkanie świąteczne",
-      "largeImage": "img/event/Mikolaj-9.jpg",
-      "smallImage": "img/event/Mikolaj-9.jpg"
-    },
-    {
-      "title": "Spotkanie świąteczne",
-      "largeImage": "img/event/Mikolaj-8.jpg",
-      "smallImage": "img/event/Mikolaj-8.jpg"
-    },
-    {
-      "title": "Spotkanie świąteczne",
-      "largeImage": "img/event/Mikolaj-7.jpg",
-      "smallImage": "img/event/Mikolaj-7.jpg"
-    },
-    {
-      "title": "Spotkanie świąteczne",
-      "largeImage": "img/event/Mikolaj-6.jpg",
-      "smallImage": "img/event/Mikolaj-6.jpg"
-    },
-    {
-      "title": "Spotkanie świąteczne",
-      "largeImage": "img/event/Mikolaj-5.jpg",
-      "smallImage": "img/event/Mikolaj-5.jpg"
-    },
-    {
-      "title": "Spotkanie świąteczne",
-      "largeImage": "img/event/Mikolaj-4.jpg",
-      "smallImage": "img/event/Mikolaj-4.jpg"
-    },
-    {
-      "title": "Spotkanie świąteczne",
-      "largeImage": "img/event/Mikolaj-3.jpg",
-      "smallImage": "img/event/Mikolaj-3.jpg"
-    },
-    {
-      "title": "Spotkanie świąteczne",
-      "largeImage": "img/event/Mikolaj-2.jpg",
-      "smallImage": "img/event/Mikolaj-2.jpg"
-    },
-    {
-      "title": "Spotkanie świąteczne",
-      "largeImage": "img/event/Mikolaj-1.jpg",
-      "smallImage": "img/event/Mikolaj-1.jpg"
-    },
-    {
-      "title": "Zebranie z mieszkańcami",
-      "largeImage": "img/event/zebranie.jpg",
-      "smallImage": "img/event/zebranie.jpg"
-    },
-    {
-      "title": "Zebranie z mieszkańcami",
-      "largeImage": "img/event/zebranie-2.jpg",
-      "smallImage": "img/event/zebranie-2.jpg"
-    },
-    {
-      "title": "Zebranie z mieszkańcami",
-      "largeImage": "img/event/zebranie-3.jpg",
-      "smallImage": "img/event/zebranie-3.jpg"
     }
   ],
   "Services": [

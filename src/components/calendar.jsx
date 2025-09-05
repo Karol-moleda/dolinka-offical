@@ -202,8 +202,8 @@ const Calendar = () => {
     },
         {
       id: 8,
-      date: "21 września 2025",
-      title: "Pobiegniemy razem-bieg osiedlowy",
+      date: "20 września 2025",
+      title: "Pobiegnijmy razem-bieg osiedlowy",
       description: "Zapraszamy do udziału w sportowej zabawie dla wszystkich – bez względu na wiek i formę! Oprócz samego biegu czeka na Was mnóstwo atrakcji. To doskonała okazja, by spędzić aktywnie czas z rodziną, sąsiadami i przyjaciółmi.",
       position: "right"
     },

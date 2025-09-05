@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useTheme } from '../context/ThemeContext';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDownload, faFilePdf, faVolleyballBall, faBasketballBall } from '@fortawesome/free-solid-svg-icons';
+import { faDownload, faFilePdf, faVolleyballBall, faBasketballBall, faRunning } from '@fortawesome/free-solid-svg-icons';
 
 const InneSection = styled.section`
   padding: 100px 0;
@@ -59,6 +59,18 @@ const TabsContainer = styled.div`
   max-width: 500px;
   margin: 40px auto;
   box-shadow: ${props => props.$isDarkMode ? '0 4px 15px rgba(0,0,0,0.3)' : '0 4px 15px rgba(0,0,0,0.1)'};
+  gap: 8px;
+  overflow-x: auto; /* allow scrolling when tabs overflow */
+  -webkit-overflow-scrolling: touch;
+
+  /* hide native scrollbar on WebKit */
+  &::-webkit-scrollbar { display: none; }
+
+  @media (max-width: 800px) {
+    display: none; /* hide tabs on smaller screens, use select instead */
+    padding: 6px;
+    max-width: calc(100% - 32px);
+  }
 `;
 
 const Tab = styled.button`
@@ -86,10 +98,40 @@ const Tab = styled.button`
   &:active {
     transform: translateY(0);
   }
+
+  /* Mobile adjustments */
+  @media (max-width: 600px) {
+    padding: 10px 14px;
+    font-size: 14px;
+    flex: 0 0 auto; /* don't stretch, allow horizontal scroll */
+    min-width: 110px;
+  }
 `;
 
 const TabIcon = styled(FontAwesomeIcon)`
   font-size: 18px;
+`;
+
+/* Mobile select that replaces tabs on small screens */
+const TabsSelect = styled.select`
+  display: none;
+  width: 100%;
+  max-width: 520px;
+  margin: 16px auto 24px auto;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid ${props => props.$isDarkMode ? '#2c3e50' : '#ddd'};
+  background: ${props => props.$isDarkMode ? '#34495e' : '#fff'};
+  color: ${props => props.$isDarkMode ? '#fff' : '#333'};
+  font-weight: 600;
+  font-size: 16px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  @media (max-width: 800px) {
+    display: block;
+  }
 `;
 
 const ContentGrid = styled.div`
@@ -174,13 +216,14 @@ const CardText = styled.p`
 
 const Inne = () => {
   const { isDarkMode } = useTheme();
-  const [activeTab, setActiveTab] = useState('basketball');
+  const [activeTab, setActiveTab] = useState('run');
 
   // Funkcja pobierania dokumentu
   const handleDownload = (doc, tournament) => {
     const filename = doc.filename;
     const originalFilename = doc.originalFilename || doc.filename;
-    const folderPath = tournament === 'basketball' ? '/document/kosz/' : '/document/';
+    // For basketball files are in /document/kos/, for others in /document/
+    const folderPath = tournament === 'basketball' ? '/document/kos/' : '/document/';
     const fileURL = `${window.location.origin}${folderPath}${filename}`;
     
     try {
@@ -195,6 +238,16 @@ const Inne = () => {
       console.error('Błąd podczas pobierania:', error);
     }
   };
+
+  // Poprawione dane dla zakładki Bieg
+  const runDocuments = [
+    {
+      name: "Regulamin Biegu 2025",
+      filename: "Regulamin_run_2025.pdf",
+      originalFilename: "Regulamin_run_2025.pdf",
+      description: "Oficjalny regulamin biegu organizowanego w Dolince"
+    }
+  ];
 
   const volleyballDocuments = [
     {
@@ -250,7 +303,7 @@ const Inne = () => {
     }
   ];
 
-  const currentDocuments = activeTab === 'basketball' ? basketballDocuments : volleyballDocuments;
+  const currentDocuments = activeTab === 'basketball' ? basketballDocuments : (activeTab === 'run' ? runDocuments : volleyballDocuments);
 
   return (
     <InneSection id="inne" $isDarkMode={isDarkMode}>
@@ -262,7 +315,21 @@ const Inne = () => {
           </Description>
         </SectionHeader>
         
+        <TabsSelect $isDarkMode={isDarkMode} value={activeTab} onChange={(e) => setActiveTab(e.target.value)}>
+          <option value="basketball">Koszykówka</option>
+          <option value="volleyball">Siatkówka</option>
+          <option value="run">Bieg</option>
+        </TabsSelect>
+
         <TabsContainer $isDarkMode={isDarkMode}>
+          <Tab 
+            $active={activeTab === 'run'} 
+            $isDarkMode={isDarkMode}
+            onClick={() => setActiveTab('run')}
+          >
+            <TabIcon icon={faRunning} />
+            Bieg
+          </Tab>
           <Tab 
             $active={activeTab === 'basketball'} 
             $isDarkMode={isDarkMode}

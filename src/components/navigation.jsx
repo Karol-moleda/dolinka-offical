@@ -208,6 +208,9 @@ const Navigation = () => {
               <NavLink href="#team" $isDarkMode={isDarkMode} $isScrolled={isScrolled}>Zarząd</NavLink>
             </NavItem>
             <NavItem>
+              <NavLink href="#portfolio" $isDarkMode={isDarkMode} $isScrolled={isScrolled}>Galeria</NavLink>
+            </NavItem>
+            <NavItem>
               <NavLink href="#inne" $isDarkMode={isDarkMode} $isScrolled={isScrolled}>Dokumenty</NavLink>
             </NavItem>
             <NavItem>
