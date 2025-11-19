@@ -238,13 +238,12 @@ const Inne = () => {
       console.error('Błąd podczas pobierania:', error);
     }
   };
-
-  // Poprawione dane dla zakładki Bieg
+  
   const runDocuments = [
     {
       name: "Regulamin Biegu 2025",
-      filename: "Regulamin_run_2025.pdf",
-      originalFilename: "Regulamin_run_2025.pdf",
+      filename: "run2025.pdf",
+      originalFilename: "run2025.pdf",
       description: "Oficjalny regulamin biegu organizowanego w Dolince"
     }
   ];

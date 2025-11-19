@@ -20,17 +20,147 @@
   },
   "Features": [
     {
-      "title": "Biesiada w Dolince",
-      "text": "Zapraszamy 19 września (piątek) o godzinie 18:00 do wspólnej zabawy podczas Biesiady w Dolince! 🎤🎹 Czekać na Was będą dania z grilla oraz wspólne śpiewanie przy ognisku 🔥 Zabawę muzyczną poprowadzi zespół Mat- Mix! Trzymajcie kciuki za dobrą pogodę 🙂",
-      "img": "img/akt/biesiada.jpg"
+      "title": "Zebranie Zarządu Osiedla Młodych.",
+      "text": "Zapraszamy na zebranie 25 listopada (wtorek) o godz. 18.30, miejsce: Szkoła Podstawowa nr 10",
+      "img": "img/akt/zebranie.jpg"
     },
     {
-      "title": "Pobiegnijmy razem",
-      "text": "🏃🏃‍♀️ 20 września (sobota) odbędzie się pierwszy bieg osiedlowy- 'Pobiegnijmy razem' !!!Na uczestników będą czekać trzy dystanse: 👉 3200 metrów dla dorosłych 👉 800 metrów marsz Nordic Walking 👉 400 metrów dla dzieci (różne kategorie wiekowe)",
-      "img": "img/akt/bieg.jpg"
+      "title": "Wspólnie ubierzmy choinkę!",
+      "text": "Kochani ❤️ Przewodczniący Wojciech Ozdoba razem z Kamilem Czopkiem przygotowali kolejną niespodziankę 🎁🌟 1️⃣3️⃣ grudnia o 15.00 na Dolince ubiorą razem z Wami świąteczną choinkę 🎄🌟🎄 Pod choinką muszą być prezenty 🎁🎁🎁 ale tym razem każdy z nas będzie mógł zostać św. Mikołajem 🎅🤶🔽 Do magicznych pudełek miłości, czułości i solidarności będziemy zbierać wszelkie artykuły chemii gospodarczej 🎁🔴 płyny do naczyń, podłóg, okien, chusteczki higieniczne i nawilżane, preparaty do WC, szampony, worki na śmieci, ściereczki i gąbki 👍",
+      "img": "img/akt/choinka.jpg"
     }
   ],
   "Gallery": [
+                               {
+      "title": "Biesiada w Dolince",
+      "largeImage": "/img/event/biesiada/1.jpg",
+      "smallImage": "/img/event/biesiada/1.jpg"
+    },
+                                   {
+      "title": "Biesiada w Dolince",
+      "largeImage": "/img/event/biesiada/2.jpg",
+      "smallImage": "/img/event/biesiada/2.jpg"
+    },
+                                   {
+      "title": "Biesiada w Dolince",
+      "largeImage": "/img/event/biesiada/3.jpg",
+      "smallImage": "/img/event/biesiada/3.jpg"
+    },
+                                   {
+      "title": "Biesiada w Dolince",
+      "largeImage": "/img/event/biesiada/4.jpg",
+      "smallImage": "/img/event/biesiada/4.jpg"
+    },
+                                   {
+      "title": "Biesiada w Dolince",
+      "largeImage": "/img/event/biesiada/5.jpg",
+      "smallImage": "/img/event/biesiada/5.jpg"
+    },
+                                   {
+      "title": "Biesiada w Dolince",
+      "largeImage": "/img/event/biesiada/6.jpg",
+      "smallImage": "/img/event/biesiada/6.jpg"
+    },
+                                   {
+      "title": "Biesiada w Dolince",
+      "largeImage": "/img/event/biesiada/7.jpg",
+      "smallImage": "/img/event/biesiada/7.jpg"
+    },
+                                   {
+      "title": "Biesiada w Dolince",
+      "largeImage": "/img/event/biesiada/8.jpg",
+      "smallImage": "/img/event/biesiada/8.jpg"
+    },
+                                   {
+      "title": "Biesiada w Dolince",
+      "largeImage": "/img/event/biesiada/9.jpg",
+      "smallImage": "/img/event/biesiada/9.jpg"
+    },
+                                   {
+      "title": "Biesiada w Dolince",
+      "largeImage": "/img/event/biesiada/10.jpg",
+      "smallImage": "/img/event/biesiada/10.jpg"
+    },
+                           {
+      "title": "I Bieg w Dolince",
+      "largeImage": "/img/event/run/1.jpg",
+      "smallImage": "/img/event/run/1.jpg"
+    },
+                           {
+      "title": "I Bieg w Dolince",
+      "largeImage": "/img/event/run/2.jpg",
+      "smallImage": "/img/event/run/2.jpg"
+    },
+                           {
+      "title": "I Bieg w Dolince",
+      "largeImage": "/img/event/run/3.jpg",
+      "smallImage": "/img/event/run/3.jpg"
+    },
+                           {
+      "title": "I Bieg w Dolince",
+      "largeImage": "/img/event/run/4.jpg",
+      "smallImage": "/img/event/run/4.jpg"
+    },
+                           {
+      "title": "I Bieg w Dolince",
+      "largeImage": "/img/event/run/5.jpg",
+      "smallImage": "/img/event/run/5.jpg"
+    },
+                           {
+      "title": "I Bieg w Dolince",
+      "largeImage": "/img/event/run/6.jpg",
+      "smallImage": "/img/event/run/6.jpg"
+    },
+                           {
+      "title": "I Bieg w Dolince",
+      "largeImage": "/img/event/run/7.jpg",
+      "smallImage": "/img/event/run/7.jpg"
+    },
+                           {
+      "title": "I Bieg w Dolince",
+      "largeImage": "/img/event/run/8.jpg",
+      "smallImage": "/img/event/run/8.jpg"
+    },
+                           {
+      "title": "I Bieg w Dolince",
+      "largeImage": "/img/event/run/9.jpg",
+      "smallImage": "/img/event/run/9.jpg"
+    },
+                           {
+      "title": "I Bieg w Dolince",
+      "largeImage": "/img/event/run/10.jpg",
+      "smallImage": "/img/event/run/10.jpg"
+    },
+                           {
+      "title": "I Bieg w Dolince",
+      "largeImage": "/img/event/run/11.jpg",
+      "smallImage": "/img/event/run/11.jpg"
+    },
+                           {
+      "title": "I Bieg w Dolince",
+      "largeImage": "/img/event/run/12.jpg",
+      "smallImage": "/img/event/run/12.jpg"
+    },
+                           {
+      "title": "I Bieg w Dolince",
+      "largeImage": "/img/event/run/13.jpg",
+      "smallImage": "/img/event/run/13.jpg"
+    },
+                           {
+      "title": "I Bieg w Dolince",
+      "largeImage": "/img/event/run/14.jpg",
+      "smallImage": "/img/event/run/14.jpg"
+    },
+                       {
+      "title": "I Bieg w Dolince",
+      "largeImage": "/img/event/run/15.jpg",
+      "smallImage": "/img/event/run/15.jpg"
+    },
+                           {
+      "title": "I Bieg w Dolince",
+      "largeImage": "/img/event/run/16.jpg",
+      "smallImage": "/img/event/run/16.jpg"
+    },
                    {
       "title": "IV turniej koszykówki w Dolince",
       "largeImage": "/img/event/kosz/1.jpg",

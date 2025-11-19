@@ -209,7 +209,7 @@ const Calendar = () => {
     },
     {
       id: 9,
-      date: "grudzień 2025",
+      date: "14 grudnia 2025",
       title: "Spotkanie Mikołajkowe",
       description: "Zapraszamy na magiczne Spotkanie Mikołajkowe! Czeka na Was świąteczna atmosfera, moc atrakcji i, oczywiście, wizyta Świętego Mikołaja! Nie zabraknie prezentów, zabaw i wspólnego kolędowania. Spędźmy razem ten wyjątkowy czas! 🎁🎶❄️",
       position: "left"

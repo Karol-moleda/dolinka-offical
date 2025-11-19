@@ -14,6 +14,60 @@
   min-height: 400px;
 }
 
+/* Style dla tabów kategorii */
+.gallery-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 30px;
+  padding: 0 15px;
+}
+
+.gallery-tab {
+  padding: 12px 20px;
+  border: 2px solid #e0e0e0;
+  background-color: #ffffff;
+  color: #333333;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  outline: none;
+}
+
+.gallery-tab:hover {
+  border-color: #608dfd;
+  background-color: #f8f9fa;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(96, 141, 253, 0.2);
+}
+
+.gallery-tab.active {
+  background-color: #608dfd;
+  color: #ffffff;
+  border-color: #608dfd;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(96, 141, 253, 0.3);
+}
+
+.tab-count {
+  margin-left: 8px;
+  font-size: 0.85em;
+  opacity: 0.8;
+}
+
+.gallery-info {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #666666;
+  font-style: italic;
+}
+
 /* Nowoczesna siatka galerii z CSS Grid */
 .modern-gallery-grid {
   display: grid;
@@ -457,4 +511,70 @@ body.dark-mode .lightbox-close:hover,
 body.dark-mode .lightbox-prev:hover,
 body.dark-mode .lightbox-next:hover {
   background-color: rgba(50, 50, 50, 0.8);
+}
+
+/* Dark mode styles dla tabów */
+body.dark-mode .gallery-tab {
+  border-color: #444444;
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+body.dark-mode .gallery-tab:hover {
+  border-color: #42a5f5;
+  background-color: #2a2a2a;
+  box-shadow: 0 4px 8px rgba(66, 165, 245, 0.2);
+}
+
+body.dark-mode .gallery-tab.active {
+  background-color: #42a5f5;
+  color: #000000;
+  border-color: #42a5f5;
+  box-shadow: 0 4px 12px rgba(66, 165, 245, 0.3);
+}
+
+body.dark-mode .gallery-info {
+  color: #cccccc;
+}
+
+/* Responsywność dla tabów */
+@media (max-width: 768px) {
+  .gallery-tabs {
+    gap: 6px;
+    padding: 0 10px;
+    margin-bottom: 20px;
+  }
+  
+  .gallery-tab {
+    padding: 8px 12px;
+    font-size: 12px;
+    border-radius: 20px;
+  }
+  
+  .tab-count {
+    display: none; /* Ukryj liczniki na małych ekranach */
+  }
+  
+  .gallery-info {
+    font-size: 12px;
+    margin-top: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-tabs {
+    gap: 4px;
+    padding: 0 5px;
+  }
+  
+  .gallery-tab {
+    padding: 6px 10px;
+    font-size: 11px;
+    border-radius: 15px;
+  }
+  
+  .modern-gallery-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    grid-gap: 15px;
+  }
 }

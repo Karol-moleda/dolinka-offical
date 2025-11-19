@@ -24,21 +24,51 @@ const GalleryContainer = styled.div`
     color: ${props => props.isDarkMode ? '#ffffff' : '#333333'};
   }
   
-  .pagination {
-    button, span {
-      font-size: inherit;
-      color: ${props => props.isDarkMode ? '#ffffff' : '#333333'};
-      background-color: ${props => props.isDarkMode ? '#1a1a1a' : '#f8f9fa'};
-      
-      &:hover {
-        background-color: ${props => props.isDarkMode ? '#333333' : '#e9ecef'};
-      }
-      
-      &.active {
-        background-color: ${props => props.isDarkMode ? '#42a5f5' : '#608dfd'};
-        color: ${props => props.isDarkMode ? '#000000' : '#ffffff'};
-      }
+  .gallery-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 30px;
+    padding: 0 15px;
+  }
+  
+  .gallery-tab {
+    font-size: inherit;
+    padding: 12px 20px;
+    border: 2px solid ${props => props.isDarkMode ? '#444444' : '#e0e0e0'};
+    background-color: ${props => props.isDarkMode ? '#1a1a1a' : '#ffffff'};
+    color: ${props => props.isDarkMode ? '#ffffff' : '#333333'};
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    
+    &:hover {
+      border-color: ${props => props.isDarkMode ? '#42a5f5' : '#608dfd'};
+      background-color: ${props => props.isDarkMode ? '#2a2a2a' : '#f8f9fa'};
+      transform: translateY(-2px);
     }
+    
+    &.active {
+      background-color: ${props => props.isDarkMode ? '#42a5f5' : '#608dfd'};
+      color: ${props => props.isDarkMode ? '#000000' : '#ffffff'};
+      border-color: ${props => props.isDarkMode ? '#42a5f5' : '#608dfd'};
+      font-weight: 600;
+    }
+    
+    .tab-count {
+      margin-left: 8px;
+      font-size: 0.85em;
+      opacity: 0.8;
+    }
+  }
+  
+  .gallery-info {
+    text-align: center;
+    margin-top: 20px;
+    font-size: inherit;
+    color: ${props => props.isDarkMode ? '#cccccc' : '#666666'};
   }
   
   .gallery-caption {
@@ -57,17 +87,41 @@ const GalleryContainer = styled.div`
 
 const Gallery = (props) => {
   const { fontSize, isDarkMode } = useTheme();
-  const [currentPage, setCurrentPage] = useState(1);
-  const imagesPerPage = 8; // Zmniejszenie liczby obrazów na stronę
   const [selectedImage, setSelectedImage] = useState(null);
   const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState('');
 
-  // Memoizacja obliczeń stron i widocznych obrazów
-  const { totalPages, visibleImages } = useMemo(() => {
-    const total = props.data ? Math.ceil(props.data.length / imagesPerPage) : 1;
-    const visible = props.data ? props.data.slice((currentPage - 1) * imagesPerPage, currentPage * imagesPerPage) : [];
-    return { totalPages: total, visibleImages: visible };
-  }, [props.data, currentPage, imagesPerPage]);
+  // Organizacja zdjęć według kategorii wydarzeń
+  const categories = useMemo(() => {
+    if (!props.data) return {};
+    
+    const grouped = props.data.reduce((acc, image) => {
+      const category = image.title || 'Inne';
+      if (!acc[category]) {
+        acc[category] = [];
+      }
+      acc[category].push(image);
+      return acc;
+    }, {});
+    
+    return grouped;
+  }, [props.data]);
+
+  const categoryNames = useMemo(() => {
+    return Object.keys(categories).sort();
+  }, [categories]);
+
+  // Ustawienie domyślnej aktywnej kategorii
+  useEffect(() => {
+    if (categoryNames.length > 0 && !activeTab) {
+      setActiveTab(categoryNames[0]);
+    }
+  }, [categoryNames, activeTab]);
+
+  // Pobranie zdjęć dla aktywnej kategorii
+  const visibleImages = useMemo(() => {
+    return categories[activeTab] || [];
+  }, [categories, activeTab]);
 
   // Helper do ścieżek
   const getImagePath = useCallback((path) => {
@@ -128,6 +182,23 @@ const Gallery = (props) => {
           <p>Zobacz zdjęcia z naszych działań i wydarzeń.</p>
         </div>
         <div className="gallery-container">
+          {/* Taby kategorii */}
+          {categoryNames.length > 1 && (
+            <div className="gallery-tabs">
+              {categoryNames.map((category, index) => (
+                <button
+                  key={category}
+                  className={`gallery-tab ${activeTab === category ? 'active' : ''}`}
+                  onClick={() => setActiveTab(category)}
+                >
+                  {category}
+                  <span className="tab-count">({categories[category]?.length || 0})</span>
+                </button>
+              ))}
+            </div>
+          )}
+          
+          {/* Galeria zdjęć */}
           <div className="modern-gallery-grid">
             {visibleImages.map((image, index) => (
               <div className="gallery-item" key={`${image.title}-${index}`}> 
@@ -142,24 +213,11 @@ const Gallery = (props) => {
               </div>
             ))}
           </div>
-          {/* Paginacja */}
-          {totalPages > 1 && (
-            <div className="gallery-pagination">
-              <ul className="pagination">
-                <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-                  <button className="page-link" onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>&laquo;</button>
-                </li>
-                {[...Array(totalPages)].map((_, idx) => (
-                  <li key={idx+1} className={`page-item ${currentPage === idx+1 ? 'active' : ''}`}>
-                    <button className="page-link" onClick={() => setCurrentPage(idx+1)}>{idx+1}</button>
-                  </li>
-                ))}
-                <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-                  <button className="page-link" onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === totalPages}>&raquo;</button>
-                </li>
-              </ul>
-            </div>
-          )}
+          
+          {/* Informacja o liczbie zdjęć */}
+          <div className="gallery-info">
+            <p>Wyświetlane: {visibleImages.length} zdjęć w kategorii "{activeTab}"</p>
+          </div>
         </div>
         {/* Lightbox */}
         {lightboxOpen && selectedImage && (
