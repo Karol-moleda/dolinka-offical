@@ -20,17 +20,97 @@
   },
   "Features": [
     {
-      "title": "Zebranie Zarządu Osiedla Młodych.",
-      "text": "Zapraszamy na zebranie 25 listopada (wtorek) o godz. 18.30, miejsce: Szkoła Podstawowa nr 10",
-      "img": "img/akt/zebranie.jpg"
-    },
-    {
-      "title": "Wspólnie ubierzmy choinkę!",
-      "text": "Kochani ❤️ Przewodczniący Wojciech Ozdoba razem z Kamilem Czopkiem przygotowali kolejną niespodziankę 🎁🌟 1️⃣3️⃣ grudnia o 15.00 na Dolince ubiorą razem z Wami świąteczną choinkę 🎄🌟🎄 Pod choinką muszą być prezenty 🎁🎁🎁 ale tym razem każdy z nas będzie mógł zostać św. Mikołajem 🎅🤶🔽 Do magicznych pudełek miłości, czułości i solidarności będziemy zbierać wszelkie artykuły chemii gospodarczej 🎁🔴 płyny do naczyń, podłóg, okien, chusteczki higieniczne i nawilżane, preparaty do WC, szampony, worki na śmieci, ściereczki i gąbki 👍",
-      "img": "img/akt/choinka.jpg"
+      "title": "Wesołych Świąt",
+      "text": "Drodzy Mieszkańcy Osiedla Młodych oraz wszyscy Mieszkańcy Olkusza! \nZ okazji zbliżających się Świąt Bożego Narodzenia, w imieniu Zarządu Osiedla Młodych oraz własnym, pragnę złożyć Państwu najserdeczniejsze życzenia. \nNiech ten szczególny czas będzie wypełniony spokojem, wzajemną życzliwością i radością z przebywania w gronie najbliższych. Życzymy Państwu, aby betlejemskie światło przyniosło nadzieję i energię do realizacji wszelkich planów, a nadchodzący Nowy Rok 2026 był czasem pomyślności, zdrowia i sąsiedzkiej serdeczności.\nWesołych Świąt! \nWasz Przewodniczący \nWojciech Ozdoba",
+      "img": "img/news/zyczenia.jpg"
     }
   ],
   "Gallery": [
+                                   {
+      "title": "Mikołaj w Dolince",
+      "largeImage": "/img/event/miko/1.jpg",
+      "smallImage": "/img/event/miko/1.jpg"
+    },
+                                       {
+      "title": "Mikołaj w Dolince",
+      "largeImage": "/img/event/miko/2.jpg",
+      "smallImage": "/img/event/miko/2.jpg"
+    },
+                                           {
+      "title": "Mikołaj w Dolince",
+      "largeImage": "/img/event/miko/3.jpg",
+      "smallImage": "/img/event/miko/3.jpg"
+    },
+                                           {
+      "title": "Mikołaj w Dolince",
+      "largeImage": "/img/event/miko/4.jpg",
+      "smallImage": "/img/event/miko/4.jpg"
+    },
+                                           {
+      "title": "Mikołaj w Dolince",
+      "largeImage": "/img/event/miko/5.jpg",
+      "smallImage": "/img/event/miko/5.jpg"
+    },
+                                               {
+      "title": "Mikołaj w Dolince",
+      "largeImage": "/img/event/miko/6.jpg",
+      "smallImage": "/img/event/miko/6.jpg"
+    },
+                                               {
+      "title": "Mikołaj w Dolince",
+      "largeImage": "/img/event/miko/7.jpg",
+      "smallImage": "/img/event/miko/7.jpg"
+    },
+                                               {
+      "title": "Mikołaj w Dolince",
+      "largeImage": "/img/event/miko/8.jpg",
+      "smallImage": "/img/event/miko/8.jpg"
+    },
+                                               {
+      "title": "Mikołaj w Dolince",
+      "largeImage": "/img/event/miko/9.jpg",
+      "smallImage": "/img/event/miko/9.jpg"
+    },
+                                               {
+      "title": "Mikołaj w Dolince",
+      "largeImage": "/img/event/miko/10.jpg",
+      "smallImage": "/img/event/miko/10.jpg"
+    },
+                                               {
+      "title": "Mikołaj w Dolince",
+      "largeImage": "/img/event/miko/11.jpg",
+      "smallImage": "/img/event/miko/11.jpg"
+    },
+                                               {
+      "title": "Mikołaj w Dolince",
+      "largeImage": "/img/event/miko/12.jpg",
+      "smallImage": "/img/event/miko/12.jpg"
+    },
+                                               {
+      "title": "Mikołaj w Dolince",
+      "largeImage": "/img/event/miko/13.jpg",
+      "smallImage": "/img/event/miko/13.jpg"
+    },
+                                               {
+      "title": "Mikołaj w Dolince",
+      "largeImage": "/img/event/miko/14.jpg",
+      "smallImage": "/img/event/miko/14.jpg"
+    },
+                                               {
+      "title": "Mikołaj w Dolince",
+      "largeImage": "/img/event/miko/15.jpg",
+      "smallImage": "/img/event/miko/15.jpg"
+    },
+                                               {
+      "title": "Mikołaj w Dolince",
+      "largeImage": "/img/event/miko/16.jpg",
+      "smallImage": "/img/event/miko/16.jpg"
+    },
+                                               {
+      "title": "Mikołaj w Dolince",
+      "largeImage": "/img/event/miko/17.jpg",
+      "smallImage": "/img/event/miko/17.jpg"
+    },
                                {
       "title": "Biesiada w Dolince",
       "largeImage": "/img/event/biesiada/1.jpg",

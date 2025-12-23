@@ -79,7 +79,8 @@ const Features = ({ data }) => {
         <div className="section-title">
           <h2>AKTUALNOŚCI</h2>
           <p>Najnowsze wydarzenia i inicjatywy w naszej społeczności</p>
-        </div>        <div className="carousel-container">
+        </div>
+        <div className="carousel-container">
           <div className="carousel-wrapper">
             <Carousel
               showArrows={true}
@@ -101,7 +102,14 @@ const Features = ({ data }) => {
                     </div>
                     <div className="text-box">
                       <h3>{item.title}</h3>
-                      <p>{item.text}</p>
+                      <p>
+                        {item.text.split('\n').map((line, idx, arr) => (
+                          <React.Fragment key={idx}>
+                            {line}
+                            {idx < arr.length - 1 && <br />}
+                          </React.Fragment>
+                        ))}
+                      </p>
                     </div>
                   </div>
                 </div>
