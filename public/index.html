@@ -3,8 +3,60 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Oficjalna strona Zarządu Osiedla Młodych w Olkuszu" />
+  <meta name="description" content="Oficjalna strona Zarządu Osiedla Młodych w Olkuszu - Aktualności, wydarzenia i informacje dla mieszkańców." />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="googlebot" content="index, follow, max-image-preview:large" />
+  <meta name="author" content="Zarząd Osiedla Młodych w Olkuszu" />
   <meta name="theme-color" content="#006400" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pl_PL" />
+  <meta property="og:site_name" content="Dolinka" />
+  <meta property="og:url" content="https://dolinka.olkusz.pl/" />
+  <meta property="og:title" content="Dolinka - Zarząd Osiedla Młodych w Olkuszu" />
+  <meta property="og:description" content="Oficjalna strona Zarządu Osiedla Młodych w Olkuszu - Aktualności, wydarzenia i informacje dla mieszkańców." />
+  <meta property="og:image" content="https://dolinka.olkusz.pl/img/logo.jpg" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://dolinka.olkusz.pl/" />
+  <meta property="twitter:title" content="Dolinka - Zarząd Osiedla Młodych w Olkuszu" />
+  <meta property="twitter:description" content="Oficjalna strona Zarządu Osiedla Młodych w Olkuszu - Aktualności, wydarzenia i informacje dla mieszkańców." />
+  <meta property="twitter:image" content="https://dolinka.olkusz.pl/img/logo.jpg" />
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://dolinka.olkusz.pl/" />
+
+  <!-- Google Analytics (GA4) -->
+  <!-- Zastąp G-XXXXXXXXXX swoim identyfikatorem śledzenia -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "GovernmentOrganization",
+      "name": "Zarząd Osiedla Młodych w Olkuszu",
+      "url": "https://dolinka.olkusz.pl/",
+      "logo": "https://dolinka.olkusz.pl/img/logo.jpg",
+      "email": "mailto:dolinka.olkusz@gmail.com",
+      "telephone": "+48789595848",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Osiedle Młodych",
+        "postalCode": "32-300",
+        "addressLocality": "Olkusz",
+        "addressCountry": "PL"
+      }
+    }
+  </script>
   
   <!-- Favicon -->
   <link rel="shortcut icon" href="/img/logo.jpg" type="image/x-icon" />
@@ -33,6 +85,7 @@
   <title>Dolinka - Zarząd Osiedla Młodych w Olkuszu</title>
 </head>
 <body>
+  <noscript>Strona Dolinka działa najlepiej z włączonym JavaScript.</noscript>
   <div id="root"></div>
   <script type="text/javascript" src="/js/jquery.1.11.1.js"></script>
   <script type="text/javascript" src="/js/bootstrap.js"></script>

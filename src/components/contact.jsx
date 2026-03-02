@@ -68,6 +68,16 @@ const ContactContainer = styled.div`
 
 export const Contact = (props) => {
   const { fontSize, isDarkMode } = useTheme();
+
+  const trackContactEvent = (action, label) => {
+    if (typeof window !== "undefined" && typeof window.gtag === "function") {
+      window.gtag("event", action, {
+        event_category: "contact",
+        event_label: label,
+      });
+    }
+  };
+
   return (
     <ContactContainer fontSize={fontSize} isDarkMode={isDarkMode}>
       <div id="contact" className={isDarkMode ? "dark-contact" : "light-contact"}>
@@ -92,7 +102,15 @@ export const Contact = (props) => {
               <div className="contact-info">
                 <h3>Telefony</h3>
                 <div className="contact-item">
-                  <span><i className="fa fa-phone"></i> 32 6260100</span>
+                  <span>
+                    <i className="fa fa-phone"></i>{" "}
+                    <a
+                      href="tel:+48326260100"
+                      onClick={() => trackContactEvent("click_phone", "urzad_miasta")}
+                    >
+                      32 6260100
+                    </a>
+                  </span>
                   <p>Urząd Miasta w Olkuszu</p>
                 </div>
                 <div className="contact-item">
@@ -140,11 +158,25 @@ export const Contact = (props) => {
                 </div>
                 <div className="contact-item">
                   <span><i className="fa fa-phone"></i> Przewodniczący Osiedla Młodych</span>
-                  <p>789 595 848</p>
+                  <p>
+                    <a
+                      href="tel:+48789595848"
+                      onClick={() => trackContactEvent("click_phone", "przewodniczacy")}
+                    >
+                      789 595 848
+                    </a>
+                  </p>
                 </div>
                 <div className="contact-item">
                   <span><i className="fa fa-envelope-o"></i> Email</span>
-                  <p>dolinka.olkusz@gmail.com</p>
+                  <p>
+                    <a
+                      href="mailto:dolinka.olkusz@gmail.com"
+                      onClick={() => trackContactEvent("click_email", "kontakt_email")}
+                    >
+                      dolinka.olkusz@gmail.com
+                    </a>
+                  </p>
                 </div>
               </div>
             </div>
@@ -155,7 +187,11 @@ export const Contact = (props) => {
               <div className="social">
                 <ul>
                   <li>
-                    <a href={props.data ? props.data.facebook : "/"} className="social-link">
+                    <a
+                      href={props.data ? props.data.facebook : "/"}
+                      className="social-link"
+                      onClick={() => trackContactEvent("click_social", "facebook")}
+                    >
                       <i className="fa fa-facebook"></i>
                     </a>
                   </li>

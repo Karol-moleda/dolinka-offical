@@ -55,7 +55,7 @@ function About(props) {
       <div className="container" style={darkModeStyle}>
         <div className="row" style={darkModeStyle}>
           <div className="col-xs-12 col-md-6" style={darkModeStyle}>
-            <img src="img/zarzad.jpg" className="img-responsive" alt="zarząd" />
+            <img src="img/zarzad.jpg" className="img-responsive" alt="Członkowie Zarządu Osiedla Młodych w Olkuszu" />
           </div>
           <div className="col-xs-12 col-md-6" style={darkModeStyle}>
             <AboutText fontSize={fontSize} isDarkMode={isDarkMode} style={darkModeStyle}>

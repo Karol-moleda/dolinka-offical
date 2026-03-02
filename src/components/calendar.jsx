@@ -153,65 +153,65 @@ const Calendar = () => {
   const events = [
     {
       id: 1,
-      date: "13 kwietnia 2025",
+      date: "29 marca 2026",
       title: "Festyn Wielkanocny",
-      description: "Zapraszamy na Festyn Wielkanocny! Szukanie jajek czekoladowych, występy artystyczne, warsztaty plastyczne dla dorosłych i dzieci, pyszny wielkanocny poczęstunek oraz świąteczną atmosfera🐣",
+      description: "Zapraszamy na Festyn Wielkanocny! Szukanie jajek czekoladowych, występy artystyczne, warsztaty plastyczne dla dorosłych i dzieci, pyszny wielkanocny poczęstunek oraz świąteczna atmosfera 🐣",
       position: "left"
     },
     {
       id: 2,
-      date: "26 kwietnia 2025",
-      title: "Wiosenne sprzątanie",
-      description: "Zapraszamy wszystkich mieszkańców do wspólnego sprzątania naszej okolicy! To świetna okazja, by zadbać o czystość i przywitać wiosnę w pięknym otoczeniu. Razem możemy więcej! 💪♻️",
+      date: "2 maja 2026",
+      title: "Piknik Patriotyczny",
+      description: "Świętujmy razem majówkę! Zapraszamy na Piknik Patriotyczny z atrakcjami dla całych rodzin, wspólnym śpiewaniem pieśni patriotycznych i grochówką. Pokażmy naszą dumę i radość ze wspólnoty! 🇵🇱",
       position: "right"
     },
     {
       id: 3,
-      date: "6 czerwca 2025",
-      title: "Dzień dziecka",
-      description: "Zapraszamy na radosny festyn z okazji Dnia Dziecka przy Szkole Podstawowej nr 10! Czeka mnóstwo atrakcji, zabaw i niespodzianek dla najmłodszych. Nie zabraknie konkursów, animacji i słodkich upominków. Spędźmy ten dzień pełen uśmiechu razem! 🎊👧🧒💖",
+      date: "24 maja 2026",
+      title: "Festiwal Dmuchańców",
+      description: "Prawdziwe szaleństwo dla najmłodszych! Wielki Festiwal Dmuchańców to dzień pełen skakania, zjeżdżania i niesamowitej zabawy. Gwarantujemy uśmiech na twarzy każdego dziecka! 🏰🎈",
       position: "left"
     },
     {
       id: 4,
-      date: "20 lipca 2025",
-      title: "IV Turniej Siatkówki",
-      description: "Zapraszamy na czwartą edycję Turnieju Siatkówki! To doskonała okazja do sportowej rywalizacji, dobrej zabawy i integracji. Nie zabraknie emocjonujących meczów, ducha fair play i pozytywnej energii. Dołącz do nas i wspólnie przeżyjmy sportowe emocje! 💪🔥",
+      date: "25 lipca 2026",
+      title: "Kino Plenerowe",
+      description: "Magia kina pod gwiazdami powraca! Zabierzcie koce i leżaki, by wspólnie obejrzeć filmowy hit tego lata. Niezapomniana atmosfera i popcorn gratis! 🎬🍿🌌",
       position: "right"
     },
     {
       id: 5,
-      date: "9 sierpnia 2025",
-      title: "X Kino plenerowe",
-      description: "Zapraszamy na jubileuszową, dziesiątą edycję Kina Plenerowego! Czeka na Was niezapomniany seans pod gołym niebem, magiczna atmosfera i świetne kino. Weźcie koc, coś do przekąszenia i spędźmy razem wieczór pełen filmowych emocji! 🎥✨🍿",
+      date: "26 lipca 2026",
+      title: "Turniej Siatkówki",
+      description: "Sportowe emocje na piasku! Zapraszamy drużyny i kibiców na Turniej Siatkówki. Czeka nas rywalizacja w duchu fair play, słońce i świetna zabawa. Dołącz do gry! 🏐☀️",
       position: "left"
     },
     {
       id: 6,
-      date: "24 sierpnia 2025",
-      title: "III Turniej Koszykówki 3x3",
-      description: "Zapraszamy na trzecią edycję Turnieju Koszykówki 3x3! Szybka akcja, dynamiczna gra i sportowe emocje gwarantowane. Zbierz drużynę, pokaż swoje umiejętności i walcz o zwycięstwo! Do zobaczenia na boisku! ⛹️‍♂️🏆🔥",
+      date: "21 sierpnia 2026",
+      title: "Potańcówka w Dolince",
+      description: "Tanecznym krokiem żegnamy lato! Zapraszamy na sąsiedzką potańcówkę przy najlepszych przebojach. Niech nogi same niosą do tańca – dobra zabawa gwarantowana dla każdego! 💃🕺🎵",
       position: "right"
     },
     {
       id: 7,
-      date: "19 września 2025",
-      title: "Biesiada(potańcówka) zakończenie lata",
-      description: "Czekają na nas pieczone ziemniaki prosto z ogniska, wspólne śpiewanie i radosne spędzenie czasu w gronie sąsiadów i przyjaciół. Niech to będzie wieczór pełen ciepła, muzyki i dobrej zabawy!",
+      date: "23 sierpnia 2026",
+      title: "Turniej Koszykówki 3x3",
+      description: "Streetball w najlepszym wydaniu!Turniej Koszykówki 3x3 to szybkość, technika i walka pod koszem. Zbierz ekpię i walcz o puchar Dolinki! 🏀🏆",
       position: "left"
     },
-        {
+    {
       id: 8,
-      date: "20 września 2025",
-      title: "Pobiegnijmy razem-bieg osiedlowy",
-      description: "Zapraszamy do udziału w sportowej zabawie dla wszystkich – bez względu na wiek i formę! Oprócz samego biegu czeka na Was mnóstwo atrakcji. To doskonała okazja, by spędzić aktywnie czas z rodziną, sąsiadami i przyjaciółmi.",
+      date: "18 września 2026",
+      title: "Zebranie Ogólne i Potańcówka",
+      description: "Ważne sprawy i wspólna zabawa. Zapraszamy na zebranie ogólne mieszkańców, po którym zintegrujemy się podczas jesiennej potańcówki. Wasz głos i obecność są dla nas ważne! 🗣️🍂💃",
       position: "right"
     },
     {
       id: 9,
-      date: "14 grudnia 2025",
-      title: "Spotkanie Mikołajkowe",
-      description: "Zapraszamy na magiczne Spotkanie Mikołajkowe! Czeka na Was świąteczna atmosfera, moc atrakcji i, oczywiście, wizyta Świętego Mikołaja! Nie zabraknie prezentów, zabaw i wspólnego kolędowania. Spędźmy razem ten wyjątkowy czas! 🎁🎶❄️",
+      date: "13 grudnia 2026",
+      title: "Mikołajki",
+      description: "Ho, ho, ho! Święty Mikołaj odwiedzi Dolinkę! Zapraszamy wszystkie dzieci na spotkanie z Mikołajem, prezenty i wspólne kolędowanie. Poczujmy magię Świąt! 🎅🎄🎁",
       position: "left"
     },
   ];
