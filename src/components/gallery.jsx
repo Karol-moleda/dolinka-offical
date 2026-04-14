@@ -89,13 +89,78 @@ const Gallery = (props) => {
   const { fontSize, isDarkMode } = useTheme();
   const [selectedImage, setSelectedImage] = useState(null);
   const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [activeYear, setActiveYear] = useState("");
   const [activeTab, setActiveTab] = useState('');
 
-  // Organizacja zdjęć według kategorii wydarzeń
+  const extraImages2026 = useMemo(
+    () => Array.from({ length: 14 }, (_, index) => {
+      const imageNumber = index + 1;
+      const imagePath = `/img/event/2026/wielkanoc-${imageNumber}.jpg`;
+
+      return {
+        title: "Wielkanoc 2026",
+        year: "2026",
+        largeImage: imagePath,
+        smallImage: imagePath,
+      };
+    }),
+    []
+  );
+
+  const allImages = useMemo(() => {
+    const baseImages = Array.isArray(props.data) ? props.data : [];
+    const has2026Wielkanoc = baseImages.some((image) =>
+      String(image?.smallImage || image?.largeImage || "").includes("/img/event/2026/")
+    );
+
+    return has2026Wielkanoc ? baseImages : [...baseImages, ...extraImages2026];
+  }, [props.data, extraImages2026]);
+
+  const normalizeImagePath = useCallback((path) => {
+    if (!path) return "";
+
+    let normalizedPath = String(path).trim().replace(/\\/g, "/");
+    if (!normalizedPath.startsWith("/")) {
+      normalizedPath = `/${normalizedPath}`;
+    }
+
+    if (/^\/img\/event\/(?!2025\/|2026\/)/.test(normalizedPath)) {
+      normalizedPath = normalizedPath.replace(/^\/img\/event\//, "/img/event/2025/");
+    }
+
+    return normalizedPath;
+  }, []);
+
+  const galleryImages = useMemo(() => {
+    return allImages.map((image) => {
+      const normalizedSmall = normalizeImagePath(image.smallImage);
+      const normalizedLarge = normalizeImagePath(image.largeImage);
+      const sourcePath = normalizedSmall || normalizedLarge;
+
+      const yearMatch = sourcePath.match(/\/img\/event\/(2025|2026)\//);
+      const year = image.year || (yearMatch ? yearMatch[1] : "Inne");
+
+      return {
+        ...image,
+        year,
+        smallImage: normalizedSmall,
+        largeImage: normalizedLarge,
+      };
+    }).filter((image) => image.year === "2025" || image.year === "2026");
+  }, [allImages, normalizeImagePath]);
+
+  const years = useMemo(() => {
+    const orderedYears = ["2026", "2025"];
+    return orderedYears.filter((year) => galleryImages.some((image) => image.year === year));
+  }, [galleryImages]);
+
+  // Organizacja zdjęć według kategorii wydarzeń (w obrębie roku)
   const categories = useMemo(() => {
-    if (!props.data) return {};
+    if (!galleryImages.length || !activeYear) return {};
     
-    const grouped = props.data.reduce((acc, image) => {
+    const grouped = galleryImages
+      .filter((image) => image.year === activeYear)
+      .reduce((acc, image) => {
       const category = image.title || 'Inne';
       if (!acc[category]) {
         acc[category] = [];
@@ -105,15 +170,28 @@ const Gallery = (props) => {
     }, {});
     
     return grouped;
-  }, [props.data]);
+  }, [galleryImages, activeYear]);
 
   const categoryNames = useMemo(() => {
     return Object.keys(categories).sort();
   }, [categories]);
 
+  // Ustawienie domyślnego roku
+  useEffect(() => {
+    if (years.length > 0 && !activeYear) {
+      setActiveYear(years[0]);
+    }
+  }, [years, activeYear]);
+
   // Ustawienie domyślnej aktywnej kategorii
   useEffect(() => {
     if (categoryNames.length > 0 && !activeTab) {
+      setActiveTab(categoryNames[0]);
+    }
+  }, [categoryNames, activeTab]);
+
+  useEffect(() => {
+    if (categoryNames.length > 0 && !categoryNames.includes(activeTab)) {
       setActiveTab(categoryNames[0]);
     }
   }, [categoryNames, activeTab]);
@@ -141,16 +219,17 @@ const Gallery = (props) => {
   }, []);
 
   const navigateImage = useCallback((direction) => {
-    if (!selectedImage || !props.data) return;
-    const currentIndex = props.data.findIndex(img => img.largeImage === selectedImage.largeImage);
+    if (!selectedImage || !visibleImages.length) return;
+    const currentIndex = visibleImages.findIndex(img => img.largeImage === selectedImage.largeImage);
+    if (currentIndex === -1) return;
     let newIndex;
     if (direction === 'next') {
-      newIndex = (currentIndex + 1) % props.data.length;
+      newIndex = (currentIndex + 1) % visibleImages.length;
     } else {
-      newIndex = (currentIndex - 1 + props.data.length) % props.data.length;
+      newIndex = (currentIndex - 1 + visibleImages.length) % visibleImages.length;
     }
-    setSelectedImage(props.data[newIndex]);
-  }, [selectedImage, props.data]);
+    setSelectedImage(visibleImages[newIndex]);
+  }, [selectedImage, visibleImages]);
 
   // Obsługa klawiszy w lightboxie
   useEffect(() => {
@@ -170,7 +249,7 @@ const Gallery = (props) => {
   }, [lightboxOpen, navigateImage, closeLightbox]);
 
   // Render
-  if (!props.data) {
+  if (!galleryImages.length) {
     return <div>Ładowanie galerii...</div>;
   }
 
@@ -179,13 +258,34 @@ const Gallery = (props) => {
       <div className="container">
         <div className="section-title">
           <h2>Galeria</h2>
-          <p>Zobacz zdjęcia z naszych działań i wydarzeń.</p>
+          <p>Zobacz zdjęcia z naszych działań i wydarzeń z lat 2025 i 2026.</p>
         </div>
         <div className="gallery-container">
+          {/* Taby lat */}
+          {years.length > 1 && (
+            <div className="gallery-tabs" style={{ marginBottom: "15px" }}>
+              {years.map((year) => (
+                <button
+                  key={year}
+                  className={`gallery-tab ${activeYear === year ? "active" : ""}`}
+                  onClick={() => {
+                    setActiveYear(year);
+                    setActiveTab("");
+                  }}
+                >
+                  Rok {year}
+                  <span className="tab-count">
+                    ({galleryImages.filter((image) => image.year === year).length})
+                  </span>
+                </button>
+              ))}
+            </div>
+          )}
+
           {/* Taby kategorii */}
           {categoryNames.length > 1 && (
             <div className="gallery-tabs">
-              {categoryNames.map((category, index) => (
+              {categoryNames.map((category) => (
                 <button
                   key={category}
                   className={`gallery-tab ${activeTab === category ? 'active' : ''}`}
@@ -216,7 +316,7 @@ const Gallery = (props) => {
           
           {/* Informacja o liczbie zdjęć */}
           <div className="gallery-info">
-            <p>Wyświetlane: {visibleImages.length} zdjęć w kategorii "{activeTab}"</p>
+            <p>Wyświetlane: {visibleImages.length} zdjęć z roku {activeYear} w kategorii "{activeTab}"</p>
           </div>
         </div>
         {/* Lightbox */}
