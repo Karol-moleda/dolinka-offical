@@ -5,27 +5,34 @@ import '../styles/components/ToggleSwitch.css';
 
 const AccessibilityContainer = styled.div`
   position: fixed;
-  right: 20px;
-  top: 100px;
+  right: 16px;
+  top: ${props => props.isCollapsed ? 'auto' : '88px'};
+  bottom: ${props => props.isCollapsed ? '16px' : 'auto'};
   z-index: 1000;
   display: flex;
   flex-direction: column;
   background-color: ${props => props.theme.cardBackground};
-  padding: ${props => props.isCollapsed ? '8px' : '15px'};
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  padding: ${props => props.isCollapsed ? '8px' : '16px'};
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.16);
   border: 1px solid ${props => props.isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)'};
   backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
-  width: ${props => props.isCollapsed ? 'auto' : '200px'};
+  transition: all 0.25s ease;
+  width: ${props => props.isCollapsed ? 'auto' : '240px'};
+  max-width: calc(100vw - 24px);
   
   &:hover {
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.2);
   }
   
   @media (max-width: 768px) {
-    right: 15px;
-    padding: ${props => props.isCollapsed ? '6px' : '12px'};
+    right: 12px;
+    bottom: 12px;
+    top: auto;
+    width: ${props => props.isCollapsed ? 'auto' : 'min(92vw, 320px)'};
+    max-height: ${props => props.isCollapsed ? 'none' : '80vh'};
+    overflow-y: ${props => props.isCollapsed ? 'visible' : 'auto'};
+    padding: ${props => props.isCollapsed ? '6px' : '14px'};
   }
 `;
 
@@ -88,14 +95,14 @@ const PanelTitle = styled.h3`
 
 const CollapseButton = styled.button`
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 10px;
+  right: 10px;
   background: ${props => props.theme.primary};
   color: ${props => props.theme.buttonColor};
   border: none;
   border-radius: 50%;
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -113,20 +120,29 @@ const CollapseButton = styled.button`
 const CollapsedIcon = styled.div`
   background: ${props => props.theme.primary};
   color: ${props => props.theme.buttonColor};
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  border-radius: 999px;
+  width: 52px;
+  height: 52px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 20px;
+  font-weight: 700;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease;
   
   &:hover {
     background: ${props => props.theme.primaryHover};
     transform: scale(1.1);
   }
+`;
+
+const PanelBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
 `;
 
 const AccessibilityPanel = () => {
@@ -138,7 +154,7 @@ const AccessibilityPanel = () => {
     decreaseFontSize 
   } = useTheme();
   
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
   
   const toggleCollapse = () => {
     setIsCollapsed(!isCollapsed);
@@ -162,40 +178,42 @@ const AccessibilityPanel = () => {
       <CollapseButton onClick={toggleCollapse}>
         ×
       </CollapseButton>
-      <PanelTitle isDarkMode={isDarkMode}>Dostępność</PanelTitle>
-      <ToggleContainer>
-        <ToggleLabel>Tryb ciemny:</ToggleLabel>
-        <label className="switch">
-          <input 
-            type="checkbox" 
-            checked={isDarkMode} 
-            onChange={toggleTheme}
-          />
-          <span className="slider round"></span>
-        </label>
-      </ToggleContainer>
-      
-      <ToggleContainer>
-        <ToggleLabel>Rozmiar tekstu: {fontSize}px</ToggleLabel>
-      </ToggleContainer>
-      
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <AccessibilityButton 
-          onClick={decreaseFontSize} 
-          disabled={fontSize <= 12}
-          style={{ opacity: fontSize <= 12 ? 0.5 : 1 }}
-        >
-          A-
-        </AccessibilityButton>
+      <PanelTitle isDarkMode={isDarkMode}>Ułatwienia</PanelTitle>
+      <PanelBody>
+        <ToggleContainer>
+          <ToggleLabel>Tryb ciemny:</ToggleLabel>
+          <label className="switch">
+            <input 
+              type="checkbox" 
+              checked={isDarkMode} 
+              onChange={toggleTheme}
+            />
+            <span className="slider round"></span>
+          </label>
+        </ToggleContainer>
         
-        <AccessibilityButton 
-          onClick={increaseFontSize} 
-          disabled={fontSize >= 24}
-          style={{ opacity: fontSize >= 24 ? 0.5 : 1 }}
-        >
-          A+
-        </AccessibilityButton>
-      </div>
+        <ToggleContainer>
+          <ToggleLabel>Rozmiar tekstu: {fontSize}px</ToggleLabel>
+        </ToggleContainer>
+        
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <AccessibilityButton 
+            onClick={decreaseFontSize} 
+            disabled={fontSize <= 12}
+            style={{ opacity: fontSize <= 12 ? 0.5 : 1 }}
+          >
+            A-
+          </AccessibilityButton>
+          
+          <AccessibilityButton 
+            onClick={increaseFontSize} 
+            disabled={fontSize >= 24}
+            style={{ opacity: fontSize >= 24 ? 0.5 : 1 }}
+          >
+            A+
+          </AccessibilityButton>
+        </div>
+      </PanelBody>
     </AccessibilityContainer>
   );
 };
