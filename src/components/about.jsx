@@ -59,7 +59,7 @@ function About(props) {
           </div>
           <div className="col-xs-12 col-md-6" style={darkModeStyle}>
             <AboutText fontSize={fontSize} isDarkMode={isDarkMode} style={darkModeStyle}>
-              <h2>O nas</h2>
+              <h2>O Dolince i Osiedlu Młodych w Olkuszu</h2>
               {props.data ? (
                 <div>
                   <p>{props.data.paragraph}</p>

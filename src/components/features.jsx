@@ -77,8 +77,8 @@ const Features = ({ data }) => {
     <FeaturesContainer fontSize={fontSize} isDarkMode={isDarkMode} id="features" className="text-center">
       <div className="container">
         <div className="section-title">
-          <h2>AKTUALNOŚCI</h2>
-          <p>Najnowsze wydarzenia i inicjatywy w naszej społeczności</p>
+          <h2>Aktualności Dolinka Olkusz</h2>
+          <p>Najnowsze wydarzenia, imprezy i inicjatywy na Osiedlu Młodych w Olkuszu.</p>
         </div>
         <div className="carousel-container">
           <div className="carousel-wrapper">

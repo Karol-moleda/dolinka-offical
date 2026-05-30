@@ -87,11 +87,11 @@ export const Contact = (props) => {
               <div className="section-title">
                 <h2>Kontakt</h2>
                 <p>
-                  Jeśli masz ochotę spotkać się, porozmawiać, podzielić się swoimi
-                  pomysłami lub po prostu lepiej nas poznać – serdecznie zapraszamy
-                  do kontaktu! Jesteśmy otwarci na wszelkie sugestie, pytania i
-                  inicjatywy. Razem możemy tworzyć jeszcze lepsze miejsce do
-                  życia, więc nie wahaj się do nas zgłosić!
+                  Skontaktuj się z nami, jeśli chcesz współtworzyć Dolinkę,
+                  zgłosić sprawę na Osiedlu Młodych w Olkuszu, zaproponować
+                  wydarzenie albo uzyskać informacje o działaniach Zarządu
+                  Osiedla Młodych. Jesteśmy otwarci na pytania, inicjatywy i
+                  współpracę z mieszkańcami Olkusza.
                 </p>
               </div>
             </div>

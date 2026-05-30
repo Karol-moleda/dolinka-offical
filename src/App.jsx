@@ -2,6 +2,7 @@
 import React, { Suspense, lazy, useState, useEffect } from "react";
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import JsonData from "./data/data.json";
+import { fetchSheetFeatures } from "./utils/googleSheets";
 
 // Import consolidated style files
 import GlobalStyles from "./styles/base/GlobalStyles";
@@ -27,6 +28,32 @@ function App() {
 
   useEffect(() => {
     setLandingPageData(JsonData);
+
+    let isCancelled = false;
+
+    const loadSheetFeatures = async () => {
+      try {
+        const features = await fetchSheetFeatures();
+
+        if (!isCancelled) {
+          setLandingPageData((currentData) => ({
+            ...currentData,
+            Features: features,
+          }));
+        }
+      } catch (error) {
+        console.warn(
+          "Nie udalo sie pobrac wydarzen z Google Sheets. Pozostaja dane lokalne.",
+          error
+        );
+      }
+    };
+
+    loadSheetFeatures();
+
+    return () => {
+      isCancelled = true;
+    };
   }, []);
 
   return (
@@ -36,17 +63,19 @@ function App() {
           <StyledThemeProvider theme={theme}>            <GlobalStyles fontSize={fontSize} />
             <ComponentStyles />
             <MainStyles />            <Suspense fallback={<div style={{textAlign: 'center', marginTop: 100}}>Ładowanie strony...</div>}>
-              <div>
+              <div id="page-top">
                 <Navigation />
-                <Header data={landingPageData.Header} />
-                <Features data={landingPageData.Features} />
-                <Calendar />
-                <About data={landingPageData.About} />
-                <Services data={landingPageData.Services} />
-                <Gallery data={landingPageData.Gallery}/>
-                <Team data={landingPageData.Team} />
-                <Inne />
-                <Contact data={landingPageData.Contact} />
+                <main id="main-content">
+                  <Header data={landingPageData.Header} />
+                  <Features data={landingPageData.Features} />
+                  <Calendar />
+                  <About data={landingPageData.About} />
+                  <Services data={landingPageData.Services} />
+                  <Gallery data={landingPageData.Gallery}/>
+                  <Team data={landingPageData.Team} />
+                  <Inne />
+                  <Contact data={landingPageData.Contact} />
+                </main>
                 <AccessibilityPanel />
               </div>
             </Suspense>

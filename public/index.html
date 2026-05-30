@@ -3,26 +3,30 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Oficjalna strona Zarządu Osiedla Młodych w Olkuszu - Aktualności, wydarzenia i informacje dla mieszkańców." />
+  <title>Dolinka Olkusz | Wydarzenia, imprezy i aktualności Osiedla Młodych</title>
+  <meta name="description" content="Dolinka Olkusz to oficjalna strona Zarządu Osiedla Młodych w Olkuszu. Sprawdź aktualności, wydarzenia, imprezy osiedlowe, galerię zdjęć i informacje dla mieszkańców." />
+  <meta name="keywords" content="Dolinka Olkusz, osiedle młodych Olkusz, wydarzenia Olkusz, imprezy Olkusz, festyn Dolinka Olkusz, zarząd osiedla Olkusz" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <meta name="googlebot" content="index, follow, max-image-preview:large" />
   <meta name="author" content="Zarząd Osiedla Młodych w Olkuszu" />
   <meta name="theme-color" content="#006400" />
+  <meta name="format-detection" content="telephone=yes" />
   
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="pl_PL" />
   <meta property="og:site_name" content="Dolinka" />
   <meta property="og:url" content="https://dolinka.olkusz.pl/" />
-  <meta property="og:title" content="Dolinka - Zarząd Osiedla Młodych w Olkuszu" />
-  <meta property="og:description" content="Oficjalna strona Zarządu Osiedla Młodych w Olkuszu - Aktualności, wydarzenia i informacje dla mieszkańców." />
+  <meta property="og:title" content="Dolinka Olkusz | Wydarzenia, imprezy i aktualności Osiedla Młodych" />
+  <meta property="og:description" content="Oficjalna strona Zarządu Osiedla Młodych w Olkuszu. Aktualności, wydarzenia, festyny, galeria zdjęć i informacje dla mieszkańców Dolinki." />
   <meta property="og:image" content="https://dolinka.olkusz.pl/img/logo.jpg" />
+  <meta property="og:image:alt" content="Logo Dolinka Olkusz" />
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://dolinka.olkusz.pl/" />
-  <meta property="twitter:title" content="Dolinka - Zarząd Osiedla Młodych w Olkuszu" />
-  <meta property="twitter:description" content="Oficjalna strona Zarządu Osiedla Młodych w Olkuszu - Aktualności, wydarzenia i informacje dla mieszkańców." />
+  <meta property="twitter:title" content="Dolinka Olkusz | Wydarzenia, imprezy i aktualności Osiedla Młodych" />
+  <meta property="twitter:description" content="Sprawdź wydarzenia, imprezy osiedlowe, aktualności i galerię zdjęć Dolinki w Olkuszu." />
   <meta property="twitter:image" content="https://dolinka.olkusz.pl/img/logo.jpg" />
 
   <!-- Canonical URL -->
@@ -42,19 +46,55 @@
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "GovernmentOrganization",
-      "name": "Zarząd Osiedla Młodych w Olkuszu",
-      "url": "https://dolinka.olkusz.pl/",
-      "logo": "https://dolinka.olkusz.pl/img/logo.jpg",
-      "email": "mailto:dolinka.olkusz@gmail.com",
-      "telephone": "+48789595848",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Osiedle Młodych",
-        "postalCode": "32-300",
-        "addressLocality": "Olkusz",
-        "addressCountry": "PL"
-      }
+      "@graph": [
+        {
+          "@type": "GovernmentOrganization",
+          "@id": "https://dolinka.olkusz.pl/#organization",
+          "name": "Zarząd Osiedla Młodych w Olkuszu",
+          "alternateName": "Dolinka Olkusz",
+          "url": "https://dolinka.olkusz.pl/",
+          "logo": "https://dolinka.olkusz.pl/img/logo.jpg",
+          "image": "https://dolinka.olkusz.pl/img/logo.jpg",
+          "email": "mailto:dolinka.olkusz@gmail.com",
+          "telephone": "+48789595848",
+          "areaServed": {
+            "@type": "City",
+            "name": "Olkusz"
+          },
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Osiedle Młodych",
+            "postalCode": "32-300",
+            "addressLocality": "Olkusz",
+            "addressCountry": "PL"
+          }
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://dolinka.olkusz.pl/#website",
+          "url": "https://dolinka.olkusz.pl/",
+          "name": "Dolinka Olkusz",
+          "description": "Oficjalna strona Zarządu Osiedla Młodych w Olkuszu z aktualnościami, wydarzeniami i informacjami dla mieszkańców.",
+          "publisher": {
+            "@id": "https://dolinka.olkusz.pl/#organization"
+          },
+          "inLanguage": "pl-PL"
+        },
+        {
+          "@type": "CollectionPage",
+          "@id": "https://dolinka.olkusz.pl/#homepage",
+          "url": "https://dolinka.olkusz.pl/",
+          "name": "Dolinka Olkusz | Wydarzenia, imprezy i aktualności Osiedla Młodych",
+          "isPartOf": {
+            "@id": "https://dolinka.olkusz.pl/#website"
+          },
+          "about": {
+            "@id": "https://dolinka.olkusz.pl/#organization"
+          },
+          "description": "Aktualności, wydarzenia, imprezy osiedlowe, galeria oraz informacje dla mieszkańców Osiedla Młodych w Olkuszu.",
+          "inLanguage": "pl-PL"
+        }
+      ]
     }
   </script>
   
@@ -82,10 +122,9 @@
   <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
   
-  <title>Dolinka - Zarząd Osiedla Młodych w Olkuszu</title>
 </head>
 <body>
-  <noscript>Strona Dolinka działa najlepiej z włączonym JavaScript.</noscript>
+  <noscript>Dolinka Olkusz to oficjalna strona Zarządu Osiedla Młodych w Olkuszu z aktualnościami, wydarzeniami, imprezami osiedlowymi i informacjami dla mieszkańców. Strona działa najlepiej z włączonym JavaScript.</noscript>
   <div id="root"></div>
   <script type="text/javascript" src="/js/jquery.1.11.1.js"></script>
   <script type="text/javascript" src="/js/bootstrap.js"></script>

@@ -54,13 +54,13 @@ export const Services = (props) => {
     >
       <div className="container">
         <div className="section-title">
-          <h2>Nasze Wydarzenia</h2>
+          <h2>Wydarzenia i imprezy w Dolince Olkusz</h2>
           <p>
-            Jako Zarząd Osiedla Młodych organizujemy liczne wydarzenia, które
-            mają na celu łączyć pokolenia – zarówno starszych, jak i młodszych
-            mieszkańców. Tworzymy okazje do wspólnej zabawy, integracji i
-            budowania więzi sąsiedzkich, by nasze osiedle tętniło życiem i było
-            miejscem przyjaznym dla wszystkich!
+            Jako Zarząd Osiedla Młodych w Olkuszu organizujemy wydarzenia,
+            imprezy osiedlowe i inicjatywy sąsiedzkie dla mieszkańców Dolinki,
+            Osiedla Młodych, Pakuski i całego Olkusza. Łączymy pokolenia,
+            wspieramy integrację lokalnej społeczności i tworzymy miejsce
+            przyjazne rodzinom, dzieciom, młodzieży oraz seniorom.
           </p>
         </div>
         <div className="row">

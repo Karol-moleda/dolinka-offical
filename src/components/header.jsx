@@ -146,7 +146,7 @@ const Header = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          Oficjalna strona Zarządu Osiedla Młodych w Olkuszu
+          Dolinka Olkusz - oficjalna strona Zarządu Osiedla Młodych w Olkuszu z aktualnościami, wydarzeniami i informacjami dla mieszkańców.
         </Subtitle>
         <Button
           fontSize={fontSize}
