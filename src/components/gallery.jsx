@@ -4,6 +4,35 @@ import './gallery.css';
 import styled from "styled-components";
 import { useTheme } from "../context/ThemeContext";
 
+const gallery2026Events = [
+  {
+    title: "Wielkanoc 2026",
+    folder: "Wielkanoc",
+    files: Array.from({ length: 14 }, (_, index) => `wielkanoc-${index + 1}.jpg`),
+  },
+  {
+    title: "Festiwal Dmuchańców",
+    folder: "Festiwal Dmuchańców",
+    files: Array.from({ length: 18 }, (_, index) => `Festiwal - ${index + 1}.jpg`),
+  },
+  {
+    title: "Sprzątanie osiedla",
+    folder: "Sprzątanie",
+    files: [
+      "Sprzątanie.jpg",
+      "Sprzątanie 2.jpg",
+      "Sprzątanie 3.jpg",
+      "Sprzątanie 4.jpg",
+      "Sprzątanie 5.jpg",
+    ],
+  },
+  {
+    title: "Święto flagi",
+    folder: "Święto flagi",
+    files: Array.from({ length: 15 }, (_, index) => `${index + 1}.jpg`),
+  },
+];
+
 const GalleryContainer = styled.div`
   background-color: ${props => props.isDarkMode ? '#000000' : 'transparent'};
   color: ${props => props.isDarkMode ? '#ffffff' : '#333333'};
@@ -93,17 +122,18 @@ const Gallery = (props) => {
   const [activeTab, setActiveTab] = useState('');
 
   const extraImages2026 = useMemo(
-    () => Array.from({ length: 14 }, (_, index) => {
-      const imageNumber = index + 1;
-      const imagePath = `/img/event/2026/wielkanoc-${imageNumber}.jpg`;
+    () => gallery2026Events.flatMap((event) =>
+      event.files.map((fileName) => {
+        const imagePath = `/img/event/2026/${event.folder}/${fileName}`;
 
-      return {
-        title: "Wielkanoc 2026",
-        year: "2026",
-        largeImage: imagePath,
-        smallImage: imagePath,
-      };
-    }),
+        return {
+          title: event.title,
+          year: "2026",
+          largeImage: imagePath,
+          smallImage: imagePath,
+        };
+      })
+    ),
     []
   );
 
@@ -306,10 +336,10 @@ const Gallery = (props) => {
                   src={getImagePath(image.smallImage)}
                   alt={image.title || `Zdjęcie ${index + 1}`}
                   className="gallery-image"
+                  objectFit="contain"
                   onClick={() => openLightbox(image)}
                   priority={index < 4} // Priorytetowe ładowanie tylko pierwszych 4 obrazków
                 />
-                {image.title && <h4>{image.title}</h4>}
               </div>
             ))}
           </div>
@@ -327,7 +357,6 @@ const Gallery = (props) => {
               <button className="lightbox-nav prev" onClick={() => navigateImage('prev')}>‹</button>
               <img src={getImagePath(selectedImage.largeImage)} alt={selectedImage.title || "Powiększone zdjęcie"} />
               <button className="lightbox-nav next" onClick={() => navigateImage('next')}>›</button>
-              {selectedImage.title && <div className="lightbox-caption"><h3>{selectedImage.title}</h3></div>}
             </div>
           </div>
         )}

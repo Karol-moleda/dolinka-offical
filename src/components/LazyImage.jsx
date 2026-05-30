@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import './lazyimage.css';
 
-const LazyImage = ({ src, alt, className, onClick, priority = false, placeholderSrc, width, height, sizes, onError }) => {
+const LazyImage = ({ src, alt, className, onClick, priority = false, placeholderSrc, width, height, sizes, onError, objectFit = 'cover' }) => {
   const [loaded, setLoaded] = useState(false);
   const [imgError, setImgError] = useState(false);
   const imgRef = useRef(null);
@@ -74,7 +74,7 @@ const LazyImage = ({ src, alt, className, onClick, priority = false, placeholder
           style={{
             width: '100%',
             height: '100%',
-            objectFit: 'cover',
+            objectFit,
             opacity: 1,
             transition: 'opacity 0.3s'
           }}
@@ -99,7 +99,7 @@ const LazyImage = ({ src, alt, className, onClick, priority = false, placeholder
         style={{
           width: '100%',
           height: '100%',
-          objectFit: 'cover',
+          objectFit,
           opacity: loaded ? 1 : 0,
           transition: 'opacity 0.3s'
         }}
