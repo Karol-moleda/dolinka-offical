@@ -12,24 +12,18 @@ const gallery2026Events = [
   },
   {
     title: "Festiwal Dmuchańców",
-    folder: "Festiwal Dmuchańców",
-    files: Array.from({ length: 18 }, (_, index) => `Festiwal - ${index + 1}.jpg`),
+    folder: "festiwal-dmuchancow",
+    files: Array.from({ length: 18 }, (_, index) => `festiwal-dmuchancow-${index + 1}.jpg`),
   },
   {
     title: "Sprzątanie osiedla",
-    folder: "Sprzątanie",
-    files: [
-      "Sprzątanie.jpg",
-      "Sprzątanie 2.jpg",
-      "Sprzątanie 3.jpg",
-      "Sprzątanie 4.jpg",
-      "Sprzątanie 5.jpg",
-    ],
+    folder: "sprzatanie-osiedla",
+    files: Array.from({ length: 5 }, (_, index) => `sprzatanie-osiedla-${index + 1}.jpg`),
   },
   {
     title: "Święto flagi",
-    folder: "Święto flagi",
-    files: Array.from({ length: 15 }, (_, index) => `${index + 1}.jpg`),
+    folder: "swieto-flagi",
+    files: Array.from({ length: 15 }, (_, index) => `swieto-flagi-${index + 1}.jpg`),
   },
 ];
 
