@@ -216,15 +216,19 @@ const CardText = styled.p`
 
 const Inne = () => {
   const { isDarkMode } = useTheme();
-  const [activeTab, setActiveTab] = useState('run');
+  const [activeTab, setActiveTab] = useState('volleyball');
 
   // Funkcja pobierania dokumentu
   const handleDownload = (doc, tournament) => {
     const filename = doc.filename;
     const originalFilename = doc.originalFilename || doc.filename;
-    // For basketball files are in /document/kos/, for others in /document/
-    const folderPath = tournament === 'basketball' ? '/document/kos/' : '/document/';
-    const fileURL = `${window.location.origin}${folderPath}${filename}`;
+    // Basketball files are in /document/kos/, volleyball in /document/siatk/, others in /document/
+    const folderPath = tournament === 'basketball'
+      ? '/document/kos/'
+      : tournament === 'volleyball'
+        ? '/document/siatk/'
+        : '/document/';
+    const fileURL = `${window.location.origin}${folderPath}${encodeURIComponent(filename)}`;
     
     try {
       // Tworzymy tymczasowy link, klikamy go i usuwamy
@@ -250,27 +254,27 @@ const Inne = () => {
 
   const volleyballDocuments = [
     {
-      name: "Kwestionariusz drużyny 2025",
-      filename: "Kwe_2025.pdf",
-      originalFilename: "Kwestionariusz drużyny 2025.pdf",
+      name: "Kwestionariusz drużyny 2026",
+      filename: "kwestionariusz-2026.doc",
+      originalFilename: "Kwestionariusz drużyny 2026.doc",
       description: "Formularz rejestracyjny dla drużyn uczestniczących w turnieju siatkówki"
     },
     {
-      name: "Regulamin Turnieju w Dolince 2025",
-      filename: "Regulamin_2025.pdf",
-      originalFilename: "Regulamin Turnieju w Dolince 2025.pdf",
+      name: "Regulamin Turnieju w Dolince 2026",
+      filename: "Regulamin_2026.pdf",
+      originalFilename: "Regulamin Turnieju w Dolince 2026.pdf",
       description: "Oficjalny regulamin turnieju siatkówki organizowanego w Dolince"
     },
     {
       name: "Zgłoszenie dla osoby niepełnoletniej",
-      filename: "Niepelnoletnia_2025.pdf",
-      originalFilename: "Zgłoszenie dla osoby niepełnoletniej.pdf",
+      filename: "niepelnoletnia-2026.docx",
+      originalFilename: "Zgłoszenie i ośw. dla osoby niepełnoletniej.docx",
       description: "Formularz zgłoszeniowy wraz z oświadczeniem dla osób niepełnoletnich"
     },
     {
       name: "Zgłoszenie dla osoby pełnoletniej",
-      filename: "Pelnoletnia_2025.pdf",
-      originalFilename: "Zgłoszenie dla osoby pełnoletniej.pdf",
+      filename: "pelnoletnia-2026.docx",
+      originalFilename: "Zgłoszenie i ośw. dla osoby pełnoletniej.docx",
       description: "Formularz zgłoszeniowy wraz z oświadczeniem dla osób pełnoletnich"
     }
   ];
@@ -315,30 +319,30 @@ const Inne = () => {
         </SectionHeader>
         
         <TabsSelect $isDarkMode={isDarkMode} value={activeTab} onChange={(e) => setActiveTab(e.target.value)}>
-          <option value="basketball">Koszykówka</option>
+          {/* <option value="basketball">Koszykówka</option> */}
           <option value="volleyball">Siatkówka</option>
-          <option value="run">Bieg</option>
+          {/* <option value="run">Bieg</option> */}
         </TabsSelect>
 
         <TabsContainer $isDarkMode={isDarkMode}>
-          <Tab 
-            $active={activeTab === 'run'} 
+          {/* <Tab
+            $active={activeTab === 'run'}
             $isDarkMode={isDarkMode}
             onClick={() => setActiveTab('run')}
           >
             <TabIcon icon={faRunning} />
             Bieg
           </Tab>
-          <Tab 
-            $active={activeTab === 'basketball'} 
+          <Tab
+            $active={activeTab === 'basketball'}
             $isDarkMode={isDarkMode}
             onClick={() => setActiveTab('basketball')}
           >
             <TabIcon icon={faBasketballBall} />
             Koszykówka
-          </Tab>
-          <Tab 
-            $active={activeTab === 'volleyball'} 
+          </Tab> */}
+          <Tab
+            $active={activeTab === 'volleyball'}
             $isDarkMode={isDarkMode}
             onClick={() => setActiveTab('volleyball')}
           >
