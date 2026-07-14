@@ -2,7 +2,6 @@
 import React, { Suspense, lazy, useState, useEffect } from "react";
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import JsonData from "./data/data.json";
-import { fetchSheetFeatures } from "./utils/googleSheets";
 
 // Import consolidated style files
 import GlobalStyles from "./styles/base/GlobalStyles";
@@ -28,32 +27,6 @@ function App() {
 
   useEffect(() => {
     setLandingPageData(JsonData);
-
-    let isCancelled = false;
-
-    const loadSheetFeatures = async () => {
-      try {
-        const features = await fetchSheetFeatures();
-
-        if (!isCancelled) {
-          setLandingPageData((currentData) => ({
-            ...currentData,
-            Features: features,
-          }));
-        }
-      } catch (error) {
-        console.warn(
-          "Nie udalo sie pobrac wydarzen z Google Sheets. Pozostaja dane lokalne.",
-          error
-        );
-      }
-    };
-
-    loadSheetFeatures();
-
-    return () => {
-      isCancelled = true;
-    };
   }, []);
 
   return (
