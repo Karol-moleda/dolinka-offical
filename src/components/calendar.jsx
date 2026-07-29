@@ -174,7 +174,7 @@ const Calendar = () => {
     },
     {
       id: 4,
-      date: "25 lipca 2026",
+      date: "15 sierpnia 2026",
       title: "Kino Plenerowe",
       description: "Magia kina pod gwiazdami powraca! Zabierzcie koce i leżaki, by wspólnie obejrzeć filmowy hit tego lata. Niezapomniana atmosfera i popcorn gratis! 🎬🍿🌌",
       position: "right"
