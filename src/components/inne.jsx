@@ -224,7 +224,7 @@ const Inne = () => {
     const originalFilename = doc.originalFilename || doc.filename;
     // Basketball files are in /document/kos/, volleyball in /document/siatk/, others in /document/
     const folderPath = tournament === 'basketball'
-      ? '/document/kos/'
+      ? '/document/kosz/'
       : tournament === 'volleyball'
         ? '/document/siatk/'
         : '/document/';
@@ -281,28 +281,10 @@ const Inne = () => {
 
   const basketballDocuments = [
     {
-      name: "Kwestionariusz drużyny 2025",
-      filename: "druzyna-2025.pdf",
-      originalFilename: "Kwestionariusz drużyny koszykówka 2025.pdf",
-      description: "Formularz rejestracyjny dla drużyn uczestniczących w turnieju koszykówki"
-    },
-    {
-      name: "Regulamin Turnieju Koszykówki 2025",
-      filename: "regulamin-2025.pdf",
-      originalFilename: "Regulamin Turnieju Koszykówki 2025.pdf",
-      description: "Oficjalny regulamin turnieju koszykówki organizowanego w Dolince"
-    },
-    {
-      name: "Zgłoszenie dla osoby niepełnoletniej",
-      filename: "niepelnoletni-2025.pdf",
-      originalFilename: "Zgłoszenie dla osoby niepełnoletniej koszykówka.pdf",
-      description: "Formularz zgłoszeniowy wraz z oświadczeniem dla osób niepełnoletnich"
-    },
-    {
-      name: "Zgłoszenie dla osoby pełnoletniej",
-      filename: "Pelnoletnia_2025.pdf",
-      originalFilename: "Zgłoszenie dla osoby pełnoletniej koszykówka.pdf",
-      description: "Formularz zgłoszeniowy wraz z oświadczeniem dla osób pełnoletnich"
+      name: "Regulamin V Turnieju Koszykówki w Dolince 2026",
+      filename: "Regulamin Turnieju_w_Dolince_2026.pdf",
+      originalFilename: "Regulamin Turnieju_w_Dolince_2026.pdf",
+      description: "Oficjalny regulamin V Turnieju Koszykówki organizowanego w Dolince – 23 sierpnia 2026"
     }
   ];
 
@@ -319,7 +301,7 @@ const Inne = () => {
         </SectionHeader>
         
         <TabsSelect $isDarkMode={isDarkMode} value={activeTab} onChange={(e) => setActiveTab(e.target.value)}>
-          {/* <option value="basketball">Koszykówka</option> */}
+          <option value="basketball">Koszykówka</option>
           <option value="volleyball">Siatkówka</option>
           {/* <option value="run">Bieg</option> */}
         </TabsSelect>
@@ -332,7 +314,7 @@ const Inne = () => {
           >
             <TabIcon icon={faRunning} />
             Bieg
-          </Tab>
+          </Tab> */}
           <Tab
             $active={activeTab === 'basketball'}
             $isDarkMode={isDarkMode}
@@ -340,7 +322,7 @@ const Inne = () => {
           >
             <TabIcon icon={faBasketballBall} />
             Koszykówka
-          </Tab> */}
+          </Tab>
           <Tab
             $active={activeTab === 'volleyball'}
             $isDarkMode={isDarkMode}
