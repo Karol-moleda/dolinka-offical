@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useTheme } from '../context/ThemeContext';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDownload, faFilePdf, faVolleyballBall, faBasketballBall, faRunning } from '@fortawesome/free-solid-svg-icons';
+import { faDownload, faFilePdf, faBasketballBall } from '@fortawesome/free-solid-svg-icons';
 
 const InneSection = styled.section`
   padding: 100px 0;
@@ -216,7 +216,7 @@ const CardText = styled.p`
 
 const Inne = () => {
   const { isDarkMode } = useTheme();
-  const [activeTab, setActiveTab] = useState('volleyball');
+  const [activeTab, setActiveTab] = useState('basketball');
 
   // Funkcja pobierania dokumentu
   const handleDownload = (doc, tournament) => {
@@ -302,7 +302,7 @@ const Inne = () => {
         
         <TabsSelect $isDarkMode={isDarkMode} value={activeTab} onChange={(e) => setActiveTab(e.target.value)}>
           <option value="basketball">Koszykówka</option>
-          <option value="volleyball">Siatkówka</option>
+          {/* <option value="volleyball">Siatkówka</option> */}
           {/* <option value="run">Bieg</option> */}
         </TabsSelect>
 
@@ -323,14 +323,14 @@ const Inne = () => {
             <TabIcon icon={faBasketballBall} />
             Koszykówka
           </Tab>
-          <Tab
+          {/* <Tab
             $active={activeTab === 'volleyball'}
             $isDarkMode={isDarkMode}
             onClick={() => setActiveTab('volleyball')}
           >
             <TabIcon icon={faVolleyballBall} />
             Siatkówka
-          </Tab>
+          </Tab> */}
         </TabsContainer>
         
         <ContentGrid>
