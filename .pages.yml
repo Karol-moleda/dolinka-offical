@@ -1,0 +1,178 @@
+# Konfiguracja panelu Pages CMS (app.pagescms.org).
+# Opisuje formularze, ktore widzi osoba redagujaca tresc - nie dotyka kodu strony.
+# Tresc trafia do plikow JSON w src/content, zdjecia do public/img, dokumenty
+# do public/document. Kazdy zapis to commit, ktory uruchamia deploy na vh.pl.
+
+media:
+  - name: zdjecia
+    label: Zdjęcia
+    input: public/img
+    output: /img
+    extensions: [jpg, jpeg, png, webp]
+
+  - name: dokumenty
+    label: Dokumenty
+    input: public/document
+    output: /document
+    categories: [document]
+
+content:
+  # ---------------------------------------------------------------
+  - name: aktualnosci
+    label: Aktualności
+    description: Wpisy w karuzeli na górze strony
+    type: file
+    path: src/content/aktualnosci.json
+    format: json
+    list: true
+    view:
+      fields: [title, published]
+    fields:
+      - name: title
+        label: Tytuł
+        type: string
+        required: true
+      - name: text
+        label: Treść
+        type: text
+        options:
+          rows: 10
+        description: Pusta linia rozdziela akapity
+      - name: img
+        label: Zdjęcie
+        type: image
+        options:
+          media: zdjecia
+          path: public/img/news
+      - name: published
+        label: Pokaż na stronie
+        type: boolean
+        default: true
+
+  # ---------------------------------------------------------------
+  - name: kalendarz
+    label: Kalendarz wydarzeń
+    description: Oś czasu - kolejność i wyszarzanie minionych wynikają z daty
+    type: file
+    path: src/content/kalendarz.json
+    format: json
+    list: true
+    view:
+      fields: [date, title, published]
+    fields:
+      - name: date
+        label: Data
+        type: date
+        required: true
+        description: Przy terminie przybliżonym wpisz pierwszy dzień miesiąca
+      - name: dateText
+        label: Termin przybliżony
+        type: string
+        description: Wypełnij tylko gdy nie znamy dnia, np. "wrzesień 2026"
+      - name: title
+        label: Nazwa wydarzenia
+        type: string
+        required: true
+      - name: text
+        label: Opis
+        type: text
+        options:
+          rows: 6
+      - name: published
+        label: Pokaż na stronie
+        type: boolean
+        default: true
+
+  # ---------------------------------------------------------------
+  - name: galeria
+    label: Galeria
+    description: Jeden wpis to jeden album ze zdjęciami z wydarzenia
+    type: file
+    path: src/content/galeria.json
+    format: json
+    list: true
+    view:
+      fields: [title, year, published]
+    fields:
+      - name: title
+        label: Nazwa albumu
+        type: string
+        required: true
+      - name: year
+        label: Rok
+        type: string
+        required: true
+        description: Zakładki lat powstają z tego pola
+      - name: published
+        label: Pokaż na stronie
+        type: boolean
+        default: true
+      - name: photos
+        label: Zdjęcia
+        type: image
+        list: true
+        options:
+          media: zdjecia
+          path: public/img/event
+
+  # ---------------------------------------------------------------
+  - name: dokumenty
+    label: Dokumenty do pobrania
+    description: Regulaminy i formularze. Zakładka pojawia się tylko wtedy, gdy ma opublikowany dokument.
+    type: file
+    path: src/content/dokumenty.json
+    format: json
+    fields:
+      - name: kategorie
+        label: Zakładki
+        type: object
+        list: true
+        fields:
+          - name: id
+            label: Identyfikator
+            type: string
+            required: true
+            description: Bez spacji i polskich znaków - łączy dokument z zakładką
+          - name: label
+            label: Nazwa zakładki
+            type: string
+            required: true
+          - name: icon
+            label: Ikona
+            type: select
+            options:
+              values: [basketball, volleyball, running]
+
+      - name: dokumenty
+        label: Dokumenty
+        type: object
+        list: true
+        fields:
+          - name: title
+            label: Nazwa
+            type: string
+            required: true
+          - name: description
+            label: Opis
+            type: text
+            options:
+              rows: 3
+          - name: file
+            label: Plik
+            type: file
+            options:
+              media: dokumenty
+          - name: downloadName
+            label: Nazwa przy pobieraniu
+            type: string
+            description: Pod taką nazwą plik zapisze się na komputerze
+          - name: kategoria
+            label: Zakładka
+            type: select
+            required: true
+            options:
+              values: [koszykowka, siatkowka, bieg]
+          - name: published
+            label: Pokaż na stronie
+            type: boolean
+            default: true
