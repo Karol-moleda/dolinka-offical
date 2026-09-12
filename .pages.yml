@@ -2,6 +2,9 @@
 # Opisuje formularze, ktore widzi osoba redagujaca tresc - nie dotyka kodu strony.
 # Tresc trafia do plikow JSON w src/content, zdjecia do public/img, dokumenty
 # do public/document. Kazdy zapis to commit, ktory uruchamia deploy na vh.pl.
+#
+# list.collapsible.summary decyduje, co widac na zwinietej pozycji listy.
+# Bez tego panel pokazuje bezuzyteczne "Item #1", "Item #2".
 
 media:
   - name: zdjecia
@@ -20,13 +23,14 @@ content:
   # ---------------------------------------------------------------
   - name: aktualnosci
     label: Aktualności
-    description: Wpisy w karuzeli na górze strony
+    description: Wpisy w karuzeli na górze strony. Pierwszy z listy wyświetla się jako pierwszy.
     type: file
     path: src/content/aktualnosci.json
     format: json
-    list: true
-    view:
-      fields: [title, published]
+    list:
+      collapsible:
+        collapsed: true
+        summary: "{title}"
     fields:
       - name: title
         label: Tytuł
@@ -52,27 +56,28 @@ content:
   # ---------------------------------------------------------------
   - name: kalendarz
     label: Kalendarz wydarzeń
-    description: Oś czasu - kolejność i wyszarzanie minionych wynikają z daty
+    description: Oś czasu. Kolejność i wyszarzanie minionych wydarzeń wynikają z daty — nie trzeba niczego przestawiać.
     type: file
     path: src/content/kalendarz.json
     format: json
-    list: true
-    view:
-      fields: [date, title, published]
+    list:
+      collapsible:
+        collapsed: true
+        summary: "{title} — {date}"
     fields:
-      - name: date
-        label: Data
-        type: date
-        required: true
-        description: Przy terminie przybliżonym wpisz pierwszy dzień miesiąca
-      - name: dateText
-        label: Termin przybliżony
-        type: string
-        description: Wypełnij tylko gdy nie znamy dnia, np. "wrzesień 2026"
       - name: title
         label: Nazwa wydarzenia
         type: string
         required: true
+      - name: date
+        label: Data
+        type: date
+        required: true
+        description: Gdy nie znamy dnia, wpisz pierwszy dzień miesiąca i wypełnij pole poniżej
+      - name: dateText
+        label: Termin przybliżony
+        type: string
+        description: Wypełnij tylko wtedy, gdy termin jest niepewny — np. „wrzesień 2026”. Ten tekst zobaczą mieszkańcy zamiast konkretnej daty.
       - name: text
         label: Opis
         type: text
@@ -86,27 +91,26 @@ content:
   # ---------------------------------------------------------------
   - name: galeria
     label: Galeria
-    description: Jeden wpis to jeden album ze zdjęciami z wydarzenia
+    description: Jeden wpis to jeden album ze zdjęciami z wydarzenia. Zakładki lat tworzą się same.
     type: file
     path: src/content/galeria.json
     format: json
-    list: true
-    view:
-      fields: [title, year, published]
+    list:
+      collapsible:
+        collapsed: true
+        summary: "{title} — {year}"
     fields:
       - name: title
         label: Nazwa albumu
         type: string
         required: true
+        description: Pod tą nazwą album pojawi się jako zakładka w galerii
       - name: year
         label: Rok
         type: string
         required: true
-        description: Zakładki lat powstają z tego pola
-      - name: published
-        label: Pokaż na stronie
-        type: boolean
-        default: true
+        pattern: "^(19|20)[0-9]{2}$"
+        description: Cztery cyfry, np. 2026
       - name: photos
         label: Zdjęcia
         type: image
@@ -114,11 +118,16 @@ content:
         options:
           media: zdjecia
           path: public/img/event
+        description: Kolejność na liście to kolejność w galerii — można przeciągać
+      - name: published
+        label: Pokaż na stronie
+        type: boolean
+        default: true
 
   # ---------------------------------------------------------------
   - name: dokumenty
     label: Dokumenty do pobrania
-    description: Regulaminy i formularze. Zakładka pojawia się tylko wtedy, gdy ma opublikowany dokument.
+    description: Regulaminy i formularze. Zakładka pojawia się na stronie tylko wtedy, gdy ma choć jeden opublikowany dokument.
     type: file
     path: src/content/dokumenty.json
     format: json
@@ -126,32 +135,44 @@ content:
       - name: kategorie
         label: Zakładki
         type: object
-        list: true
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{label}"
+        description: Zwykle nie trzeba tu nic zmieniać
         fields:
-          - name: id
-            label: Identyfikator
-            type: string
-            required: true
-            description: Bez spacji i polskich znaków - łączy dokument z zakładką
           - name: label
             label: Nazwa zakładki
             type: string
             required: true
+          - name: id
+            label: Identyfikator
+            type: string
+            required: true
+            pattern: "^[a-z0-9-]+$"
+            description: Małe litery bez polskich znaków i spacji — łączy dokument z zakładką
           - name: icon
             label: Ikona
             type: select
             options:
-              values: [basketball, volleyball, running]
+              values:
+                - { value: basketball, label: Piłka do koszykówki }
+                - { value: volleyball, label: Piłka do siatkówki }
+                - { value: running, label: Biegacz }
 
       - name: dokumenty
         label: Dokumenty
         type: object
-        list: true
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{title}"
         fields:
           - name: title
             label: Nazwa
             type: string
             required: true
+            description: To widzi mieszkaniec na kafelku
           - name: description
             label: Opis
             type: text
@@ -160,18 +181,22 @@ content:
           - name: file
             label: Plik
             type: file
+            required: true
             options:
               media: dokumenty
           - name: downloadName
             label: Nazwa przy pobieraniu
             type: string
-            description: Pod taką nazwą plik zapisze się na komputerze
+            description: Pod taką nazwą plik zapisze się na komputerze. Można zostawić puste.
           - name: kategoria
             label: Zakładka
             type: select
             required: true
             options:
-              values: [koszykowka, siatkowka, bieg]
+              values:
+                - { value: koszykowka, label: Koszykówka }
+                - { value: siatkowka, label: Siatkówka }
+                - { value: bieg, label: Bieg }
           - name: published
             label: Pokaż na stronie
             type: boolean
