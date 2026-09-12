@@ -73,8 +73,11 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: ${{ secrets.FTP_SERVER_DIR }}
           local-dir: ./build/
-          protocol: ftps
-          timeout: 120000
+          # ftps (szyfrowany) konczyl sie ECONNRESET na gniezdzie danych:
+          # serwer ProFTPD na cPanelu wymaga wznowienia sesji TLS dla polaczenia
+          # danych, czego biblioteka tej akcji nie negocjuje tak jak FileZilla.
+          protocol: ftp
+          timeout: 300000
           dry-run: ${{ inputs.dry_run == true }}
           exclude: |
             **/.git*
