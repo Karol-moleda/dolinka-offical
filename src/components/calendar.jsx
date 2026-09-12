@@ -78,8 +78,8 @@ const TimelineItem = styled.div`
     position: absolute;
     width: 25px;
     height: 25px;
-    right: ${(props) => (props.position === 'left' ? '-12.5px' : 'auto')};
-    left: ${(props) => (props.position === 'right' ? '-12.5px' : 'auto')};
+    right: ${(props) => (props.$position === 'left' ? '-12.5px' : 'auto')};
+    left: ${(props) => (props.$position === 'right' ? '-12.5px' : 'auto')};
     background-color: #006400;
     border: 4px solid #4CAF50;
     top: 15px;
@@ -155,64 +155,49 @@ const Calendar = () => {
       id: 1,
       date: "29 marca 2026",
       title: "Festyn Wielkanocny",
-      description: "Zapraszamy na Festyn Wielkanocny! Szukanie jajek czekoladowych, występy artystyczne, warsztaty plastyczne dla dorosłych i dzieci, pyszny wielkanocny poczęstunek oraz świąteczna atmosfera 🐣",
-      position: "left"
+      description: "Zapraszamy na Festyn Wielkanocny! Szukanie jajek czekoladowych, występy artystyczne, warsztaty plastyczne dla dorosłych i dzieci, pyszny wielkanocny poczęstunek oraz świąteczna atmosfera 🐣"
     },
     {
       id: 2,
       date: "2 maja 2026",
       title: "Piknik Patriotyczny",
-      description: "Świętujmy razem majówkę! Zapraszamy na Piknik Patriotyczny z atrakcjami dla całych rodzin, wspólnym śpiewaniem pieśni patriotycznych i grochówką. Pokażmy naszą dumę i radość ze wspólnoty! 🇵🇱",
-      position: "right"
+      description: "Świętujmy razem majówkę! Zapraszamy na Piknik Patriotyczny z atrakcjami dla całych rodzin, wspólnym śpiewaniem pieśni patriotycznych i grochówką. Pokażmy naszą dumę i radość ze wspólnoty! 🇵🇱"
     },
     {
       id: 3,
       date: "24 maja 2026",
       title: "Festiwal Dmuchańców",
-      description: "Prawdziwe szaleństwo dla najmłodszych! Wielki Festiwal Dmuchańców to dzień pełen skakania, zjeżdżania i niesamowitej zabawy. Gwarantujemy uśmiech na twarzy każdego dziecka! 🏰🎈",
-      position: "left"
+      description: "Prawdziwe szaleństwo dla najmłodszych! Wielki Festiwal Dmuchańców to dzień pełen skakania, zjeżdżania i niesamowitej zabawy. Gwarantujemy uśmiech na twarzy każdego dziecka! 🏰🎈"
     },
     {
       id: 4,
       date: "15 sierpnia 2026",
       title: "Kino Plenerowe",
-      description: "Magia kina pod gwiazdami powraca! Zabierzcie koce i leżaki, by wspólnie obejrzeć filmowy hit tego lata. Niezapomniana atmosfera i popcorn gratis! 🎬🍿🌌",
-      position: "right"
+      description: "Magia kina pod gwiazdami powraca! Zabierzcie koce i leżaki, by wspólnie obejrzeć filmowy hit tego lata. Niezapomniana atmosfera i popcorn gratis! 🎬🍿🌌"
     },
     {
       id: 5,
       date: "26 lipca 2026",
       title: "Turniej Siatkówki",
-      description: "Sportowe emocje na piasku! Zapraszamy drużyny i kibiców na Turniej Siatkówki. Czeka nas rywalizacja w duchu fair play, słońce i świetna zabawa. Dołącz do gry! 🏐☀️",
-      position: "left"
+      description: "Sportowe emocje na piasku! Zapraszamy drużyny i kibiców na Turniej Siatkówki. Czeka nas rywalizacja w duchu fair play, słońce i świetna zabawa. Dołącz do gry! 🏐☀️"
     },
     {
       id: 6,
-      date: "21 sierpnia 2026",
-      title: "Potańcówka w Dolince",
-      description: "Tanecznym krokiem żegnamy lato! Zapraszamy na sąsiedzką potańcówkę przy najlepszych przebojach. Niech nogi same niosą do tańca – dobra zabawa gwarantowana dla każdego! 💃🕺🎵",
-      position: "right"
+      date: "23 sierpnia 2026",
+      title: "Turniej Koszykówki 3x3",
+      description: "Streetball w najlepszym wydaniu!Turniej Koszykówki 3x3 to szybkość, technika i walka pod koszem. Zbierz ekpię i walcz o puchar Dolinki! 🏀🏆"
     },
     {
       id: 7,
-      date: "23 sierpnia 2026",
-      title: "Turniej Koszykówki 3x3",
-      description: "Streetball w najlepszym wydaniu!Turniej Koszykówki 3x3 to szybkość, technika i walka pod koszem. Zbierz ekpię i walcz o puchar Dolinki! 🏀🏆",
-      position: "left"
+      date: "wrzesień 2026",
+      title: "Zebranie Ogólne i Potańcówka",
+      description: "Ważne sprawy i wspólna zabawa. Zapraszamy na zebranie ogólne mieszkańców, po którym zintegrujemy się podczas jesiennej potańcówki. Wasz głos i obecność są dla nas ważne! 🗣️🍂💃"
     },
     {
       id: 8,
-      date: "18 września 2026",
-      title: "Zebranie Ogólne i Potańcówka",
-      description: "Ważne sprawy i wspólna zabawa. Zapraszamy na zebranie ogólne mieszkańców, po którym zintegrujemy się podczas jesiennej potańcówki. Wasz głos i obecność są dla nas ważne! 🗣️🍂💃",
-      position: "right"
-    },
-    {
-      id: 9,
-      date: "13 grudnia 2026",
+      date: "grudzień 2026",
       title: "Mikołajki",
-      description: "Ho, ho, ho! Święty Mikołaj odwiedzi Dolinkę! Zapraszamy wszystkie dzieci na spotkanie z Mikołajem, prezenty i wspólne kolędowanie. Poczujmy magię Świąt! 🎅🎄🎁",
-      position: "left"
+      description: "Ho, ho, ho! Święty Mikołaj odwiedzi Dolinkę! Zapraszamy wszystkie dzieci na spotkanie z Mikołajem, prezenty i wspólne kolędowanie. Poczujmy magię Świąt! 🎅🎄🎁"
     },
   ];
 
@@ -251,17 +236,30 @@ const Calendar = () => {
     }
   };
 
+  // Rok w nagłówku wynika z dat wydarzeń, nie z ręcznie wpisanej liczby.
+  // Jeśli wydarzenia obejmują dwa lata, pokazujemy zakres (np. "2026–2027").
+  const years = [...new Set(
+    events
+      .map((event) => event.date.match(/\b(20\d{2})\b/))
+      .filter(Boolean)
+      .map((match) => Number(match[1]))
+  )].sort((a, b) => a - b);
+
+  const calendarYear = years.length
+    ? (years.length > 1 ? `${years[0]}–${years[years.length - 1]}` : String(years[0]))
+    : new Date().getFullYear();
+
   return (
     <CalendarSection id="calendar">
       <CalendarContainer>
         <CalendarHeader>
-          <Title>Kalendarz wydarzeń 2025</Title>
+          <Title>Kalendarz wydarzeń {calendarYear}</Title>
           <Subtitle>Zaplanuj swój czas z nami</Subtitle>
         </CalendarHeader>
         
         <Timeline>
-          {events.map((event) => (
-            <TimelineItem key={event.id} position={event.position}>
+          {events.map((event, index) => (
+            <TimelineItem key={event.id} $position={index % 2 === 0 ? 'left' : 'right'}>
               <EventCard isPast={isEventPast(event.date)}>
                 <EventDate>{event.date}</EventDate>
                 <EventTitle>{event.title}</EventTitle>
