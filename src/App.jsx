@@ -40,11 +40,11 @@ function App() {
                 <Navigation />
                 <main id="main-content">
                   <Header data={landingPageData.Header} />
-                  <Features data={landingPageData.Features} />
+                  <Features />
                   <Calendar />
                   <About data={landingPageData.About} />
                   <Services data={landingPageData.Services} />
-                  <Gallery data={landingPageData.Gallery}/>
+                  <Gallery />
                   <Team data={landingPageData.Team} />
                   <Inne />
                   <Contact data={landingPageData.Contact} />

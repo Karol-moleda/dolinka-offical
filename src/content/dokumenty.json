@@ -1,0 +1,89 @@
+{
+  "kategorie": [
+    { "id": "koszykowka", "label": "Koszykówka", "icon": "basketball" },
+    { "id": "siatkowka", "label": "Siatkówka", "icon": "volleyball" },
+    { "id": "bieg", "label": "Bieg", "icon": "running" }
+  ],
+  "dokumenty": [
+    {
+      "title": "Regulamin V Turnieju Koszykówki w Dolince 2026",
+      "description": "Oficjalny regulamin V Turnieju Koszykówki organizowanego w Dolince – 23 sierpnia 2026",
+      "file": "/document/kosz/Regulamin Turnieju_w_Dolince_2026.pdf",
+      "downloadName": "Regulamin Turnieju w Dolince 2026.pdf",
+      "kategoria": "koszykowka",
+      "published": true
+    },
+    {
+      "title": "Regulamin Turnieju Koszykówki 2025",
+      "description": "Regulamin z poprzedniej edycji turnieju",
+      "file": "/document/kosz/regulamin-2025.pdf",
+      "downloadName": "Regulamin Turnieju w Dolince 2025.pdf",
+      "kategoria": "koszykowka",
+      "published": false
+    },
+    {
+      "title": "Zgłoszenie drużyny 2025",
+      "description": "Formularz zgłoszeniowy drużyny z edycji 2025",
+      "file": "/document/kosz/druzyna-2025.pdf",
+      "downloadName": "Zgloszenie druzyny 2025.pdf",
+      "kategoria": "koszykowka",
+      "published": false
+    },
+    {
+      "title": "Zgłoszenie dla osoby pełnoletniej 2025",
+      "description": "Formularz zgłoszeniowy wraz z oświadczeniem dla osób pełnoletnich",
+      "file": "/document/kosz/Pelnoletnia_2025.pdf",
+      "downloadName": "Zgloszenie i osw. dla osoby pelnoletniej 2025.pdf",
+      "kategoria": "koszykowka",
+      "published": false
+    },
+    {
+      "title": "Zgłoszenie dla osoby niepełnoletniej 2025",
+      "description": "Formularz zgłoszeniowy wraz z oświadczeniem dla osób niepełnoletnich",
+      "file": "/document/kosz/niepelnoletni-2025.pdf",
+      "downloadName": "Zgloszenie i osw. dla osoby niepelnoletniej 2025.pdf",
+      "kategoria": "koszykowka",
+      "published": false
+    },
+    {
+      "title": "Regulamin Turnieju Siatkówki w Dolince 2026",
+      "description": "Oficjalny regulamin turnieju siatkówki organizowanego w Dolince",
+      "file": "/document/siatk/Regulamin_2026.pdf",
+      "downloadName": "Regulamin Turnieju w Dolince 2026.pdf",
+      "kategoria": "siatkowka",
+      "published": false
+    },
+    {
+      "title": "Kwestionariusz drużyny 2026",
+      "description": "Formularz rejestracyjny dla drużyn uczestniczących w turnieju siatkówki",
+      "file": "/document/siatk/kwestionariusz-2026.doc",
+      "downloadName": "Kwestionariusz drużyny 2026.doc",
+      "kategoria": "siatkowka",
+      "published": false
+    },
+    {
+      "title": "Zgłoszenie dla osoby pełnoletniej",
+      "description": "Formularz zgłoszeniowy wraz z oświadczeniem dla osób pełnoletnich",
+      "file": "/document/siatk/pelnoletnia-2026.docx",
+      "downloadName": "Zgłoszenie i ośw. dla osoby pełnoletniej.docx",
+      "kategoria": "siatkowka",
+      "published": false
+    },
+    {
+      "title": "Zgłoszenie dla osoby niepełnoletniej",
+      "description": "Formularz zgłoszeniowy wraz z oświadczeniem dla osób niepełnoletnich",
+      "file": "/document/siatk/niepelnoletnia-2026.docx",
+      "downloadName": "Zgłoszenie i ośw. dla osoby niepełnoletniej.docx",
+      "kategoria": "siatkowka",
+      "published": false
+    },
+    {
+      "title": "Regulamin Biegu 2025",
+      "description": "Oficjalny regulamin biegu organizowanego w Dolince",
+      "file": "/document/run2025.pdf",
+      "downloadName": "Regulamin Biegu 2025.pdf",
+      "kategoria": "bieg",
+      "published": false
+    }
+  ]
+}

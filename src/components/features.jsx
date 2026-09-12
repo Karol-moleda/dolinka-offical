@@ -4,6 +4,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './features.css';
 import './event-image-fix.css'; // Import the event image fix CSS
 import { useTheme } from '../context/ThemeContext';
+import aktualnosci from "../content/aktualnosci.json";
 import styled from 'styled-components';
 
 const FeaturesContainer = styled.div`
@@ -68,11 +69,19 @@ const FeaturesContainer = styled.div`
   }
 `;
 
-const Features = ({ data }) => {
+// Spacje i polskie znaki w nazwach plikow musza byc zakodowane,
+// ale ukosniki w sciezce juz nie.
+const encodePath = (path) =>
+  String(path || '').split('/').map(encodeURIComponent).join('/');
+
+const Features = () => {
   const { fontSize, isDarkMode } = useTheme();
-  
-  if (!data) return <div>Ładowanie...</div>;
-  
+
+  // Tresc pochodzi z src/content/aktualnosci.json - w kodzie nie ma zadnych wpisow.
+  const items = aktualnosci.filter((item) => item.published !== false);
+
+  if (!items.length) return null;
+
   return (
     <FeaturesContainer fontSize={fontSize} isDarkMode={isDarkMode} id="features" className="text-center">
       <div className="container">
@@ -86,24 +95,24 @@ const Features = ({ data }) => {
               showArrows={true}
               showStatus={false}
               showThumbs={false}
-              infiniteLoop={true}
-              autoPlay={true}
+              infiniteLoop={items.length > 1}
+              autoPlay={items.length > 1}
               interval={5000}
               stopOnHover={true}
               emulateTouch={true}
               swipeable={true}
               className={`${isDarkMode ? 'dark-carousel' : 'light-carousel'} carousel-with-spacing`}
             >
-              {data.map((item, i) => (
+              {items.map((item, i) => (
                 <div key={`${item.title}-${i}`} className="slide-item">
                   <div className="event-content">
                     <div className="image-container">
-                      <img src={item.img} alt={item.title} />
+                      <img src={encodePath(item.img)} alt={item.title} loading="lazy" />
                     </div>
                     <div className="text-box">
                       <h3>{item.title}</h3>
                       <p>
-                        {item.text.split('\n').map((line, idx, arr) => (
+                        {String(item.text).split('\n').map((line, idx, arr) => (
                           <React.Fragment key={idx}>
                             {line}
                             {idx < arr.length - 1 && <br />}

@@ -35,3 +35,6 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
+
+# wynik optymalizacji zdjec (katalog roboczy, nie commitujemy)
+/public/img-optimized/

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import wydarzenia from "../content/kalendarz.json";
 
 const CalendarSection = styled.div`
   padding: 100px 0;
@@ -104,7 +105,7 @@ const TimelineItem = styled.div`
 
 const EventCard = styled.div`
   padding: 20px;
-  background-color: ${props => props.isPast ? '#e0e0e0' : 'white'};
+  background-color: ${props => props.$isPast ? '#e0e0e0' : 'white'};
   border-radius: 6px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
@@ -149,104 +150,55 @@ const EventDescription = styled.p`
   }
 `;
 
+const dateFormatter = new Intl.DateTimeFormat("pl-PL", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
+
+// Ostatni dzien miesiaca danej daty. Uzywany dla wydarzen z przyblizonym
+// terminem ("wrzesien 2026") - takie nie powinno stac sie "minione" 2 wrzesnia.
+const endOfMonth = (date) =>
+  new Date(date.getFullYear(), date.getMonth() + 1, 0, 23, 59, 59);
+
 const Calendar = () => {
-  const events = [
-    {
-      id: 1,
-      date: "29 marca 2026",
-      title: "Festyn Wielkanocny",
-      description: "Zapraszamy na Festyn Wielkanocny! Szukanie jajek czekoladowych, występy artystyczne, warsztaty plastyczne dla dorosłych i dzieci, pyszny wielkanocny poczęstunek oraz świąteczna atmosfera 🐣"
-    },
-    {
-      id: 2,
-      date: "2 maja 2026",
-      title: "Piknik Patriotyczny",
-      description: "Świętujmy razem majówkę! Zapraszamy na Piknik Patriotyczny z atrakcjami dla całych rodzin, wspólnym śpiewaniem pieśni patriotycznych i grochówką. Pokażmy naszą dumę i radość ze wspólnoty! 🇵🇱"
-    },
-    {
-      id: 3,
-      date: "24 maja 2026",
-      title: "Festiwal Dmuchańców",
-      description: "Prawdziwe szaleństwo dla najmłodszych! Wielki Festiwal Dmuchańców to dzień pełen skakania, zjeżdżania i niesamowitej zabawy. Gwarantujemy uśmiech na twarzy każdego dziecka! 🏰🎈"
-    },
-    {
-      id: 4,
-      date: "15 sierpnia 2026",
-      title: "Kino Plenerowe",
-      description: "Magia kina pod gwiazdami powraca! Zabierzcie koce i leżaki, by wspólnie obejrzeć filmowy hit tego lata. Niezapomniana atmosfera i popcorn gratis! 🎬🍿🌌"
-    },
-    {
-      id: 5,
-      date: "26 lipca 2026",
-      title: "Turniej Siatkówki",
-      description: "Sportowe emocje na piasku! Zapraszamy drużyny i kibiców na Turniej Siatkówki. Czeka nas rywalizacja w duchu fair play, słońce i świetna zabawa. Dołącz do gry! 🏐☀️"
-    },
-    {
-      id: 6,
-      date: "23 sierpnia 2026",
-      title: "Turniej Koszykówki 3x3",
-      description: "Streetball w najlepszym wydaniu!Turniej Koszykówki 3x3 to szybkość, technika i walka pod koszem. Zbierz ekpię i walcz o puchar Dolinki! 🏀🏆"
-    },
-    {
-      id: 7,
-      date: "wrzesień 2026",
-      title: "Zebranie Ogólne i Potańcówka",
-      description: "Ważne sprawy i wspólna zabawa. Zapraszamy na zebranie ogólne mieszkańców, po którym zintegrujemy się podczas jesiennej potańcówki. Wasz głos i obecność są dla nas ważne! 🗣️🍂💃"
-    },
-    {
-      id: 8,
-      date: "grudzień 2026",
-      title: "Mikołajki",
-      description: "Ho, ho, ho! Święty Mikołaj odwiedzi Dolinkę! Zapraszamy wszystkie dzieci na spotkanie z Mikołajem, prezenty i wspólne kolędowanie. Poczujmy magię Świąt! 🎅🎄🎁"
-    },
-  ];
+  const today = new Date();
 
-  // Function to check if an event date has passed
-  const isEventPast = (dateString) => {
-    const today = new Date();
-    
-    // Handle different date formats
-    if (dateString.includes("grudzień") && dateString.includes("2025")) {
-      // December 2025 - create date for December 1, 2025
-      return new Date(2025, 11, 1) < today;
-    } else if (dateString.includes("koniec sierpnia") || dateString.includes("początek września")) {
-      // End of August / beginning of September - use September 1, 2025
-      return new Date(2025, 8, 1) < today;
-    } else {
-      // Parse specific dates like "13 kwietnia 2025"
-      const months = {
-        "stycznia": 0, "lutego": 1, "marca": 2, "kwietnia": 3, "maja": 4, "czerwca": 5, 
-        "lipca": 6, "sierpnia": 7, "września": 8, "października": 9, "listopada": 10, "grudnia": 11
+  // Tresc pochodzi z src/content/kalendarz.json - w kodzie nie ma zadnych wydarzen.
+  const events = wydarzenia
+    .filter((event) => event.published !== false)
+    .map((event) => {
+      const parsed = new Date(`${event.date}T00:00:00`);
+      const isValid = !Number.isNaN(parsed.getTime());
+      const isApproximate = Boolean(event.dateText);
+
+      return {
+        ...event,
+        parsedDate: isValid ? parsed : null,
+        // Przy przyblizonym terminie pokazujemy tekst wpisany recznie,
+        // w pozostalych przypadkach date formatowana po polsku.
+        label: isApproximate
+          ? event.dateText
+          : (isValid ? dateFormatter.format(parsed) : event.date),
+        isPast: isValid
+          ? (isApproximate ? endOfMonth(parsed) : parsed) < today
+          : false,
       };
-      
-      // Extract date components
-      const parts = dateString.split(" ");
-      if (parts.length >= 3) {
-        const day = parseInt(parts[0], 10);
-        const month = months[parts[1]];
-        const year = parseInt(parts[2], 10);
-        
-        if (!isNaN(day) && month !== undefined && !isNaN(year)) {
-          return new Date(year, month, day) < today;
-        }
-      }
-      
-      // Default to future if we can't parse the date
-      return false;
-    }
-  };
+    })
+    // Kolejnosc wynika z daty, a nie z kolejnosci wpisow w pliku.
+    .sort((left, right) => {
+      if (!left.parsedDate) return 1;
+      if (!right.parsedDate) return -1;
+      return left.parsedDate - right.parsedDate;
+    });
 
-  // Rok w nagłówku wynika z dat wydarzeń, nie z ręcznie wpisanej liczby.
-  // Jeśli wydarzenia obejmują dwa lata, pokazujemy zakres (np. "2026–2027").
+  // Rok w naglowku wynika z dat wydarzen, nie z recznie wpisanej liczby.
   const years = [...new Set(
-    events
-      .map((event) => event.date.match(/\b(20\d{2})\b/))
-      .filter(Boolean)
-      .map((match) => Number(match[1]))
+    events.filter((event) => event.parsedDate).map((event) => event.parsedDate.getFullYear())
   )].sort((a, b) => a - b);
 
   const calendarYear = years.length
-    ? (years.length > 1 ? `${years[0]}–${years[years.length - 1]}` : String(years[0]))
+    ? (years.length > 1 ? `${years[0]}\u2013${years[years.length - 1]}` : String(years[0]))
     : new Date().getFullYear();
 
   return (
@@ -259,11 +211,14 @@ const Calendar = () => {
         
         <Timeline>
           {events.map((event, index) => (
-            <TimelineItem key={event.id} $position={index % 2 === 0 ? 'left' : 'right'}>
-              <EventCard isPast={isEventPast(event.date)}>
-                <EventDate>{event.date}</EventDate>
+            <TimelineItem
+              key={`${event.date}-${event.title}`}
+              $position={index % 2 === 0 ? 'left' : 'right'}
+            >
+              <EventCard $isPast={event.isPast}>
+                <EventDate>{event.label}</EventDate>
                 <EventTitle>{event.title}</EventTitle>
-                <EventDescription>{event.description}</EventDescription>
+                <EventDescription>{event.text}</EventDescription>
               </EventCard>
             </TimelineItem>
           ))}

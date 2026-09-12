@@ -1,8 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useTheme } from '../context/ThemeContext';
+import trescDokumentow from "../content/dokumenty.json";
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDownload, faFilePdf, faBasketballBall } from '@fortawesome/free-solid-svg-icons';
+import {
+  faDownload,
+  faFilePdf,
+  faFileWord,
+  faBasketballBall,
+  faVolleyballBall,
+  faRunning,
+} from '@fortawesome/free-solid-svg-icons';
 
 const InneSection = styled.section`
   padding: 100px 0;
@@ -214,81 +222,60 @@ const CardText = styled.p`
   line-height: 1.6;
 `;
 
+// Ikona zakladki wynika z pola "icon" w pliku tresci.
+const ICONS = {
+  basketball: faBasketballBall,
+  volleyball: faVolleyballBall,
+  running: faRunning,
+};
+
+// Dokumenty Word dostaja inna ikone niz PDF-y.
+const fileIcon = (file) => (/\.docx?$/i.test(String(file)) ? faFileWord : faFilePdf);
+
+// Spacje i polskie znaki w nazwach plikow musza byc zakodowane,
+// ale ukosniki w sciezce juz nie.
+const encodePath = (path) =>
+  String(path || '').split('/').map(encodeURIComponent).join('/');
+
 const Inne = () => {
   const { isDarkMode } = useTheme();
-  const [activeTab, setActiveTab] = useState('basketball');
 
-  // Funkcja pobierania dokumentu
-  const handleDownload = (doc, tournament) => {
-    const filename = doc.filename;
-    const originalFilename = doc.originalFilename || doc.filename;
-    // Basketball files are in /document/kos/, volleyball in /document/siatk/, others in /document/
-    const folderPath = tournament === 'basketball'
-      ? '/document/kosz/'
-      : tournament === 'volleyball'
-        ? '/document/siatk/'
-        : '/document/';
-    const fileURL = `${window.location.origin}${folderPath}${encodeURIComponent(filename)}`;
-    
+  // Tresc pochodzi z src/content/dokumenty.json - w kodzie nie ma zadnych dokumentow.
+  const dokumenty = useMemo(
+    () => (trescDokumentow.dokumenty || []).filter((doc) => doc.published !== false),
+    []
+  );
+
+  // Zakladka pojawia sie tylko wtedy, gdy ma jakikolwiek opublikowany dokument.
+  const kategorie = useMemo(
+    () => (trescDokumentow.kategorie || []).filter((kategoria) =>
+      dokumenty.some((doc) => doc.kategoria === kategoria.id)
+    ),
+    [dokumenty]
+  );
+
+  const [activeTab, setActiveTab] = useState(() => kategorie[0]?.id || '');
+
+  useEffect(() => {
+    if (kategorie.length && !kategorie.some((kategoria) => kategoria.id === activeTab)) {
+      setActiveTab(kategorie[0].id);
+    }
+  }, [kategorie, activeTab]);
+
+  const currentDocuments = dokumenty.filter((doc) => doc.kategoria === activeTab);
+
+  const handleDownload = (doc) => {
     try {
-      // Tworzymy tymczasowy link, klikamy go i usuwamy
       const link = document.createElement('a');
-      link.href = fileURL;
-      link.setAttribute('download', originalFilename);
+      link.href = `${window.location.origin}${encodePath(doc.file)}`;
+      link.setAttribute('download', doc.downloadName || doc.title);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
     } catch (error) {
-      console.error('Błąd podczas pobierania:', error);
+      console.error('Blad podczas pobierania:', error);
     }
   };
-  
-  const runDocuments = [
-    {
-      name: "Regulamin Biegu 2025",
-      filename: "run2025.pdf",
-      originalFilename: "run2025.pdf",
-      description: "Oficjalny regulamin biegu organizowanego w Dolince"
-    }
-  ];
-
-  const volleyballDocuments = [
-    {
-      name: "Kwestionariusz drużyny 2026",
-      filename: "kwestionariusz-2026.doc",
-      originalFilename: "Kwestionariusz drużyny 2026.doc",
-      description: "Formularz rejestracyjny dla drużyn uczestniczących w turnieju siatkówki"
-    },
-    {
-      name: "Regulamin Turnieju w Dolince 2026",
-      filename: "Regulamin_2026.pdf",
-      originalFilename: "Regulamin Turnieju w Dolince 2026.pdf",
-      description: "Oficjalny regulamin turnieju siatkówki organizowanego w Dolince"
-    },
-    {
-      name: "Zgłoszenie dla osoby niepełnoletniej",
-      filename: "niepelnoletnia-2026.docx",
-      originalFilename: "Zgłoszenie i ośw. dla osoby niepełnoletniej.docx",
-      description: "Formularz zgłoszeniowy wraz z oświadczeniem dla osób niepełnoletnich"
-    },
-    {
-      name: "Zgłoszenie dla osoby pełnoletniej",
-      filename: "pelnoletnia-2026.docx",
-      originalFilename: "Zgłoszenie i ośw. dla osoby pełnoletniej.docx",
-      description: "Formularz zgłoszeniowy wraz z oświadczeniem dla osób pełnoletnich"
-    }
-  ];
-
-  const basketballDocuments = [
-    {
-      name: "Regulamin V Turnieju Koszykówki w Dolince 2026",
-      filename: "Regulamin Turnieju_w_Dolince_2026.pdf",
-      originalFilename: "Regulamin Turnieju_w_Dolince_2026.pdf",
-      description: "Oficjalny regulamin V Turnieju Koszykówki organizowanego w Dolince – 23 sierpnia 2026"
-    }
-  ];
-
-  const currentDocuments = activeTab === 'basketball' ? basketballDocuments : (activeTab === 'run' ? runDocuments : volleyballDocuments);
 
   return (
     <InneSection id="inne" $isDarkMode={isDarkMode}>
@@ -299,69 +286,67 @@ const Inne = () => {
             Oficjalne dokumenty, formularze i regulaminy stowarzyszenia
           </Description>
         </SectionHeader>
-        
-        <TabsSelect $isDarkMode={isDarkMode} value={activeTab} onChange={(e) => setActiveTab(e.target.value)}>
-          <option value="basketball">Koszykówka</option>
-          {/* <option value="volleyball">Siatkówka</option> */}
-          {/* <option value="run">Bieg</option> */}
-        </TabsSelect>
 
-        <TabsContainer $isDarkMode={isDarkMode}>
-          {/* <Tab
-            $active={activeTab === 'run'}
+        {kategorie.length > 1 && (
+          <TabsSelect
             $isDarkMode={isDarkMode}
-            onClick={() => setActiveTab('run')}
+            value={activeTab}
+            onChange={(event) => setActiveTab(event.target.value)}
+            aria-label="Wybierz kategorie dokumentow"
           >
-            <TabIcon icon={faRunning} />
-            Bieg
-          </Tab> */}
-          <Tab
-            $active={activeTab === 'basketball'}
-            $isDarkMode={isDarkMode}
-            onClick={() => setActiveTab('basketball')}
-          >
-            <TabIcon icon={faBasketballBall} />
-            Koszykówka
-          </Tab>
-          {/* <Tab
-            $active={activeTab === 'volleyball'}
-            $isDarkMode={isDarkMode}
-            onClick={() => setActiveTab('volleyball')}
-          >
-            <TabIcon icon={faVolleyballBall} />
-            Siatkówka
-          </Tab> */}
-        </TabsContainer>
-        
-        <ContentGrid>
-          {currentDocuments.map((doc, index) => (
-            <DocumentCard 
-              key={index}
-              $isDarkMode={isDarkMode}
-            >
-              <DocumentIcon>
-                <FontAwesomeIcon icon={faFilePdf} />
-              </DocumentIcon>
-              <DocumentTitle $isDarkMode={isDarkMode}>
-                {doc.name}
-              </DocumentTitle>
-              <CardText $isDarkMode={isDarkMode}>
-                {doc.description}
-              </CardText>
-              <DocumentMeta $isDarkMode={isDarkMode}>
-                <div 
-                  onClick={() => handleDownload(doc, activeTab)}
-                  style={{ textDecoration: 'none', cursor: 'pointer' }}
-                >
-                  <DownloadButton>
-                    <FontAwesomeIcon icon={faDownload} />
-                    Pobierz
-                  </DownloadButton>
-                </div>
-              </DocumentMeta>
-            </DocumentCard>
-          ))}
-        </ContentGrid>
+            {kategorie.map((kategoria) => (
+              <option key={kategoria.id} value={kategoria.id}>
+                {kategoria.label}
+              </option>
+            ))}
+          </TabsSelect>
+        )}
+
+        {kategorie.length > 1 && (
+          <TabsContainer $isDarkMode={isDarkMode}>
+            {kategorie.map((kategoria) => (
+              <Tab
+                key={kategoria.id}
+                $active={activeTab === kategoria.id}
+                $isDarkMode={isDarkMode}
+                onClick={() => setActiveTab(kategoria.id)}
+              >
+                <TabIcon icon={ICONS[kategoria.icon] || faFilePdf} />
+                {kategoria.label}
+              </Tab>
+            ))}
+          </TabsContainer>
+        )}
+
+        {currentDocuments.length === 0 ? (
+          <CardText $isDarkMode={isDarkMode} style={{ textAlign: 'center' }}>
+            Brak dokumentow do pobrania.
+          </CardText>
+        ) : (
+          <ContentGrid>
+            {currentDocuments.map((doc) => (
+              <DocumentCard key={doc.file} $isDarkMode={isDarkMode}>
+                <DocumentIcon>
+                  <FontAwesomeIcon icon={fileIcon(doc.file)} />
+                </DocumentIcon>
+                <DocumentTitle $isDarkMode={isDarkMode}>{doc.title}</DocumentTitle>
+                <CardText $isDarkMode={isDarkMode}>{doc.description}</CardText>
+                <DocumentMeta $isDarkMode={isDarkMode}>
+                  <button
+                    type="button"
+                    onClick={() => handleDownload(doc)}
+                    style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
+                  >
+                    <DownloadButton>
+                      <FontAwesomeIcon icon={faDownload} />
+                      Pobierz
+                    </DownloadButton>
+                  </button>
+                </DocumentMeta>
+              </DocumentCard>
+            ))}
+          </ContentGrid>
+        )}
       </Container>
     </InneSection>
   );
