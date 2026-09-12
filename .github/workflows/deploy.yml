@@ -43,11 +43,14 @@ jobs:
       - name: Przygotuj Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
       - name: Zainstaluj zaleznosci
-        run: npm ci
+        # npm install zamiast npm ci: lokalny npm 12 zapisuje drzewo zaleznosci
+        # inaczej niz npm dolaczony do starszego Node, przez co npm ci odmawial
+        # (spory o ajv i json-schema-traverse). Node 22 = to samo co lokalnie.
+        run: npm install --no-audit --no-fund
 
       - name: Zbuduj strone
         # GitHub Actions ustawia CI=true, a wtedy react-scripts traktuje
