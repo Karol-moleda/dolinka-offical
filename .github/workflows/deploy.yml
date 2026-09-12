@@ -1,0 +1,79 @@
+# Buduje strone i wysyla ja na serwer vh.pl przez FTPS.
+#
+# Zastepuje reczne wrzucanie katalogu build/ FileZilla.
+# Wysylane sa tylko pliki, ktore sie zmienily - stan zapamietuje plik
+# .ftp-deploy-sync-state.json tworzony na serwerze przy pierwszym uruchomieniu.
+#
+# Wymagane sekrety repozytorium (Settings -> Secrets and variables -> Actions):
+#   FTP_SERVER      host FTP z panelu vh.pl, np. ftp.dolinka.olkusz.pl
+#   FTP_USERNAME    login FTP
+#   FTP_PASSWORD    haslo FTP
+#   FTP_SERVER_DIR  katalog strony na serwerze, ZAKONCZONY ukosnikiem,
+#                   np. /domains/dolinka.olkusz.pl/public_html/
+
+name: Deploy na vh.pl
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'README.md'
+      - 'LICENSE'
+      - '.github/ISSUE_TEMPLATE/**'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Proba bez wysylki - pokazuje co by poleclo, nic nie zmienia'
+        type: boolean
+        default: false
+
+# Dwa deploye naraz moglyby sie wzajemnie nadpisac.
+concurrency:
+  group: deploy-vh
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Pobierz repozytorium
+        uses: actions/checkout@v4
+
+      - name: Przygotuj Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Zainstaluj zaleznosci
+        run: npm ci
+
+      - name: Zbuduj strone
+        # GitHub Actions ustawia CI=true, a wtedy react-scripts traktuje
+        # ostrzezenia eslinta jak bledy i przerywa build. Tego nie da sie
+        # ustawic w .env, bo dotenv nie nadpisuje istniejacych zmiennych.
+        env:
+          CI: false
+        run: npm run build
+
+      - name: Sprawdz, czy build nie jest pusty
+        run: |
+          test -f build/index.html || { echo "Brak build/index.html - przerywam."; exit 1; }
+          echo "Rozmiar builda: $(du -sh build | cut -f1)"
+
+      - name: Wyslij na serwer vh.pl
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ${{ secrets.FTP_SERVER_DIR }}
+          local-dir: ./build/
+          protocol: ftps
+          timeout: 120000
+          dry-run: ${{ inputs.dry_run == true }}
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
