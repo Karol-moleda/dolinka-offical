@@ -6,9 +6,6 @@
     "@fortawesome/free-brands-svg-icons": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^12.1.5",
-    "@testing-library/user-event": "^14.5.2",
     "bootstrap": "^5.3.3",
     "emailjs-com": "^3.2.0",
     "framer-motion": "^10.18.0",
@@ -27,7 +24,6 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
     "eject": "react-scripts eject",
     "images:report": "node scripts/imageOptimizer.js",
     "images:preview": "node scripts/imageOptimizer.js --run",
