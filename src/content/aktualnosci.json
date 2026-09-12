@@ -1,20 +1,22 @@
-[
-  {
-    "title": "Skrzynki obywatelskie – Program \"Aktywni Seniorzy-Asy\" 2026-2030",
-    "text": "W ramach Programu „Aktywni Seniorzy- Asy” na lata 2026-2030 zostały zakupione „Skrzynki obywatelskie” służące prowadzeniu dialogu obywatelskiego z szerszym gronem seniorów i ich otoczeniem.\n\nCel skrzynek obywatelskich:\n- Zbieranie uwag, opinii, wniosków i pomysłów od osób starszych oraz ich otoczenia\n- Ułatwienie dialogu pomiędzy lokalną społecznością senioralną a władzami samorządowymi\n- Włączanie najstarszych mieszkańców w procesy decyzyjne w gminie.\n\nSkrzynka zlokalizowana przed wejściem do Klubu Krecik/ Filii Biblioteki przy ul. Konopnickiej.\n\nWszelkie uwagi co do stanu skrzynki prosimy przekazywać przewodniczącemu Zarządu p. Wojciechowi Ozdobie.",
-    "img": "/img/news/skrzynka.jpg",
-    "published": true
-  },
-  {
-    "title": "V Turniej Koszykówki w Dolince – 23 sierpnia, godz. 14:00",
-    "text": "Już po raz piąty na Osiedlu Młodych w Olkuszu rozegrany zostanie Turniej Koszykówki w Dolince! 23 sierpnia o godzinie 14:00 najlepsze drużyny zmierzą się na boisku w emocjonujących rozgrywkach. Wydarzenie organizowane przez Zarząd Osiedla Młodych we współpracy z MOSiR Olkusz to prawdziwe sportowe święto dla całej społeczności. Zapisy drogą mailową do 21 sierpnia na adres dolinka.olkusz@gmail.com. Szczegółowy regulamin dostępny na stronie www.dolinka-olkusz.pl.",
-    "img": "/img/news/zawody kosz.jpg",
-    "published": true
-  },
-  {
-    "title": "Zakupiliśmy windery",
-    "text": "W tym roku Dolinka Olkusz zorganizowała lub współorganizowała już 5 wydarzeń dla mieszkańców. Aby kolejne imprezy na Osiedlu Młodych w Olkuszu miały jeszcze lepszą oprawę, zakupiliśmy nowe windery, które będą towarzyszyć naszym festynom, wydarzeniom lokalnym i akcjom społecznym.",
-    "img": "/img/news/zakup.jpg",
-    "published": true
-  }
-]
+{
+  "wpisy": [
+    {
+      "title": "Skrzynki obywatelskie – Program \"Aktywni Seniorzy-Asy\" 2026-2030",
+      "text": "W ramach Programu „Aktywni Seniorzy- Asy” na lata 2026-2030 zostały zakupione „Skrzynki obywatelskie” służące prowadzeniu dialogu obywatelskiego z szerszym gronem seniorów i ich otoczeniem.\n\nCel skrzynek obywatelskich:\n- Zbieranie uwag, opinii, wniosków i pomysłów od osób starszych oraz ich otoczenia\n- Ułatwienie dialogu pomiędzy lokalną społecznością senioralną a władzami samorządowymi\n- Włączanie najstarszych mieszkańców w procesy decyzyjne w gminie.\n\nSkrzynka zlokalizowana przed wejściem do Klubu Krecik/ Filii Biblioteki przy ul. Konopnickiej.\n\nWszelkie uwagi co do stanu skrzynki prosimy przekazywać przewodniczącemu Zarządu p. Wojciechowi Ozdobie.",
+      "img": "/img/news/skrzynka.jpg",
+      "published": true
+    },
+    {
+      "title": "V Turniej Koszykówki w Dolince – 23 sierpnia, godz. 14:00",
+      "text": "Już po raz piąty na Osiedlu Młodych w Olkuszu rozegrany zostanie Turniej Koszykówki w Dolince! 23 sierpnia o godzinie 14:00 najlepsze drużyny zmierzą się na boisku w emocjonujących rozgrywkach. Wydarzenie organizowane przez Zarząd Osiedla Młodych we współpracy z MOSiR Olkusz to prawdziwe sportowe święto dla całej społeczności. Zapisy drogą mailową do 21 sierpnia na adres dolinka.olkusz@gmail.com. Szczegółowy regulamin dostępny na stronie www.dolinka-olkusz.pl.",
+      "img": "/img/news/zawody kosz.jpg",
+      "published": true
+    },
+    {
+      "title": "Zakupiliśmy windery",
+      "text": "W tym roku Dolinka Olkusz zorganizowała lub współorganizowała już 5 wydarzeń dla mieszkańców. Aby kolejne imprezy na Osiedlu Młodych w Olkuszu miały jeszcze lepszą oprawę, zakupiliśmy nowe windery, które będą towarzyszyć naszym festynom, wydarzeniom lokalnym i akcjom społecznym.",
+      "img": "/img/news/zakup.jpg",
+      "published": true
+    }
+  ]
+}

@@ -104,7 +104,7 @@ const Gallery = () => {
 
   // Tresc pochodzi z src/content/galeria.json - w kodzie nie ma zadnych sciezek.
   const publishedAlbums = useMemo(
-    () => albumy
+    () => (albumy.albumy || [])
       .filter((album) => album.published !== false)
       .map((album) => ({
         ...album,

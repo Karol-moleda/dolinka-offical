@@ -165,7 +165,7 @@ const Calendar = () => {
   const today = new Date();
 
   // Tresc pochodzi z src/content/kalendarz.json - w kodzie nie ma zadnych wydarzen.
-  const events = wydarzenia
+  const events = (wydarzenia.wydarzenia || [])
     .filter((event) => event.published !== false)
     .map((event) => {
       const parsed = new Date(`${event.date}T00:00:00`);

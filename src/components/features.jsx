@@ -78,7 +78,7 @@ const Features = () => {
   const { fontSize, isDarkMode } = useTheme();
 
   // Tresc pochodzi z src/content/aktualnosci.json - w kodzie nie ma zadnych wpisow.
-  const items = aktualnosci.filter((item) => item.published !== false);
+  const items = (aktualnosci.wpisy || []).filter((item) => item.published !== false);
 
   if (!items.length) return null;
 

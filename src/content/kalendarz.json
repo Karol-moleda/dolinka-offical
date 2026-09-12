@@ -1,58 +1,60 @@
-[
-  {
-    "date": "2026-03-29",
-    "dateText": "",
-    "title": "Festyn Wielkanocny",
-    "text": "Zapraszamy na Festyn Wielkanocny! Szukanie jajek czekoladowych, występy artystyczne, warsztaty plastyczne dla dorosłych i dzieci, pyszny wielkanocny poczęstunek oraz świąteczna atmosfera 🐣",
-    "published": true
-  },
-  {
-    "date": "2026-05-02",
-    "dateText": "",
-    "title": "Piknik Patriotyczny",
-    "text": "Świętujmy razem majówkę! Zapraszamy na Piknik Patriotyczny z atrakcjami dla całych rodzin, wspólnym śpiewaniem pieśni patriotycznych i grochówką. Pokażmy naszą dumę i radość ze wspólnoty! 🇵🇱",
-    "published": true
-  },
-  {
-    "date": "2026-05-24",
-    "dateText": "",
-    "title": "Festiwal Dmuchańców",
-    "text": "Prawdziwe szaleństwo dla najmłodszych! Wielki Festiwal Dmuchańców to dzień pełen skakania, zjeżdżania i niesamowitej zabawy. Gwarantujemy uśmiech na twarzy każdego dziecka! 🏰🎈",
-    "published": true
-  },
-  {
-    "date": "2026-07-26",
-    "dateText": "",
-    "title": "Turniej Siatkówki",
-    "text": "Sportowe emocje na piasku! Zapraszamy drużyny i kibiców na Turniej Siatkówki. Czeka nas rywalizacja w duchu fair play, słońce i świetna zabawa. Dołącz do gry! 🏐☀️",
-    "published": true
-  },
-  {
-    "date": "2026-08-15",
-    "dateText": "",
-    "title": "Kino Plenerowe",
-    "text": "Magia kina pod gwiazdami powraca! Zabierzcie koce i leżaki, by wspólnie obejrzeć filmowy hit tego lata. Niezapomniana atmosfera i popcorn gratis! 🎬🍿🌌",
-    "published": true
-  },
-  {
-    "date": "2026-08-23",
-    "dateText": "",
-    "title": "Turniej Koszykówki 3x3",
-    "text": "Streetball w najlepszym wydaniu! Turniej Koszykówki 3x3 to szybkość, technika i walka pod koszem. Zbierz ekipę i walcz o puchar Dolinki! 🏀🏆",
-    "published": true
-  },
-  {
-    "date": "2026-09-01",
-    "dateText": "wrzesień 2026",
-    "title": "Zebranie Ogólne i Potańcówka",
-    "text": "Ważne sprawy i wspólna zabawa. Zapraszamy na zebranie ogólne mieszkańców, po którym zintegrujemy się podczas jesiennej potańcówki. Wasz głos i obecność są dla nas ważne! 🗣️🍂💃",
-    "published": true
-  },
-  {
-    "date": "2026-12-01",
-    "dateText": "grudzień 2026",
-    "title": "Mikołajki",
-    "text": "Ho, ho, ho! Święty Mikołaj odwiedzi Dolinkę! Zapraszamy wszystkie dzieci na spotkanie z Mikołajem, prezenty i wspólne kolędowanie. Poczujmy magię Świąt! 🎅🎄🎁",
-    "published": true
-  }
-]
+{
+  "wydarzenia": [
+    {
+      "date": "2026-03-29",
+      "dateText": "",
+      "title": "Festyn Wielkanocny",
+      "text": "Zapraszamy na Festyn Wielkanocny! Szukanie jajek czekoladowych, występy artystyczne, warsztaty plastyczne dla dorosłych i dzieci, pyszny wielkanocny poczęstunek oraz świąteczna atmosfera 🐣",
+      "published": true
+    },
+    {
+      "date": "2026-05-02",
+      "dateText": "",
+      "title": "Piknik Patriotyczny",
+      "text": "Świętujmy razem majówkę! Zapraszamy na Piknik Patriotyczny z atrakcjami dla całych rodzin, wspólnym śpiewaniem pieśni patriotycznych i grochówką. Pokażmy naszą dumę i radość ze wspólnoty! 🇵🇱",
+      "published": true
+    },
+    {
+      "date": "2026-05-24",
+      "dateText": "",
+      "title": "Festiwal Dmuchańców",
+      "text": "Prawdziwe szaleństwo dla najmłodszych! Wielki Festiwal Dmuchańców to dzień pełen skakania, zjeżdżania i niesamowitej zabawy. Gwarantujemy uśmiech na twarzy każdego dziecka! 🏰🎈",
+      "published": true
+    },
+    {
+      "date": "2026-07-26",
+      "dateText": "",
+      "title": "Turniej Siatkówki",
+      "text": "Sportowe emocje na piasku! Zapraszamy drużyny i kibiców na Turniej Siatkówki. Czeka nas rywalizacja w duchu fair play, słońce i świetna zabawa. Dołącz do gry! 🏐☀️",
+      "published": true
+    },
+    {
+      "date": "2026-08-15",
+      "dateText": "",
+      "title": "Kino Plenerowe",
+      "text": "Magia kina pod gwiazdami powraca! Zabierzcie koce i leżaki, by wspólnie obejrzeć filmowy hit tego lata. Niezapomniana atmosfera i popcorn gratis! 🎬🍿🌌",
+      "published": true
+    },
+    {
+      "date": "2026-08-23",
+      "dateText": "",
+      "title": "Turniej Koszykówki 3x3",
+      "text": "Streetball w najlepszym wydaniu! Turniej Koszykówki 3x3 to szybkość, technika i walka pod koszem. Zbierz ekipę i walcz o puchar Dolinki! 🏀🏆",
+      "published": true
+    },
+    {
+      "date": "2026-09-01",
+      "dateText": "wrzesień 2026",
+      "title": "Zebranie Ogólne i Potańcówka",
+      "text": "Ważne sprawy i wspólna zabawa. Zapraszamy na zebranie ogólne mieszkańców, po którym zintegrujemy się podczas jesiennej potańcówki. Wasz głos i obecność są dla nas ważne! 🗣️🍂💃",
+      "published": true
+    },
+    {
+      "date": "2026-12-01",
+      "dateText": "grudzień 2026",
+      "title": "Mikołajki",
+      "text": "Ho, ho, ho! Święty Mikołaj odwiedzi Dolinkę! Zapraszamy wszystkie dzieci na spotkanie z Mikołajem, prezenty i wspólne kolędowanie. Poczujmy magię Świąt! 🎅🎄🎁",
+      "published": true
+    }
+  ]
+}
