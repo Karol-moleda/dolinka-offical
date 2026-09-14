@@ -3,7 +3,6 @@
     {
       "title": "Turniej Siatkówki 2026",
       "year": "2026",
-      "published": true,
       "photos": [
         "/images/event/2026/Turniej-Siatkowki/DSC_6133.JPG",
         "/images/event/2026/Turniej-Siatkowki/DSC_6155-Picsart-AiImageEnhancer.JPG",
@@ -58,12 +57,12 @@
         "/images/event/2026/Turniej-Siatkowki/DSC_6667.JPG",
         "/images/event/2026/Turniej-Siatkowki/DSC_6683.JPG",
         "/images/event/2026/Turniej-Siatkowki/DSC_6685.JPG"
-      ]
+      ],
+      "published": true
     },
     {
       "title": "Festiwal Dmuchańców",
       "year": "2026",
-      "published": true,
       "photos": [
         "/images/event/2026/festiwal-dmuchancow/festiwal-dmuchancow-1.jpg",
         "/images/event/2026/festiwal-dmuchancow/festiwal-dmuchancow-2.jpg",
@@ -83,12 +82,12 @@
         "/images/event/2026/festiwal-dmuchancow/festiwal-dmuchancow-16.jpg",
         "/images/event/2026/festiwal-dmuchancow/festiwal-dmuchancow-17.jpg",
         "/images/event/2026/festiwal-dmuchancow/festiwal-dmuchancow-18.jpg"
-      ]
+      ],
+      "published": true
     },
     {
       "title": "Święto flagi",
       "year": "2026",
-      "published": true,
       "photos": [
         "/images/event/2026/swieto-flagi/swieto-flagi-1.jpg",
         "/images/event/2026/swieto-flagi/swieto-flagi-2.jpg",
@@ -105,24 +104,24 @@
         "/images/event/2026/swieto-flagi/swieto-flagi-13.jpg",
         "/images/event/2026/swieto-flagi/swieto-flagi-14.jpg",
         "/images/event/2026/swieto-flagi/swieto-flagi-15.jpg"
-      ]
+      ],
+      "published": true
     },
     {
       "title": "Sprzątanie osiedla",
       "year": "2026",
-      "published": true,
       "photos": [
         "/images/event/2026/sprzatanie-osiedla/sprzatanie-osiedla-1.jpg",
         "/images/event/2026/sprzatanie-osiedla/sprzatanie-osiedla-2.jpg",
         "/images/event/2026/sprzatanie-osiedla/sprzatanie-osiedla-3.jpg",
         "/images/event/2026/sprzatanie-osiedla/sprzatanie-osiedla-4.jpg",
         "/images/event/2026/sprzatanie-osiedla/sprzatanie-osiedla-5.jpg"
-      ]
+      ],
+      "published": true
     },
     {
       "title": "Wielkanoc 2026",
       "year": "2026",
-      "published": true,
       "photos": [
         "/images/event/2026/Wielkanoc/wielkanoc-1.jpg",
         "/images/event/2026/Wielkanoc/wielkanoc-2.jpg",
@@ -138,12 +137,12 @@
         "/images/event/2026/Wielkanoc/wielkanoc-12.jpg",
         "/images/event/2026/Wielkanoc/wielkanoc-13.jpg",
         "/images/event/2026/Wielkanoc/wielkanoc-14.jpg"
-      ]
+      ],
+      "published": true
     },
     {
       "title": "Mikołaj w Dolince",
       "year": "2025",
-      "published": true,
       "photos": [
         "/images/event/2025/miko/1.jpg",
         "/images/event/2025/miko/2.jpg",
@@ -162,12 +161,12 @@
         "/images/event/2025/miko/15.jpg",
         "/images/event/2025/miko/16.jpg",
         "/images/event/2025/miko/17.jpg"
-      ]
+      ],
+      "published": true
     },
     {
       "title": "Biesiada w Dolince",
       "year": "2025",
-      "published": true,
       "photos": [
         "/images/event/2025/biesiada/1.jpg",
         "/images/event/2025/biesiada/2.jpg",
@@ -179,12 +178,12 @@
         "/images/event/2025/biesiada/8.jpg",
         "/images/event/2025/biesiada/9.jpg",
         "/images/event/2025/biesiada/10.jpg"
-      ]
+      ],
+      "published": true
     },
     {
       "title": "I Bieg w Dolince",
       "year": "2025",
-      "published": true,
       "photos": [
         "/images/event/2025/run/1.jpg",
         "/images/event/2025/run/2.jpg",
@@ -202,12 +201,12 @@
         "/images/event/2025/run/14.jpg",
         "/images/event/2025/run/15.jpg",
         "/images/event/2025/run/16.jpg"
-      ]
+      ],
+      "published": true
     },
     {
       "title": "X turniej siatkówki w Dolince",
       "year": "2025",
-      "published": true,
       "photos": [
         "/images/event/2025/siat/1.jpg",
         "/images/event/2025/siat/2.jpg",
@@ -225,12 +224,12 @@
         "/images/event/2025/siat/14.jpg",
         "/images/event/2025/siat/15.jpg",
         "/images/event/2025/siat/16.jpg"
-      ]
+      ],
+      "published": true
     },
     {
       "title": "IV turniej koszykówki w Dolince",
       "year": "2025",
-      "published": true,
       "photos": [
         "/images/event/2025/kosz/1.jpg",
         "/images/event/2025/kosz/2.jpg",
@@ -242,12 +241,12 @@
         "/images/event/2025/kosz/8.jpg",
         "/images/event/2025/kosz/9.jpg",
         "/images/event/2025/kosz/10.jpg"
-      ]
+      ],
+      "published": true
     },
     {
       "title": "Potańcówka w Dolince",
       "year": "2025",
-      "published": true,
       "photos": [
         "/images/event/2025/tance/1.jpg",
         "/images/event/2025/tance/2.jpg",
@@ -255,12 +254,12 @@
         "/images/event/2025/tance/4.jpg",
         "/images/event/2025/tance/5.jpg",
         "/images/event/2025/tance/6.jpg"
-      ]
+      ],
+      "published": true
     },
     {
       "title": "Festyn W SP10",
       "year": "2025",
-      "published": true,
       "photos": [
         "/images/event/2025/sp/1.jpg",
         "/images/event/2025/sp/2.jpg",
@@ -283,12 +282,12 @@
         "/images/event/2025/sp/19.jpg",
         "/images/event/2025/sp/20.jpg",
         "/images/event/2025/sp/21.jpg"
-      ]
+      ],
+      "published": true
     },
     {
       "title": "Festyn Wielkanocny",
       "year": "2025",
-      "published": true,
       "photos": [
         "/images/festyn/1.JPG",
         "/images/festyn/2.JPG",
@@ -316,6 +315,17 @@
         "/images/festyn/24.JPG",
         "/images/festyn/25.JPG",
         "/images/festyn/26.JPG"
+      ],
+      "published": true
+    },
+    {
+      "title": "Rewitalizacja Dolinki- konsultacje i pierwsze pomysły",
+      "year": "2016",
+      "photos": [
+        "/images/DSC03048.JPG",
+        "/images/DSC02432.JPG",
+        "/images/DSC02485.JPG",
+        "/images/20160923_102138.jpg"
       ]
     }
   ]
