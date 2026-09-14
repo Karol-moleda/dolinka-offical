@@ -53,26 +53,28 @@ jobs:
         run: npm install --no-audit --no-fund
 
       - name: Zbuduj strone
-        # GitHub Actions ustawia CI=true, a wtedy react-scripts traktuje
-        # ostrzezenia eslinta jak bledy i przerywa build. Tego nie da sie
-        # ustawic w .env, bo dotenv nie nadpisuje istniejacych zmiennych.
-        env:
-          CI: false
+        # Bylo tu `env: CI: false` - react-scripts przy CI=true traktowal
+        # ostrzezenia eslinta jak bledy. Astro tego nie robi, wiec obejscie
+        # jest juz niepotrzebne.
+        #
+        # Pierwsze budowanie po przesiadce trwa kilka minut: Astro generuje
+        # miniatury i lzejsze warianty dla ponad dwustu zdjec z src/images.
         run: npm run build
 
       - name: Sprawdz, czy build nie jest pusty
         run: |
-          test -f build/index.html || { echo "Brak build/index.html - przerywam."; exit 1; }
-          echo "Rozmiar builda: $(du -sh build | cut -f1)"
+          test -f dist/index.html || { echo "Brak dist/index.html - przerywam."; exit 1; }
+          echo "Rozmiar wyniku: $(du -sh dist | cut -f1)"
+          echo "Plikow: $(find dist -type f | wc -l)"
 
       - name: Wyslij na serwer vh.pl
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ${{ secrets.FTP_SERVER }}
+          server: ${{ secrets.local-dir }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: ${{ secrets.FTP_SERVER_DIR }}
-          local-dir: ./build/
+          local-dir: ./dist/
           # ftps (szyfrowany) konczyl sie ECONNRESET na gniezdzie danych:
           # serwer ProFTPD na cPanelu wymaga wznowienia sesji TLS dla polaczenia
           # danych, czego biblioteka tej akcji nie negocjuje tak jak FileZilla.
