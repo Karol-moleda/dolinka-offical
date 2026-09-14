@@ -2,9 +2,11 @@
 import Base from '../layouts/Base.astro';
 import Nawigacja from '../components/Nawigacja.astro';
 import Naglowek from '../components/Naglowek.astro';
+import Aktualnosci from '../components/Aktualnosci.astro';
 import Kalendarz from '../components/Kalendarz.astro';
 import ONas from '../components/ONas.astro';
 import Dzialania from '../components/Dzialania.astro';
+import Galeria from '../components/Galeria.astro';
 import Zarzad from '../components/Zarzad.astro';
 import Dokumenty from '../components/Dokumenty.astro';
 import Stopka from '../components/Stopka.astro';
@@ -16,12 +18,11 @@ import Stopka from '../components/Stopka.astro';
   <main id="tresc">
     <Naglowek />
 
-    {/* Aktualnosci i galeria dochodza w kroku 5 - sa jedynymi sekcjami,
-        ktore potrzebuja wlasnego zachowania, a nie samego wyswietlenia. */}
-
+    <Aktualnosci />
     <Kalendarz />
     <ONas />
     <Dzialania />
+    <Galeria />
     <Zarzad />
     <Dokumenty />
   </main>

@@ -1,12 +1,25 @@
 ---
+import { Image } from 'astro:assets';
 import { strona } from '../tresc.js';
+import { obraz } from '../zdjecia.js';
+
 const { oNas } = strona;
+const zdjecie = obraz(oNas.zdjecie);
 ---
 
 <section class="sekcja sekcja--wyrozniona" id="o-nas">
   <div class="kontener uklad">
     <div class="uklad__zdjecie">
-      <img src={oNas.zdjecie} alt={oNas.opisZdjecia} width="1200" height="800" loading="lazy" decoding="async" />
+      {zdjecie && (
+        <Image
+          src={zdjecie}
+          alt={oNas.opisZdjecia}
+          widths={[600, 1000, 1400]}
+          sizes="(min-width: 900px) 50vw, 100vw"
+          loading="lazy"
+          decoding="async"
+        />
+      )}
     </div>
 
     <div class="uklad__tekst">
@@ -47,7 +60,7 @@ const { oNas } = strona;
     }
   }
 
-  .uklad__zdjecie img {
+  .uklad__zdjecie :global(img) {
     width: 100%;
     height: auto;
     border-radius: var(--r-l);

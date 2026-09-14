@@ -1,0 +1,364 @@
+---
+/**
+ * Aktualnosci.astro
+ *
+ * Na ekranie stoi zawsze JEDEN wpis, domyslnie najnowszy. Reszta jest pod
+ * polem wyboru. Powod: wpisow przybywa, a osiem pelnych kart jedna pod
+ * druga to kilkanascie ekranow przewijania, zanim ktokolwiek dojdzie do
+ * kalendarza. Wysokosc sekcji nie zalezy tu od liczby wpisow.
+ *
+ * Karuzeli nie ma celowo - przesuwanie palcem gryzlo sie z przewijaniem
+ * strony i gest w bok czesto konczyl sie scrollem w dol.
+ */
+import { Image } from 'astro:assets';
+import { aktualnosci } from '../tresc.js';
+import { obraz } from '../zdjecia.js';
+
+const wpisy = aktualnosci.map((wpis) => ({ ...wpis, zdjecie: obraz(wpis.img) }));
+
+// Powyzej tylu znakow tresc zwijamy. Zawiadomienie o zebraniu potrafi miec
+// osiem punktow porzadku obrad - w calosci zjada caly ekran telefonu.
+const DLUGI = 260;
+---
+
+{wpisy.length > 0 && (
+  <section class="sekcja" id="aktualnosci">
+    <div class="kontener">
+      <div class="sekcja__naglowek">
+        <p class="sekcja__nadtytul">Aktualności</p>
+        <h2 class="sekcja__tytul">Co się dzieje na Osiedlu</h2>
+        <p class="sekcja__opis">Najnowsze informacje Zarządu Osiedla Młodych.</p>
+      </div>
+
+      <div class="wiesci" data-liczba={wpisy.length}>
+        {wpisy.length > 1 && (
+          <div class="wybor">
+            <label class="tylko-dla-czytnika" for="wybor-wiesci">Wybierz aktualność</label>
+            <select id="wybor-wiesci" class="wybor__pole">
+              {wpisy.map((wpis, i) => (
+                <option value={i}>{wpis.title}</option>
+              ))}
+            </select>
+            <svg class="wybor__strzalka" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+        )}
+
+        {/*
+          Wszystkie wpisy sa w HTML, przelaczamy sam atrybut hidden.
+          Dzieki temu strona dziala takze bez JavaScriptu - widac wtedy
+          po prostu wszystkie wpisy pod soba, zamiast pustego miejsca.
+        */}
+        {wpisy.map((wpis, i) => (
+          <article class="wiesc" data-wpis={i} hidden={i !== 0}>
+            {wpis.zdjecie && (
+              <div class="wiesc__media">
+                <Image
+                  src={wpis.zdjecie}
+                  alt=""
+                  widths={[400, 800, 1200]}
+                  sizes="(min-width: 900px) 540px, 100vw"
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                />
+              </div>
+            )}
+
+            <div class="wiesc__tresc">
+              {i === 0 && wpisy.length > 1 && <p><span class="plakietka">Najnowsza</span></p>}
+              <h3 class="wiesc__tytul">{wpis.title}</h3>
+
+              <div class="wiesc__tekst" data-dlugi={wpis.text.length > DLUGI}>
+                {wpis.text.split('\n').map((linia, nr, tab) => (
+                  <>
+                    {linia}
+                    {nr < tab.length - 1 && <br />}
+                  </>
+                ))}
+              </div>
+
+              {wpis.text.length > DLUGI && (
+                <button type="button" class="wiesc__wiecej" aria-expanded="false">Czytaj więcej</button>
+              )}
+            </div>
+          </article>
+        ))}
+
+        {wpisy.length > 1 && (
+          <nav class="kroki" aria-label="Nawigacja aktualności">
+            <button type="button" class="krok" data-ruch="-1" aria-label="Nowsza aktualność">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+
+            <p class="kroki__licznik" aria-live="polite">
+              <span data-numer>1</span> z {wpisy.length}
+            </p>
+
+            <button type="button" class="krok" data-ruch="1" aria-label="Starsza aktualność">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+          </nav>
+        )}
+      </div>
+    </div>
+  </section>
+)}
+
+<script>
+  const sekcja = document.querySelector('.wiesci');
+
+  if (sekcja) {
+    const wpisy = [...sekcja.querySelectorAll('[data-wpis]')];
+    const pole = sekcja.querySelector('.wybor__pole');
+    const numer = sekcja.querySelector('[data-numer]');
+    let biezacy = 0;
+
+    const pokaz = (nowy) => {
+      biezacy = Math.min(Math.max(nowy, 0), wpisy.length - 1);
+
+      wpisy.forEach((wpis, i) => {
+        wpis.hidden = i !== biezacy;
+
+        // Kazda zmiana wpisu zaczyna od zwinietej tresci - inaczej krotki
+        // wpis dziedziczylby "rozwiniete" po poprzednim, dlugim.
+        const tekst = wpis.querySelector('.wiesc__tekst');
+        const przycisk = wpis.querySelector('.wiesc__wiecej');
+        if (tekst && przycisk) {
+          tekst.classList.remove('is-rozwiniety');
+          przycisk.setAttribute('aria-expanded', 'false');
+          przycisk.textContent = 'Czytaj więcej';
+        }
+      });
+
+      if (pole) pole.value = String(biezacy);
+      if (numer) numer.textContent = String(biezacy + 1);
+
+      sekcja.querySelectorAll('.krok').forEach((krok) => {
+        const ruch = Number(krok.dataset.ruch);
+        krok.disabled = ruch < 0 ? biezacy === 0 : biezacy === wpisy.length - 1;
+      });
+    };
+
+    pole?.addEventListener('change', () => pokaz(Number(pole.value)));
+
+    sekcja.querySelectorAll('.krok').forEach((krok) => {
+      krok.addEventListener('click', () => pokaz(biezacy + Number(krok.dataset.ruch)));
+    });
+
+    sekcja.querySelectorAll('.wiesc__wiecej').forEach((przycisk) => {
+      przycisk.addEventListener('click', () => {
+        const tekst = przycisk.previousElementSibling;
+        const rozwiniety = tekst.classList.toggle('is-rozwiniety');
+        przycisk.setAttribute('aria-expanded', String(rozwiniety));
+        przycisk.textContent = rozwiniety ? 'Zwiń' : 'Czytaj więcej';
+      });
+    });
+
+    pokaz(0);
+  }
+</script>
+
+<style>
+  .wiesci {
+    display: grid;
+    gap: var(--o-4);
+  }
+
+  /* ---- Pole wyboru -----------------------------------------------------
+     Grid z jedna komorka: pole i strzalka leza na sobie. Bez
+     position: absolute nic nie moze wyjechac poza pole, niezaleznie
+     od dlugosci tytulu. */
+  .wybor {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 560px;
+  }
+
+  .wybor__pole {
+    grid-area: 1 / 1;
+    appearance: none;
+    /* min-width: 0 jest konieczne - bez niego pole rozpycha siatke
+       do szerokosci najdluzszego tytulu i wychodzi poza ekran. */
+    min-width: 0;
+    width: 100%;
+    min-height: 52px;
+    padding: var(--o-3) var(--o-12) var(--o-3) var(--o-4);
+    border: 1px solid var(--linia-pole);
+    border-radius: var(--r-m);
+    background: var(--powierzchnia);
+    color: var(--tekst);
+    /* Ponizej 16px iOS przybliza strone przy dotknieciu pola. */
+    font-size: max(16px, var(--t-m));
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .wybor__strzalka {
+    grid-area: 1 / 1;
+    justify-self: end;
+    align-self: center;
+    width: 20px;
+    height: 20px;
+    margin-right: var(--o-4);
+    color: var(--tekst-3);
+    pointer-events: none;
+  }
+
+  /* ---- Karta wpisu ------------------------------------------------------ */
+  .wiesc {
+    display: grid;
+    background: var(--powierzchnia);
+    border: 1px solid var(--linia);
+    border-radius: var(--r-l);
+    box-shadow: var(--cien-m);
+    overflow: hidden;
+  }
+
+  .wiesc[hidden] {
+    /* Bez tego `display: grid` z klasy wygrywa z wbudowana regula
+       przegladarki [hidden] { display: none } - style autora maja
+       pierwszenstwo nad stylami przegladarki. */
+    display: none;
+  }
+
+  @media (min-width: 900px) {
+    .wiesc {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      align-items: start;
+    }
+  }
+
+  .wiesc__media {
+    background: var(--powierzchnia-2);
+  }
+
+  .wiesc__media :global(img) {
+    width: 100%;
+    height: auto;
+    /* Plakaty bywaja pionowe, zdjecia poziome. Ograniczamy wysokosc,
+       zamiast przycinac do stalej ramki i ucinac komus tekst z plakatu. */
+    max-height: 60svh;
+    object-fit: contain;
+  }
+
+  @media (min-width: 900px) {
+    /* NIE `object-fit: cover` i NIE `height: 100%`.
+       Aktualnosci to najczesciej plakaty - przyciecie do wysokosci karty
+       ucinalo im dol, czyli godzine, miejsce i liste atrakcji. Plakat musi
+       byc widoczny w calosci, nawet kosztem pustego miejsca obok tekstu. */
+    .wiesc__media {
+      display: grid;
+      place-items: center;
+      padding: var(--o-5);
+    }
+
+    .wiesc__media :global(img) {
+      max-height: 34rem;
+      width: auto;
+      max-width: 100%;
+      object-fit: contain;
+      border-radius: var(--r-m);
+    }
+  }
+
+  .wiesc__tresc {
+    padding: var(--o-5);
+  }
+
+  @media (min-width: 900px) {
+    .wiesc__tresc {
+      padding: var(--o-8);
+      /* Przy pionowym plakacie i krotkim wpisie tekst wisialby u gory,
+         a pod nim zostawaloby pol karty pustki. Na srodku wyglada to
+         jak decyzja, a nie jak brakujaca tresc. */
+      align-self: center;
+    }
+  }
+
+  .wiesc__tytul {
+    font-size: var(--t-naglowek-m);
+    margin-block: var(--o-3) var(--o-4);
+  }
+
+  .wiesc__tresc > p:first-child + .wiesc__tytul {
+    margin-top: var(--o-3);
+  }
+
+  .wiesc__tekst {
+    color: var(--tekst-2);
+    line-height: 1.65;
+  }
+
+  /* Zwiniete: piec linii i miekkie sciecie. */
+  .wiesc__tekst[data-dlugi='true']:not(.is-rozwiniety) {
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .wiesc__wiecej {
+    margin-top: var(--o-4);
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--marka);
+    font-weight: 600;
+  }
+
+  .wiesc__wiecej:hover {
+    text-decoration: underline;
+  }
+
+  /* ---- Pasek nawigacji --------------------------------------------------- */
+  .kroki {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--o-5);
+  }
+
+  .krok {
+    display: inline-grid;
+    place-items: center;
+    /* 48px - cel dotykowy, ktory da sie trafic kciukiem. */
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--linia-pole);
+    border-radius: var(--r-pigulka);
+    background: var(--powierzchnia);
+    color: var(--tekst);
+  }
+
+  .krok:hover:not(:disabled) {
+    background: var(--marka-delikatna);
+    border-color: var(--marka);
+    color: var(--marka);
+  }
+
+  .krok:disabled {
+    opacity: 0.35;
+  }
+
+  .krok svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .kroki__licznik {
+    font-size: var(--t-s);
+    font-weight: 600;
+    color: var(--tekst-3);
+    font-variant-numeric: tabular-nums;
+  }
+</style>

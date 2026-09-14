@@ -1,5 +1,9 @@
 ---
+import { Image } from 'astro:assets';
 import { dzialania } from '../tresc.js';
+import { obraz } from '../zdjecia.js';
+
+const pozycje = dzialania.map((pozycja) => ({ ...pozycja, plik: obraz(pozycja.zdjecie) }));
 ---
 
 <section class="sekcja" id="dzialania">
@@ -13,17 +17,19 @@ import { dzialania } from '../tresc.js';
     </div>
 
     <div class="siatka siatka--3">
-      {dzialania.map((pozycja) => (
+      {pozycje.map((pozycja) => (
         <article class="karta dzialanie">
-          <img
-            class="dzialanie__zdjecie"
-            src={pozycja.zdjecie}
-            alt=""
-            width="800"
-            height="600"
-            loading="lazy"
-            decoding="async"
-          />
+          {pozycja.plik && (
+            <Image
+              class="dzialanie__zdjecie"
+              src={pozycja.plik}
+              alt=""
+              widths={[400, 800]}
+              sizes="(min-width: 1000px) 360px, (min-width: 640px) 50vw, 100vw"
+              loading="lazy"
+              decoding="async"
+            />
+          )}
           <div class="karta__tresc">
             <h3 class="dzialanie__tytul">{pozycja.tytul}</h3>
             <p class="dzialanie__opis">{pozycja.opis}</p>
@@ -42,7 +48,7 @@ import { dzialania } from '../tresc.js';
 
   /* Stala ramka 3:2 - karty w rzedzie maja rowna wysokosc zdjec
      niezaleznie od tego, w jakich proporcjach ktos je wrzucil. */
-  .dzialanie__zdjecie {
+  :global(.dzialanie__zdjecie) {
     width: 100%;
     aspect-ratio: 3 / 2;
     object-fit: cover;

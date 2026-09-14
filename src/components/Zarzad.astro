@@ -1,5 +1,9 @@
 ---
+import { Image } from 'astro:assets';
 import { zarzad } from '../tresc.js';
+import { obraz } from '../zdjecia.js';
+
+const osoby = zarzad.map((osoba) => ({ ...osoba, plik: obraz(osoba.zdjecie) }));
 
 // Przewodniczacy dostaje plakietke. Na liscie samych "Czlonek Zarzadu"
 // mieszkaniec nie wie, do kogo sie zwrocic.
@@ -17,21 +21,23 @@ const czyPrzewodniczacy = (funkcja) => /przewodnicz/i.test(funkcja);
     </div>
 
     <ul class="osoby">
-      {zarzad.map((osoba) => (
+      {osoby.map((osoba) => (
         <li class="osoba">
           <div class="osoba__kadr">
             {/* alt="" celowo: imie i funkcja stoja tuz obok jako tekst.
                 Powtorzenie ich w opisie zdjecia sprawia, ze czytnik ekranu
                 odczytuje kazda osobe dwa razy. */}
-            <img
-              class="osoba__zdjecie"
-              src={osoba.zdjecie}
-              alt=""
-              width="800"
-              height="1000"
-              loading="lazy"
-              decoding="async"
-            />
+            {osoba.plik && (
+              <Image
+                class="osoba__zdjecie"
+                src={osoba.plik}
+                alt=""
+                widths={[200, 400]}
+                sizes="(min-width: 1200px) 150px, (min-width: 620px) 25vw, 50vw"
+                loading="lazy"
+                decoding="async"
+              />
+            )}
           </div>
 
           <div class="osoba__opis">
@@ -88,7 +94,7 @@ const czyPrzewodniczacy = (funkcja) => /przewodnicz/i.test(funkcja);
     overflow: hidden;
   }
 
-  .osoba__zdjecie {
+  :global(.osoba__zdjecie) {
     width: 100%;
     height: 100%;
     object-fit: cover;

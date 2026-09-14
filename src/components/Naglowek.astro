@@ -7,32 +7,56 @@
  * i zeby dalo sie podac wymiary. Tlo w CSS jest pobierane dopiero po
  * wczytaniu arkusza stylow - na telefonie w parku widac to golym okiem.
  */
+import { Image } from 'astro:assets';
 import { strona } from '../tresc.js';
+import { obraz } from '../zdjecia.js';
 
 const { naglowek } = strona;
+const zdjecie = obraz(naglowek.zdjecie);
 ---
 
 <section class="naglowek" id="gora">
-  <img
-    class="naglowek__zdjecie"
-    src={naglowek.zdjecie}
-    alt=""
-    width="1920"
-    height="1280"
-    fetchpriority="high"
-    decoding="async"
-  />
+  {zdjecie && (
+    <Image
+      class="naglowek__zdjecie"
+      src={zdjecie}
+      alt=""
+      widths={[800, 1400, 1920]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+  )}
 
-  <div class="naglowek__tresc kontener">
-    <p class="naglowek__nadtytul">Oficjalna strona</p>
-    <h1 class="naglowek__tytul">{naglowek.tytul}</h1>
-    <p class="naglowek__podtytul">{naglowek.podtytul}</p>
+  {/* Dwa poziomy celowo: .kontener wyznacza te sama lewa linie co kazda
+      sekcja nizej, a .naglowek__tresc ogranicza dlugosc wiersza. Gdyby
+      ograniczenie szerokosci siedzialo na .kontener, caly blok
+      wysrodkowalby sie w oknie i tytul stalby 270px dalej w prawo niz
+      naglowki sekcji - strona przestawalaby trzymac pion. */}
+  <div class="kontener">
+    <div class="naglowek__tresc">
+      <p class="naglowek__nadtytul">Oficjalna strona</p>
+      <h1 class="naglowek__tytul">{naglowek.tytul}</h1>
+      <p class="naglowek__podtytul">{naglowek.podtytul}</p>
 
-    <div class="naglowek__przyciski">
-      <a class="przycisk" href="#aktualnosci">Zobacz aktualności</a>
-      <a class="przycisk przycisk--przezroczysty" href="#kalendarz">Kalendarz wydarzeń</a>
+      <div class="naglowek__przyciski">
+        <a class="przycisk" href="#aktualnosci">Zobacz aktualności</a>
+        <a class="przycisk przycisk--przezroczysty" href="#kalendarz">Kalendarz wydarzeń</a>
+      </div>
     </div>
   </div>
+
+  {/* Strzalka na dole. Nie jest ozdoba: bez niej dolna krawedz naglowka
+      wyglada jak przypadkowo ucieta, bo widac tam skrawek nastepnej sekcji.
+      Ze strzalka ten skrawek czyta sie jako "jest wiecej nizej". */}
+  <a class="naglowek__dalej" href="#aktualnosci">
+    <span class="tylko-dla-czytnika">Przejdź do aktualności</span>
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M12 5v14M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </a>
 
   <!-- Niewidoczny znacznik. Gdy wyjedzie poza ekran, pasek nawigacji
        dostaje tlo. Tansze niz nasluchiwanie na przewijaniu. -->
@@ -43,16 +67,33 @@ const { naglowek } = strona;
   .naglowek {
     position: relative;
     display: grid;
-    align-items: end;
-    /* 100svh, nie 100vh: na telefonie vh liczy sie razem z paskiem adresu,
+    /* Tresc na srodku, nie przy dolnej krawedzi. Przy `end` na monitorze
+       zostawalo 936px pustego zdjecia nad tekstem i 64px pod nim -
+       kompozycja czytala sie jak niedokonczona. */
+    align-items: center;
+
+    /* 88svh, nie 100svh. Dwa powody:
+       - na wysokim monitorze pelny ekran zdjecia to duzo przewijania,
+         zanim pojawi sie jakakolwiek tresc,
+       - skrawek nastepnej sekcji widoczny u dolu mowi, ze strona sie
+         nie konczy. Przy 100svh dolna krawedz wyglada jak sciana.
+       svh, nie vh: vh na telefonie liczy sie razem z paskiem adresu,
        wiec przy pierwszym przewinieciu caly ekran podskakuje. */
-    min-height: 100svh;
+    min-height: 88svh;
     padding-block: var(--o-20) var(--o-16);
     overflow: hidden;
     isolation: isolate;
   }
 
-  .naglowek__zdjecie {
+  @media (min-width: 900px) {
+    .naglowek {
+      /* Na duzym ekranie zdjecie lotnicze ma co pokazywac, ale tresc
+         nie moze rozjechac sie na cala szerokosc. */
+      min-height: min(88svh, 820px);
+    }
+  }
+
+  :global(.naglowek__zdjecie) {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -64,22 +105,35 @@ const { naglowek } = strona;
   /* Przyciemnienie. Gradient, nie plaskie krycie - u gory mocniejsze,
      zeby bialy tekst paska nawigacji mial na czym stac, a u dolu
      lzejsze, zeby zdjecie bylo widac. */
+  /* Przyciemnienie w dwoch warstwach.
+     Pionowy gradient daje oparcie bialemu tekstowi paska nawigacji u gory
+     i strzalce u dolu, a w srodku puszcza zdjecie. Poziomy przyciemnia
+     lewa strone, gdzie stoi tekst - bez tego naglowek czytal sie tylko
+     tam, gdzie zdjecie akurat bylo ciemne. */
   .naglowek::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      to bottom,
-      rgba(8, 14, 10, 0.72) 0%,
-      rgba(8, 14, 10, 0.45) 35%,
-      rgba(8, 14, 10, 0.78) 100%
-    );
+    background:
+      linear-gradient(
+        to right,
+        rgba(8, 14, 10, 0.68) 0%,
+        rgba(8, 14, 10, 0.34) 45%,
+        rgba(8, 14, 10, 0.12) 100%
+      ),
+      linear-gradient(
+        to bottom,
+        rgba(8, 14, 10, 0.6) 0%,
+        rgba(8, 14, 10, 0.18) 30%,
+        rgba(8, 14, 10, 0.2) 70%,
+        rgba(8, 14, 10, 0.62) 100%
+      );
     z-index: -1;
   }
 
   .naglowek__tresc {
     color: #ffffff;
-    max-width: 44rem;
+    max-width: 40rem;
   }
 
   .naglowek__nadtytul {
@@ -110,6 +164,51 @@ const { naglowek } = strona;
     gap: var(--o-3);
   }
 
+  /* ---- Strzalka "nizej" ------------------------------------------------ */
+  .naglowek__dalej {
+    position: absolute;
+    left: 50%;
+    bottom: var(--o-5);
+    transform: translateX(-50%);
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--r-pigulka);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    backdrop-filter: blur(6px);
+    animation: podskok 2.4s ease-in-out infinite;
+  }
+
+  .naglowek__dalej:hover {
+    background: rgba(255, 255, 255, 0.26);
+    color: #ffffff;
+  }
+
+  .naglowek__dalej svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  @keyframes podskok {
+    0%, 72%, 100% { transform: translate(-50%, 0); }
+    82% { transform: translate(-50%, 6px); }
+  }
+
+  /* Osoby, ktore wylaczyly animacje, robia to czesto z powodu zawrotow
+     glowy. Skaczaca strzalka jest dla nich problemem, nie wskazowka. */
+  @media (prefers-reduced-motion: reduce) {
+    .naglowek__dalej {
+      animation: none;
+    }
+  }
+
+  :global(:root[data-ruch='stop']) .naglowek__dalej {
+    animation: none;
+  }
+
   #wartownik {
     position: absolute;
     top: 60px;
@@ -119,7 +218,7 @@ const { naglowek } = strona;
 
   /* W trybie wysokiego kontrastu zdjecie pod tekstem jest przeszkoda,
      a nie ozdoba - bialy tekst na fotografii nigdy nie da 19:1. */
-  :global(:root[data-theme='kontrast']) .naglowek__zdjecie {
+  :global(:root[data-theme='kontrast']) :global(.naglowek__zdjecie) {
     display: none;
   }
 
@@ -130,5 +229,12 @@ const { naglowek } = strona;
   :global(:root[data-theme='kontrast']) .naglowek__tresc,
   :global(:root[data-theme='kontrast']) .naglowek__tytul {
     color: var(--tekst);
+  }
+
+  :global(:root[data-theme='kontrast']) .naglowek__dalej {
+    background: transparent;
+    border-color: var(--linia);
+    color: var(--tekst);
+    backdrop-filter: none;
   }
 </style>

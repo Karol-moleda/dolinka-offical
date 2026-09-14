@@ -1,0 +1,404 @@
+---
+/**
+ * Galeria.astro
+ *
+ * Zakladki lat i albumow + siatka miniatur + powiekszanie zdjecia.
+ *
+ * Najwazniejsza rzecz dzieje sie przy budowaniu, nie w przegladarce:
+ * kazde zdjecie dostaje miniature 400px i wersje 1400px do powiekszenia.
+ * Dzis telefon pobiera plik 1920px jako miniature - przy albumie na
+ * 53 zdjecia to kilkanascie megabajtow zamiast okolo dwoch.
+ *
+ * Powiekszenie to natywny <dialog>. Przegladarka daje za darmo: zamykanie
+ * Escapem, przytrzymanie fokusu wewnatrz okna i zaslonienie reszty strony
+ * dla czytnika ekranu. Wlasna implementacja tego wszystkiego to 100 linii,
+ * ktore i tak zrobia to gorzej.
+ */
+import { Image, getImage } from 'astro:assets';
+import { galeria, lataGalerii } from '../tresc.js';
+import { obraz } from '../zdjecia.js';
+
+// Zdjecia, ktorych nie ma na dysku, wypadaja tu - zamiast wysypac build
+// albo zostawic mieszkancowi puste ramki na stronie.
+const albumy = await Promise.all(
+  galeria.map(async (album) => {
+    const zdjecia = [];
+
+    for (const sciezka of album.photos) {
+      const plik = obraz(sciezka);
+      if (!plik) continue;
+
+      zdjecia.push({
+        miniatura: plik,
+        pelne: await getImage({ src: plik, width: 1400, format: 'webp' }),
+      });
+    }
+
+    return { ...album, zdjecia };
+  })
+);
+
+const widoczne = albumy.filter((album) => album.zdjecia.length > 0);
+const pierwszyRok = lataGalerii.find((rok) => widoczne.some((a) => a.year === rok));
+const pierwszyAlbum = widoczne.find((album) => album.year === pierwszyRok);
+
+const lata = lataGalerii.filter((rok) => widoczne.some((album) => album.year === rok));
+---
+
+{widoczne.length > 0 && (
+  <section class="sekcja" id="galeria">
+    <div class="kontener">
+      <div class="sekcja__naglowek">
+        <p class="sekcja__nadtytul">Galeria</p>
+        <h2 class="sekcja__tytul">Zdjęcia z wydarzeń</h2>
+        <p class="sekcja__opis">Festyny, turnieje i spotkania w Dolince.</p>
+      </div>
+
+      {lata.length > 1 && (
+        <div class="zakladki" role="tablist" aria-label="Rok">
+          {lata.map((rok) => (
+            <button
+              type="button"
+              class:list={['zakladka', rok === pierwszyRok && 'is-wybrana']}
+              data-rok={rok}
+              role="tab"
+              aria-selected={rok === pierwszyRok}
+            >
+              {rok}
+            </button>
+          ))}
+        </div>
+      )}
+
+      <div class="zakladki zakladki--albumy" role="tablist" aria-label="Album">
+        {widoczne.map((album) => (
+          <button
+            type="button"
+            class:list={['zakladka', album.title === pierwszyAlbum?.title && 'is-wybrana']}
+            data-album={album.title}
+            data-rok-albumu={album.year}
+            role="tab"
+            aria-selected={album.title === pierwszyAlbum?.title}
+            hidden={album.year !== pierwszyRok}
+          >
+            {album.title}
+            <span class="zakladka__licznik">{album.zdjecia.length}</span>
+          </button>
+        ))}
+      </div>
+
+      {widoczne.map((album) => (
+        <ul class="siatka-zdjec" data-album-tresc={album.title} hidden={album.title !== pierwszyAlbum?.title}>
+          {album.zdjecia.map((zdjecie, i) => (
+            <li>
+              {/* Miniatura jest przyciskiem, nie linkiem - nie prowadzi
+                  pod inny adres, tylko otwiera okno na tej samej stronie. */}
+              <button type="button" class="kafelek" data-pelne={zdjecie.pelne.src} data-nr={i + 1}>
+                <Image
+                  src={zdjecie.miniatura}
+                  alt={`${album.title} — zdjęcie ${i + 1}`}
+                  widths={[300, 600]}
+                  sizes="(min-width: 1000px) 280px, (min-width: 600px) 33vw, 50vw"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </button>
+            </li>
+          ))}
+        </ul>
+      ))}
+    </div>
+
+    <dialog class="podglad" id="podglad">
+      <button type="button" class="podglad__zamknij" aria-label="Zamknij zdjęcie">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+      </button>
+
+      <button type="button" class="podglad__strzalka podglad__strzalka--wstecz" aria-label="Poprzednie zdjęcie">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+
+      <img class="podglad__zdjecie" alt="" />
+
+      <button type="button" class="podglad__strzalka podglad__strzalka--dalej" aria-label="Następne zdjęcie">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+
+      <p class="podglad__licznik" aria-live="polite"></p>
+    </dialog>
+  </section>
+)}
+
+<script>
+  const sekcja = document.getElementById('galeria');
+
+  if (sekcja) {
+    /* ---- Zakladki ------------------------------------------------------- */
+    const zakladkiLat = [...sekcja.querySelectorAll('[data-rok]')];
+    const zakladkiAlbumow = [...sekcja.querySelectorAll('[data-album]')];
+    const siatki = [...sekcja.querySelectorAll('[data-album-tresc]')];
+
+    const pokazAlbum = (tytul) => {
+      zakladkiAlbumow.forEach((z) => {
+        const wybrana = z.dataset.album === tytul;
+        z.classList.toggle('is-wybrana', wybrana);
+        z.setAttribute('aria-selected', String(wybrana));
+      });
+      siatki.forEach((s) => {
+        s.hidden = s.dataset.albumTresc !== tytul;
+      });
+    };
+
+    zakladkiLat.forEach((zakladka) => {
+      zakladka.addEventListener('click', () => {
+        const rok = zakladka.dataset.rok;
+
+        zakladkiLat.forEach((z) => {
+          const wybrany = z === zakladka;
+          z.classList.toggle('is-wybrana', wybrany);
+          z.setAttribute('aria-selected', String(wybrany));
+        });
+
+        // Album z innego roku nie ma prawa zostac widoczny.
+        zakladkiAlbumow.forEach((z) => {
+          z.hidden = z.dataset.rokAlbumu !== rok;
+        });
+
+        const pierwszy = zakladkiAlbumow.find((z) => z.dataset.rokAlbumu === rok);
+        if (pierwszy) pokazAlbum(pierwszy.dataset.album);
+      });
+    });
+
+    zakladkiAlbumow.forEach((zakladka) => {
+      zakladka.addEventListener('click', () => pokazAlbum(zakladka.dataset.album));
+    });
+
+    /* ---- Powiekszenie ---------------------------------------------------- */
+    const okno = document.getElementById('podglad');
+    const zdjecie = okno.querySelector('.podglad__zdjecie');
+    const licznik = okno.querySelector('.podglad__licznik');
+    let kafelki = [];
+    let nr = 0;
+
+    const ustaw = (nowy) => {
+      if (!kafelki.length) return;
+      // Zapetlenie: z ostatniego zdjecia przechodzimy na pierwsze.
+      nr = (nowy + kafelki.length) % kafelki.length;
+      const kafelek = kafelki[nr];
+      zdjecie.src = kafelek.dataset.pelne;
+      zdjecie.alt = kafelek.querySelector('img')?.alt ?? '';
+      licznik.textContent = `${nr + 1} z ${kafelki.length}`;
+    };
+
+    sekcja.addEventListener('click', (zdarzenie) => {
+      const kafelek = zdarzenie.target.closest('.kafelek');
+      if (!kafelek) return;
+
+      const siatka = kafelek.closest('[data-album-tresc]');
+      kafelki = [...siatka.querySelectorAll('.kafelek')];
+      ustaw(kafelki.indexOf(kafelek));
+      okno.showModal();
+    });
+
+    okno.querySelector('.podglad__zamknij').addEventListener('click', () => okno.close());
+    okno.querySelector('.podglad__strzalka--wstecz').addEventListener('click', () => ustaw(nr - 1));
+    okno.querySelector('.podglad__strzalka--dalej').addEventListener('click', () => ustaw(nr + 1));
+
+    okno.addEventListener('keydown', (zdarzenie) => {
+      if (zdarzenie.key === 'ArrowLeft') ustaw(nr - 1);
+      if (zdarzenie.key === 'ArrowRight') ustaw(nr + 1);
+    });
+
+    // Klikniecie w tlo zamyka. <dialog> nie rozroznia tla od zawartosci,
+    // wiec sprawdzamy, czy klikniecie trafilo w samo okno, a nie w dziecko.
+    okno.addEventListener('click', (zdarzenie) => {
+      if (zdarzenie.target === okno) okno.close();
+    });
+  }
+</script>
+
+<style>
+  /* ---- Zakladki --------------------------------------------------------
+     Zawijaja sie do nastepnego wiersza. Probowalem jednego rzedu
+     przewijanego w bok - zajmuje mniej miejsca, ale ostatni album zostaje
+     za krawedzia i nic tego nie zapowiada. Zakladka, ktorej nie widac,
+     to zakladka, ktorej dla mieszkanca nie ma. */
+  .zakladki {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--o-2);
+    margin-bottom: var(--o-4);
+  }
+
+  .zakladki--albumy {
+    margin-bottom: var(--o-6);
+  }
+
+  .zakladka {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--o-2);
+    flex: 0 0 auto;
+    /* 44px - cel dotykowy. */
+    min-height: 44px;
+    padding: var(--o-2) var(--o-4);
+    border: 1px solid var(--linia-pole);
+    border-radius: var(--r-pigulka);
+    background: var(--powierzchnia);
+    color: var(--tekst-2);
+    font-size: var(--t-s);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .zakladka:hover {
+    border-color: var(--marka);
+    color: var(--marka);
+  }
+
+  .zakladka.is-wybrana {
+    background: var(--marka);
+    border-color: var(--marka);
+    color: var(--na-marce);
+  }
+
+  .zakladka__licznik {
+    font-size: var(--t-xs);
+    opacity: 0.75;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---- Siatka ----------------------------------------------------------- */
+  .siatka-zdjec {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 160px), 1fr));
+    gap: var(--o-3);
+    margin: 0;
+  }
+
+  .siatka-zdjec[hidden] {
+    display: none;
+  }
+
+  @media (min-width: 700px) {
+    .siatka-zdjec {
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+      gap: var(--o-4);
+    }
+  }
+
+  .kafelek {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: var(--r-m);
+    overflow: hidden;
+    background: var(--powierzchnia-2);
+    /* Stala ramka 4:3 dla kazdej miniatury. Bez tego siatka skacze
+       przy wczytywaniu, bo zdjecia maja rozne proporcje. */
+    aspect-ratio: 4 / 3;
+  }
+
+  .kafelek :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--przejscie);
+  }
+
+  @media (hover: hover) {
+    .kafelek:hover :global(img) {
+      transform: scale(1.04);
+    }
+  }
+
+  /* ---- Powiekszenie ------------------------------------------------------ */
+  .podglad {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: rgba(8, 10, 9, 0.96);
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: var(--o-2);
+    padding-inline: var(--o-2);
+  }
+
+  .podglad:not([open]) {
+    display: none;
+  }
+
+  .podglad::backdrop {
+    background: rgba(0, 0, 0, 0.8);
+  }
+
+  .podglad__zdjecie {
+    grid-column: 2;
+    justify-self: center;
+    max-width: 100%;
+    /* Zdjecie zawsze miesci sie w oknie - zadnego przewijania i zadnego
+       wychodzenia poza ekran, niezaleznie od proporcji fotografii. */
+    max-height: calc(100svh - 7rem);
+    width: auto;
+    object-fit: contain;
+    border-radius: var(--r-s);
+  }
+
+  .podglad__zamknij,
+  .podglad__strzalka {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border: 0;
+    border-radius: var(--r-pigulka);
+    background: rgba(255, 255, 255, 0.14);
+    color: #ffffff;
+  }
+
+  .podglad__zamknij:hover,
+  .podglad__strzalka:hover {
+    background: rgba(255, 255, 255, 0.28);
+  }
+
+  .podglad__zamknij svg,
+  .podglad__strzalka svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .podglad__zamknij {
+    position: absolute;
+    top: var(--o-3);
+    right: var(--o-3);
+    z-index: 2;
+  }
+
+  .podglad__strzalka--wstecz { grid-column: 1; }
+  .podglad__strzalka--dalej { grid-column: 3; }
+
+  .podglad__licznik {
+    position: absolute;
+    left: 0;
+    bottom: var(--o-4);
+    width: 100%;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: var(--t-s);
+    font-variant-numeric: tabular-nums;
+  }
+</style>

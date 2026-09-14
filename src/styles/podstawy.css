@@ -120,6 +120,20 @@ ol {
   list-style: none;
 }
 
+/* ---------------------------------------------------------------------
+   [hidden] MUSI wygrywac z kazda klasa.
+   Przegladarka ma wbudowana regule `[hidden] { display: none }`, ale jest
+   to styl PRZEGLADARKI - kazda klasa autora z `display: flex/grid/block`
+   bije ja na glowe. Element z atrybutem hidden zostaje wtedy widoczny.
+   W tym projekcie zlapalo mnie to trzy razy: panel dostepnosci otwieral
+   sie sam, karty aktualnosci pokazywaly sie wszystkie naraz, a zakladki
+   galerii z jednego roku wisialy przy albumach z drugiego.
+   Jedna regula z !important zamyka cala te klase bledow.
+   --------------------------------------------------------------------- */
+[hidden] {
+  display: none !important;
+}
+
 /* Widoczny obrys tylko przy nawigacji klawiatura - mysz go nie wywoluje. */
 :focus-visible {
   outline: 3px solid var(--marka);
