@@ -3,43 +3,43 @@
     {
       "imieNazwisko": "Wojciech Ozdoba",
       "funkcja": "Przewodniczący Zarządu",
-      "zdjecie": "/img/Ozdoba.jpg",
+      "zdjecie": "/images/Ozdoba.jpg",
       "opublikowane": true
     },
     {
       "imieNazwisko": "Henryka Foryś",
       "funkcja": "Członek Zarządu",
-      "zdjecie": "/img/Henryka.png",
+      "zdjecie": "/images/Henryka.png",
       "opublikowane": true
     },
     {
       "imieNazwisko": "Kamil Czopek",
       "funkcja": "Członek Zarządu",
-      "zdjecie": "/img/Czopek.jpg",
+      "zdjecie": "/images/Czopek.jpg",
       "opublikowane": true
     },
     {
       "imieNazwisko": "Karol Molęda",
       "funkcja": "Członek Zarządu",
-      "zdjecie": "/img/Moleda.png",
+      "zdjecie": "/images/Moleda.png",
       "opublikowane": true
     },
     {
       "imieNazwisko": "Katarzyna Maliszewska-Tomsia",
       "funkcja": "Członek Zarządu",
-      "zdjecie": "/img/Maliszewska.jpg",
+      "zdjecie": "/images/Maliszewska.jpg",
       "opublikowane": true
     },
     {
       "imieNazwisko": "Roksana Gorajczyk",
       "funkcja": "Członek Zarządu",
-      "zdjecie": "/img/Roskana.jpg",
+      "zdjecie": "/images/Roskana.jpg",
       "opublikowane": true
     },
     {
       "imieNazwisko": "Zofia Patrykiewicz",
       "funkcja": "Członek Zarządu",
-      "zdjecie": "/img/Zosia.jpeg",
+      "zdjecie": "/images/Zosia.jpeg",
       "opublikowane": true
     }
   ]
