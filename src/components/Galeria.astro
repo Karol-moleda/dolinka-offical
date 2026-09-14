@@ -30,7 +30,18 @@ const albumy = await Promise.all(
 
       zdjecia.push({
         miniatura: plik,
-        pelne: await getImage({ src: plik, width: 1400, format: 'webp' }),
+        // 1200px i jakosc 65, nie 1400px i domyslne ~80.
+        //
+        // Powod jest bardzo konkretny: przy 227 zdjeciach kazde 100 kB
+        // roznicy to 22 MB w paczce wysylanej na serwer. Wariant 1400px
+        // w domyslnej jakosci dawal ~144 MB - wiecej niz cala stara strona
+        // i za duzo, zeby FTP na vh.pl przepchnal to bez zerwania.
+        //
+        // 1200px wystarcza: zdjecie i tak nigdy nie jest pokazywane
+        // szerzej niz okno przegladarki, a w oknie powiekszenia ma
+        // marginesy. Roznicy przy jakosci 65 w webp nie widac na fotografii
+        // - webp przy tej wartosci odpowiada mniej wiecej JPEG-owi 80.
+        pelne: await getImage({ src: plik, width: 1200, quality: 65, format: 'webp' }),
       });
     }
 
@@ -97,8 +108,13 @@ const lata = lataGalerii.filter((rok) => widoczne.some((album) => album.year ===
                 <Image
                   src={zdjecie.miniatura}
                   alt={`${album.title} — zdjęcie ${i + 1}`}
-                  widths={[300, 600]}
-                  sizes="(min-width: 1000px) 280px, (min-width: 600px) 33vw, 50vw"
+                  {/* Jedna szerokosc, nie dwie. Kafelek ma najwyzej 240px,
+                      wiec 480px pokrywa takze ekrany o podwojnej gestosci.
+                      Druga szerokosc to 227 dodatkowych plikow do wyslania
+                      przez FTP, ktore niczego nie poprawiaja. */}
+                  widths={[480]}
+                  quality={60}
+                  sizes="(min-width: 1000px) 240px, (min-width: 600px) 33vw, 50vw"
                   loading="lazy"
                   decoding="async"
                 />

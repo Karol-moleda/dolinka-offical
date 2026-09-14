@@ -25,6 +25,7 @@ const pozycje = dzialania.map((pozycja) => ({ ...pozycja, plik: obraz(pozycja.zd
               src={pozycja.plik}
               alt=""
               widths={[400, 800]}
+              quality={70}
               sizes="(min-width: 1000px) 360px, (min-width: 640px) 50vw, 100vw"
               loading="lazy"
               decoding="async"
