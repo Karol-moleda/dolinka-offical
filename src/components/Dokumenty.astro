@@ -1,5 +1,6 @@
 ---
 import { dokumenty } from '../tresc.js';
+import { plik } from '../zdjecia.js';
 ---
 
 {dokumenty.length > 0 && (
@@ -19,10 +20,14 @@ import { dokumenty } from '../tresc.js';
             {kategoria.pozycje.map((dokument) => (
               <li>
                 {/* Caly kafelek jest linkiem, a nie maly przycisk w rogu.
-                    `download` podpowiada nazwe pliku przy zapisie. */}
+                    `download` podpowiada nazwe pliku przy zapisie.
+
+                    `plik()` obsluguje regulaminy wgrane przez panel (leza
+                    w `src/`, wiec potrzebuja adresu z budowania). Dla plikow
+                    z `public/document/` zwraca null i zostaje sciezka wprost. */}
                 <a
                   class="plik"
-                  href={dokument.file}
+                  href={plik(dokument.file) ?? dokument.file}
                   download={dokument.downloadName || undefined}
                 >
                   <span class="plik__ikona" aria-hidden="true">

@@ -42,3 +42,12 @@ yarn-error.log*
 
 # wynik optymalizacji zdjec (katalog roboczy, nie commitujemy)
 /public/img-optimized/
+
+# TinaCMS - sekrety panelu (Client ID i token). Nigdy do repozytorium.
+.env
+
+# panel budowany z tina/config.ts przy kazdym `npm run build`
+/public/admin/
+
+# zrzuty ekranu i pliki robocze z rozmow - nie naleza do kodu strony
+Claude outputs/

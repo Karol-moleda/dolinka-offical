@@ -1,0 +1,115 @@
+fragment AktualnosciParts on Aktualnosci {
+  __typename
+  wpisy {
+    __typename
+    title
+    text
+    img
+    published
+  }
+}
+
+fragment KalendarzParts on Kalendarz {
+  __typename
+  wydarzenia {
+    __typename
+    title
+    date
+    dateText
+    text
+    published
+  }
+}
+
+fragment GaleriaParts on Galeria {
+  __typename
+  albumy {
+    __typename
+    title
+    year
+    photos
+    published
+  }
+}
+
+fragment DokumentyParts on Dokumenty {
+  __typename
+  kategorie {
+    __typename
+    id
+    label
+    icon
+  }
+  dokumenty {
+    __typename
+    title
+    description
+    file
+    downloadName
+    kategoria
+    published
+  }
+}
+
+fragment ZarzadParts on Zarzad {
+  __typename
+  osoby {
+    __typename
+    imieNazwisko
+    funkcja
+    zdjecie
+    opublikowane
+  }
+}
+
+fragment DzialaniaParts on Dzialania {
+  __typename
+  pozycje {
+    __typename
+    tytul
+    opis
+    zdjecie
+    opublikowane
+  }
+}
+
+fragment StronaParts on Strona {
+  __typename
+  naglowek {
+    __typename
+    tytul
+    podtytul
+    zdjecie
+  }
+  oNas {
+    __typename
+    tytul
+    tresc
+    zdjecie
+    opisZdjecia
+    coRobimy
+    czymSieZajmujemy
+  }
+  kontakt {
+    __typename
+    adres
+    email
+    facebook
+    przewodniczacy {
+      __typename
+      imieNazwisko
+      telefon
+    }
+    telefony {
+      __typename
+      numer
+      opis
+      alarmowy
+    }
+    linki {
+      __typename
+      nazwa
+      adres
+    }
+  }
+}

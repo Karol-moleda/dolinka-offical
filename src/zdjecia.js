@@ -24,13 +24,55 @@ const pliki = import.meta.glob('./images/**/*.{jpg,JPG,jpeg,JPEG,png,PNG,webp,WE
 });
 
 // Klucze z globa wygladaja jak './images/event/2026/DSC_6133.JPG'.
-// W tresci ta sama fotografia to '/img/event/2026/DSC_6133.JPG'.
-const mapa = new Map(
-  Object.entries(pliki).map(([klucz, modul]) => [
-    klucz.replace(/^\.\/images/, '/img'),
-    modul.default,
-  ])
-);
+// Ta sama fotografia moze byc zapisana w tresci na dwa sposoby:
+//
+//   '/img/event/2026/DSC_6133.JPG'     - tak sa zapisane wpisy sprzed panelu
+//   '/images/event/2026/DSC_6133.JPG'  - tak zapisuje panel (Tina)
+//
+// Panel liczy sciezke wzgledem `publicFolder: 'src'`, wiec dostaje
+// '/images/...'. Przepisywanie 227 istniejacych sciezek przy wlaczaniu
+// panelu byloby 227 okazjami do literowki, wiec obie postaci prowadza
+// do tego samego pliku.
+const mapa = new Map();
+
+for (const [klucz, modul] of Object.entries(pliki)) {
+  const zImages = klucz.replace(/^\./, ''); // '/images/...'
+  mapa.set(zImages, modul.default);
+  mapa.set(zImages.replace(/^\/images/, '/img'), modul.default);
+}
+
+/* ---- Pliki do pobrania (PDF) ----------------------------------------
+   Panel wgrywa KAZDY plik do `src/images/`, takze regulaminy. Astro nie
+   serwuje `src/` samo z siebie - trzeba plik zaimportowac, zeby dostal
+   adres w zbudowanej stronie. Stad drugi glob, tym razem po adres (?url),
+   a nie po metadane obrazu.
+
+   Regulaminy wgrane wczesniej leza w `public/document/` i dzialaja bez
+   tego - `plik()` zwraca dla nich null, a sekcja uzywa sciezki wprost. */
+const dokumentyZrodlowe = import.meta.glob('./images/**/*.{pdf,PDF}', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+});
+
+const mapaDokumentow = new Map();
+
+for (const [klucz, adres] of Object.entries(dokumentyZrodlowe)) {
+  const zImages = klucz.replace(/^\./, '');
+  mapaDokumentow.set(zImages, adres);
+  mapaDokumentow.set(zImages.replace(/^\/images/, '/img'), adres);
+}
+
+/**
+ * Adres pliku do pobrania. Zwraca null dla plikow lezacych w `public/` -
+ * te maja juz gotowy adres i uzywa sie ich bez zmian.
+ */
+export function plik(sciezka) {
+  if (!sciezka) return null;
+
+  const czysta = String(sciezka).trim();
+  return mapaDokumentow.get(czysta) ?? mapaDokumentow.get(safeDecode(czysta)) ?? null;
+}
 
 /**
  * Zamienia sciezke z pliku tresci na obiekt zdjecia, ktory Astro umie

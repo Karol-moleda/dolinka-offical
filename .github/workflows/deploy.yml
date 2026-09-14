@@ -59,6 +59,9 @@ jobs:
         #
         # Pierwsze budowanie po przesiadce trwa kilka minut: Astro generuje
         # miniatury i lzejsze warianty dla ponad dwustu zdjec z src/images.
+        env:
+          TINA_CLIENT_ID: ${{ secrets.TINA_CLIENT_ID }}
+          TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
         run: npm run build
 
       - name: Sprawdz, czy build nie jest pusty
