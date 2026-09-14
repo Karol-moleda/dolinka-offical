@@ -23,8 +23,48 @@
     ]
   },
   "kontakt": {
-    "adres": "Osiedla Młodych, 32-300 Olkusz",
+    "adres": "Osiedle Młodych, 32-300 Olkusz",
     "email": "dolinka.olkusz@gmail.com",
-    "facebook": "https://www.facebook.com/profile.php?id=61563485266766"
+    "facebook": "https://www.facebook.com/profile.php?id=61563485266766",
+    "przewodniczacy": {
+      "imieNazwisko": "Wojciech Ozdoba",
+      "telefon": "789 595 848"
+    },
+    "telefony": [
+      {
+        "numer": "32 626 01 00",
+        "opis": "Urząd Miasta i Gminy Olkusz",
+        "alarmowy": false
+      },
+      {
+        "numer": "112",
+        "opis": "Numer alarmowy — zagrożenie zdrowia, życia lub mienia",
+        "alarmowy": true
+      },
+      {
+        "numer": "999",
+        "opis": "Pogotowie ratunkowe",
+        "alarmowy": true
+      },
+      {
+        "numer": "998",
+        "opis": "Straż pożarna",
+        "alarmowy": true
+      }
+    ],
+    "linki": [
+      {
+        "nazwa": "Urząd Miasta i Gminy Olkusz",
+        "adres": "https://umig.olkusz.pl/"
+      },
+      {
+        "nazwa": "Starostwo Powiatowe w Olkuszu",
+        "adres": "https://www.sp.olkusz.pl/"
+      },
+      {
+        "nazwa": "Olkuska Spółdzielnia Mieszkaniowa",
+        "adres": "http://www.osm.olkusz.pl/"
+      }
+    ]
   }
 }

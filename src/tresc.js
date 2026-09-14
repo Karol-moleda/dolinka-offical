@@ -88,6 +88,25 @@ const schematStrony = z.object({
     adres: niepusty('Adres'),
     email: z.string().trim().email('To nie wygląda na adres e-mail'),
     facebook: z.string().trim().url('To nie wygląda na adres strony'),
+    przewodniczacy: z.object({
+      imieNazwisko: niepusty('Imię i nazwisko'),
+      telefon: niepusty('Telefon'),
+    }),
+    telefony: z.array(
+      z.object({
+        numer: niepusty('Numer'),
+        opis: niepusty('Opis'),
+        // Numery alarmowe sa wyroznione na stronie - to nie jest ozdoba,
+        // tylko informacja, ze tego numeru uzywa sie w innej sytuacji.
+        alarmowy: z.boolean().default(false),
+      })
+    ),
+    linki: z.array(
+      z.object({
+        nazwa: niepusty('Nazwa'),
+        adres: z.string().trim().url('To nie wygląda na adres strony'),
+      })
+    ),
   }),
 });
 

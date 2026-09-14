@@ -1,73 +1,60 @@
 ---
-import { strona } from '../tresc.js';
-const { kontakt } = strona;
+/**
+ * Stopka.astro
+ *
+ * Celowo bardzo krotka. Byly tu wczesniej adres, e-mail i Facebook -
+ * czyli dokladnie to samo, co w sekcji Kontakt tuz nad stopka. Te same
+ * dane dwa razy pod soba nie dodaja niczego, a kaza mieszkancowi
+ * zastanawiac sie, czy to na pewno to samo.
+ *
+ * Zostaje to, co do stopki naprawde nalezy: kto odpowiada za strone
+ * i skrot z powrotem na gore.
+ */
 const rok = new Date().getFullYear();
 ---
 
-<footer class="stopka" id="kontakt">
-  <div class="kontener">
-    <div class="stopka__gora">
-      <div>
-        <p class="stopka__marka">Dolinka</p>
-        <p class="stopka__podpis">Zarząd Osiedla Młodych w Olkuszu</p>
-      </div>
-
-      <ul class="dane">
-        <li>
-          <span class="dane__etykieta">Adres</span>
-          <span class="dane__wartosc">{kontakt.adres}</span>
-        </li>
-        <li>
-          <span class="dane__etykieta">E-mail</span>
-          <a class="dane__wartosc" href={`mailto:${kontakt.email}`}>{kontakt.email}</a>
-        </li>
-        <li>
-          <span class="dane__etykieta">Facebook</span>
-          {/* rel="noopener" jest tu obowiazkowy przy target="_blank" -
-              bez niego otwarta strona dostaje dostep do naszego okna. */}
-          <a
-            class="dane__wartosc"
-            href={kontakt.facebook}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Profil Osiedla Młodych
-            <span class="tylko-dla-czytnika">(otwiera się w nowej karcie)</span>
-          </a>
-        </li>
-      </ul>
+<footer class="stopka">
+  <div class="kontener stopka__wnetrze">
+    <div>
+      <p class="stopka__marka">Dolinka</p>
+      <p class="stopka__podpis">
+        © {rok} Zarząd Osiedla Młodych w Olkuszu
+      </p>
     </div>
 
-    <p class="stopka__dol">© {rok} Zarząd Osiedla Młodych w Olkuszu</p>
+    <a class="stopka__gora" href="#gora">
+      Na górę
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M12 19V5M6 11l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </a>
   </div>
 </footer>
 
 <style>
   .stopka {
-    padding-block: var(--o-16) var(--o-8);
+    /* Dolny odstep wiekszy o wysokosc przycisku "Dostepnosc", ktory jest
+       przyklejony do dolu okna. Bez tego zaslania on przycisk "Na gore"
+       dokladnie wtedy, gdy uzytkownik dojedzie na sam dol strony. */
+    padding-block: var(--o-8) calc(var(--o-8) + 64px);
     background: var(--powierzchnia);
     border-top: 1px solid var(--linia);
   }
 
-  .stopka__gora {
-    display: grid;
-    gap: var(--o-10);
-    padding-bottom: var(--o-10);
-    border-bottom: 1px solid var(--linia);
-  }
-
-  @media (min-width: 760px) {
-    .stopka__gora {
-      grid-template-columns: auto 1fr;
-      gap: var(--o-16);
-    }
+  .stopka__wnetrze {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--o-5);
   }
 
   .stopka__marka {
     font-family: var(--font-naglowki);
     font-weight: 800;
-    font-size: var(--t-naglowek-m);
-    line-height: 1.1;
+    font-size: var(--t-naglowek-s);
+    line-height: 1.2;
   }
 
   .stopka__podpis {
@@ -75,44 +62,28 @@ const rok = new Date().getFullYear();
     font-size: var(--t-s);
   }
 
-  .dane {
-    display: grid;
-    gap: var(--o-5);
-  }
-
-  @media (min-width: 760px) {
-    .dane {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
-  .dane li {
-    display: grid;
-    gap: var(--o-1);
-  }
-
-  .dane__etykieta {
-    font-size: var(--t-xs);
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--tekst-3);
-  }
-
-  .dane__wartosc {
-    color: var(--tekst);
-    text-decoration: none;
-    word-break: break-word;
-  }
-
-  a.dane__wartosc:hover {
-    color: var(--marka);
-    text-decoration: underline;
-  }
-
-  .stopka__dol {
-    padding-top: var(--o-6);
+  .stopka__gora {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--o-2);
+    /* 44px - cel dotykowy. */
+    min-height: 44px;
+    padding-inline: var(--o-4);
+    border: 1px solid var(--linia-pole);
+    border-radius: var(--r-pigulka);
+    color: var(--tekst-2);
     font-size: var(--t-s);
-    color: var(--tekst-3);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .stopka__gora:hover {
+    border-color: var(--marka);
+    color: var(--marka);
+  }
+
+  .stopka__gora svg {
+    width: 16px;
+    height: 16px;
   }
 </style>

@@ -1,0 +1,272 @@
+---
+/**
+ * Kontakt.astro
+ *
+ * Dzis ta sekcja siedzi w trzech kolumnach Bootstrapa i miesza ze soba
+ * numer do Urzedu, numery alarmowe, linki do innych instytucji i dane
+ * Zarzadu - wszystko tym samym krojem i w tym samym kolorze. Mieszkaniec,
+ * ktory szuka telefonu do przewodniczacego, musi to przeczytac w calosci.
+ *
+ * Tutaj sa trzy wyrazne bloki, a numery alarmowe sa odroznione kolorem -
+ * to nie ozdoba, tylko informacja, ze tego numeru uzywa sie w zupelnie
+ * innej sytuacji niz pozostalych.
+ *
+ * Kazdy numer jest linkiem tel: - na telefonie dzwoni sie jednym tapnieciem,
+ * bez przepisywania cyfr.
+ */
+import { strona } from '../tresc.js';
+
+const { kontakt } = strona;
+
+// Numer do wybrania musi byc bez spacji, ale czlowiek ma widziec spacje.
+const doWybrania = (numer) => `tel:${numer.replace(/\s/g, '')}`;
+---
+
+<section class="sekcja sekcja--wyrozniona" id="kontakt">
+  <div class="kontener">
+    <div class="sekcja__naglowek">
+      <p class="sekcja__nadtytul">Kontakt</p>
+      <h2 class="sekcja__tytul">Napisz lub zadzwoń</h2>
+      <p class="sekcja__opis">
+        Masz sprawę na Osiedlu, pomysł na wydarzenie albo chcesz współtworzyć
+        Dolinkę? Odezwij się do nas.
+      </p>
+    </div>
+
+    <div class="bloki">
+      <!-- ---- Zarzad ---- -->
+      <div class="blok blok--glowny">
+        <h3 class="blok__tytul">Zarząd Osiedla Młodych</h3>
+
+        <ul class="dane">
+          <li>
+            <span class="dane__etykieta">Przewodniczący</span>
+            <span class="dane__wartosc">{kontakt.przewodniczacy.imieNazwisko}</span>
+            <a class="dane__link" href={doWybrania(kontakt.przewodniczacy.telefon)}>
+              {kontakt.przewodniczacy.telefon}
+            </a>
+          </li>
+
+          <li>
+            <span class="dane__etykieta">E-mail</span>
+            <a class="dane__link" href={`mailto:${kontakt.email}`}>{kontakt.email}</a>
+          </li>
+
+          <li>
+            <span class="dane__etykieta">Adres</span>
+            <span class="dane__wartosc">{kontakt.adres}</span>
+          </li>
+        </ul>
+
+        <a class="przycisk fejsbuk" href={kontakt.facebook} target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path
+              d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H8v3h2v7h3v-7h3l1-3h-4v-2c0-.6.4-1 1-1z"
+              fill="currentColor"
+            />
+          </svg>
+          Profil na Facebooku
+          <span class="tylko-dla-czytnika">(otwiera się w nowej karcie)</span>
+        </a>
+      </div>
+
+      <!-- ---- Telefony ---- -->
+      <div class="blok">
+        <h3 class="blok__tytul">Ważne telefony</h3>
+
+        <ul class="telefony">
+          {kontakt.telefony.map((telefon) => (
+            <li class:list={['telefon', telefon.alarmowy && 'is-alarmowy']}>
+              <a class="telefon__numer" href={doWybrania(telefon.numer)}>{telefon.numer}</a>
+              <span class="telefon__opis">{telefon.opis}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- ---- Linki ---- -->
+      <div class="blok">
+        <h3 class="blok__tytul">Przydatne strony</h3>
+
+        <ul class="linki">
+          {kontakt.linki.map((link) => (
+            <li>
+              <a class="link" href={link.adres} target="_blank" rel="noopener noreferrer">
+                <span>{link.nazwa}</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path
+                    d="M7 17L17 7M17 7H9M17 7v8"
+                    fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round"
+                  />
+                </svg>
+                <span class="tylko-dla-czytnika">(otwiera się w nowej karcie)</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .bloki {
+    display: grid;
+    gap: var(--o-6);
+    /* Kazdy blok ma wysokosc swojej tresci. Przy rozciaganiu do rownej
+       wysokosci pod "Przydatnymi stronami" zostawala pusta plama -
+       trzy linki nie maja czym wypelnic wysokosci bloku Zarzadu. */
+    align-items: start;
+  }
+
+  @media (min-width: 860px) {
+    .bloki {
+      /* Zarzad dostaje wiecej miejsca - to po niego przychodzi mieszkaniec. */
+      grid-template-columns: 1.3fr 1fr 1fr;
+      gap: var(--o-8);
+    }
+  }
+
+  .blok {
+    padding: var(--o-6);
+    background: var(--tlo);
+    border: 1px solid var(--linia);
+    border-radius: var(--r-l);
+  }
+
+  .blok--glowny {
+    background: var(--marka-delikatna);
+    border-color: transparent;
+  }
+
+  .blok__tytul {
+    font-size: var(--t-naglowek-s);
+    margin-bottom: var(--o-5);
+  }
+
+  /* ---- Dane Zarzadu ---------------------------------------------------- */
+  .dane {
+    display: grid;
+    gap: var(--o-5);
+    margin-bottom: var(--o-6);
+  }
+
+  .dane li {
+    display: grid;
+    gap: 2px;
+  }
+
+  .dane__etykieta {
+    font-size: var(--t-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--tekst-3);
+  }
+
+  .dane__wartosc {
+    color: var(--tekst);
+  }
+
+  .dane__link {
+    font-weight: 700;
+    color: var(--marka);
+    text-decoration: none;
+    word-break: break-word;
+  }
+
+  .dane__link:hover {
+    text-decoration: underline;
+  }
+
+  .fejsbuk {
+    width: 100%;
+  }
+
+  .fejsbuk svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* ---- Telefony --------------------------------------------------------- */
+  .telefony {
+    display: grid;
+    gap: var(--o-4);
+  }
+
+  .telefon {
+    display: grid;
+    gap: 2px;
+    padding-left: var(--o-4);
+    border-left: 3px solid var(--linia);
+  }
+
+  /* Numery alarmowe maja inny kolor krawedzi i numeru. Nie dlatego, ze
+     ladniej - dlatego, ze 112 i telefon do Urzedu to dwie zupelnie rozne
+     sytuacje i nie powinny wygladac tak samo. */
+  .telefon.is-alarmowy {
+    border-left-color: var(--uwaga);
+  }
+
+  .telefon__numer {
+    font-family: var(--font-naglowki);
+    font-weight: 700;
+    font-size: var(--t-l);
+    color: var(--tekst);
+    text-decoration: none;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .telefon.is-alarmowy .telefon__numer {
+    color: var(--uwaga);
+  }
+
+  .telefon__numer:hover {
+    text-decoration: underline;
+  }
+
+  .telefon__opis {
+    font-size: var(--t-s);
+    color: var(--tekst-2);
+    line-height: 1.5;
+  }
+
+  /* ---- Linki ------------------------------------------------------------ */
+  .linki {
+    display: grid;
+    gap: var(--o-2);
+  }
+
+  .link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--o-3);
+    /* 48px - cel dotykowy na cala szerokosc kafelka, nie sam tekst. */
+    min-height: 48px;
+    padding: var(--o-2) var(--o-3);
+    margin-inline: calc(-1 * var(--o-3));
+    border-radius: var(--r-m);
+    color: var(--tekst);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: var(--t-s);
+  }
+
+  .link:hover {
+    background: var(--powierzchnia-2);
+    color: var(--marka);
+  }
+
+  .link svg {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 auto;
+    color: var(--tekst-3);
+  }
+
+  .link:hover svg {
+    color: var(--marka);
+  }
+</style>
