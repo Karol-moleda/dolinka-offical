@@ -74,8 +74,190 @@ const FeaturesContainer = styled.div`
 const encodePath = (path) =>
   String(path || '').split('/').map(encodeURIComponent).join('/');
 
+// Czy jestesmy na waskim ekranie. Sprawdzane realnym media query, a nie
+// szerokoscia okna przepisywana przy kazdym resize - matchMedia odpala sie
+// tylko wtedy, gdy warunek faktycznie zmienia stan.
+const MOBILE_QUERY = '(max-width: 768px)';
+
+const useIsMobile = () => {
+  const [isMobile, setIsMobile] = React.useState(
+    () => typeof window !== 'undefined' && window.matchMedia(MOBILE_QUERY).matches
+  );
+
+  React.useEffect(() => {
+    const mq = window.matchMedia(MOBILE_QUERY);
+    const onChange = (event) => setIsMobile(event.matches);
+    mq.addEventListener('change', onChange);
+    setIsMobile(mq.matches);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+
+  return isMobile;
+};
+
+// Jeden wpis aktualnosci w karuzeli na desktopie.
+const NewsItem = ({ item }) => (
+  <div className="event-content">
+    <div className="image-container">
+      <img src={encodePath(item.img)} alt={item.title} loading="lazy" />
+    </div>
+    <div className="text-box">
+      <h3>{item.title}</h3>
+      <p>
+        {String(item.text).split('\n').map((line, idx, arr) => (
+          <React.Fragment key={idx}>
+            {line}
+            {idx < arr.length - 1 && <br />}
+          </React.Fragment>
+        ))}
+      </p>
+    </div>
+  </div>
+);
+
+// Powyzej tylu znakow tresc zwijamy i dajemy "Czytaj wiecej". Zawiadomienie
+// o zebraniu potrafi miec osiem punktow porzadku obrad - w calosci zjada
+// caly ekran i spycha wszystko ponizej poza zasieg.
+const DLUGI_TEKST = 260;
+
+// Aktualnosci na telefonie.
+//
+// Na ekranie stoi zawsze JEDNA aktualnosc, domyslnie najnowsza. Reszta
+// jest pod polem wyboru - natywnym <select>, ktory na telefonie otwiera
+// systemowa liste, wiec obsluguje i trzy, i trzydziesci wpisow bez zmiany
+// wygladu strony. Wysokosc sekcji jest staa niezaleznie od liczby wpisow.
+const MobileNews = ({ items }) => {
+  const [index, setIndex] = React.useState(0);
+  const [rozwiniete, setRozwiniete] = React.useState(false);
+
+  // Gdy przewodniczacy doda lub usunie wpis w panelu, wracamy na najnowszy.
+  React.useEffect(() => { setIndex(0); }, [items.length]);
+
+  // Kazda zmiana wpisu zaczyna od zwinietej tresci - inaczej krotki wpis
+  // dziedziczylby "rozwiniete" po poprzednim, dlugim.
+  React.useEffect(() => { setRozwiniete(false); }, [index]);
+
+  const item = items[index] || items[0];
+  const tekst = String(item.text || '');
+  const doZwijania = tekst.length > DLUGI_TEKST;
+
+  const idzDo = (next) => {
+    setIndex(Math.min(Math.max(next, 0), items.length - 1));
+  };
+
+  return (
+    <div className="news">
+      {items.length > 1 && (
+        <div className="news__select">
+          <select
+            aria-label="Wybierz aktualność"
+            value={index}
+            onChange={(event) => setIndex(Number(event.target.value))}
+          >
+            {items.map((entry, i) => (
+              <option key={`${entry.title}-${i}`} value={i}>
+                {entry.title}
+              </option>
+            ))}
+          </select>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2"
+              strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
+      )}
+
+      <article className="news__card">
+        {item.img && (
+          <div className="news__media">
+            <img src={encodePath(item.img)} alt={item.title} loading="lazy" />
+          </div>
+        )}
+
+        <div className="news__body">
+          {index === 0 && items.length > 1 && (
+            <span className="news__badge">Najnowsza</span>
+          )}
+
+          <h3 className="news__title">{item.title}</h3>
+
+          <div className={`news__text${rozwiniete || !doZwijania ? ' is-open' : ''}`}>
+            {tekst.split('\n').map((line, i, arr) => (
+              <React.Fragment key={i}>
+                {line}
+                {i < arr.length - 1 && <br />}
+              </React.Fragment>
+            ))}
+          </div>
+
+          {doZwijania && (
+            <button
+              type="button"
+              className="news__more"
+              aria-expanded={rozwiniete}
+              onClick={() => setRozwiniete((v) => !v)}
+            >
+              {rozwiniete ? 'Zwiń' : 'Czytaj więcej'}
+            </button>
+          )}
+        </div>
+      </article>
+
+      {items.length > 1 && (
+        <nav className="news__nav" aria-label="Nawigacja aktualności">
+          <button
+            type="button"
+            className="news__arrow"
+            onClick={() => idzDo(index - 1)}
+            disabled={index === 0}
+            aria-label="Nowsza aktualność"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" strokeWidth="2"
+                strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+
+          {/* Kropki tylko wtedy, gdy da sie je policzyc wzrokiem. Przy
+              dwudziestu wpisach zamieniamy je na licznik. */}
+          {items.length <= 7 ? (
+            <span className="news__dots">
+              {items.map((entry, i) => (
+                <button
+                  key={`${entry.title}-dot-${i}`}
+                  type="button"
+                  className={`news__dot${i === index ? ' is-active' : ''}`}
+                  onClick={() => setIndex(i)}
+                  aria-label={`Aktualność ${i + 1}: ${entry.title}`}
+                  aria-current={i === index}
+                />
+              ))}
+            </span>
+          ) : (
+            <span className="news__counter">{index + 1} / {items.length}</span>
+          )}
+
+          <button
+            type="button"
+            className="news__arrow"
+            onClick={() => idzDo(index + 1)}
+            disabled={index === items.length - 1}
+            aria-label="Starsza aktualność"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" strokeWidth="2"
+                strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+        </nav>
+      )}
+    </div>
+  );
+};
+
 const Features = () => {
   const { fontSize, isDarkMode } = useTheme();
+  const isMobile = useIsMobile();
 
   // Tresc pochodzi z src/content/aktualnosci.json - w kodzie nie ma zadnych wpisow.
   const items = (aktualnosci.wpisy || []).filter((item) => item.published !== false);
@@ -89,43 +271,35 @@ const Features = () => {
           <h2>Aktualności Dolinka Olkusz</h2>
           <p>Najnowsze wydarzenia, imprezy i inicjatywy na Osiedlu Młodych w Olkuszu.</p>
         </div>
-        <div className="carousel-container">
-          <div className="carousel-wrapper">
-            <Carousel
-              showArrows={true}
-              showStatus={false}
-              showThumbs={false}
-              infiniteLoop={items.length > 1}
-              autoPlay={items.length > 1}
-              interval={5000}
-              stopOnHover={true}
-              emulateTouch={true}
-              swipeable={true}
-              className={`${isDarkMode ? 'dark-carousel' : 'light-carousel'} carousel-with-spacing`}
-            >
-              {items.map((item, i) => (
-                <div key={`${item.title}-${i}`} className="slide-item">
-                  <div className="event-content">
-                    <div className="image-container">
-                      <img src={encodePath(item.img)} alt={item.title} loading="lazy" />
-                    </div>
-                    <div className="text-box">
-                      <h3>{item.title}</h3>
-                      <p>
-                        {String(item.text).split('\n').map((line, idx, arr) => (
-                          <React.Fragment key={idx}>
-                            {line}
-                            {idx < arr.length - 1 && <br />}
-                          </React.Fragment>
-                        ))}
-                      </p>
-                    </div>
+        {isMobile ? (
+          // Na telefonie zadnej karuzeli. Przesuwanie palcem w bibliotece
+          // react-responsive-carousel gryzie sie z przewijaniem strony:
+          // gest w bok czesto laduje jako scroll w dol i slajd wraca.
+          <MobileNews items={items} />
+        ) : (
+          <div className="carousel-container">
+            <div className="carousel-wrapper">
+              <Carousel
+                showArrows={true}
+                showStatus={false}
+                showThumbs={false}
+                infiniteLoop={items.length > 1}
+                autoPlay={items.length > 1}
+                interval={5000}
+                stopOnHover={true}
+                emulateTouch={true}
+                swipeable={true}
+                className={`${isDarkMode ? 'dark-carousel' : 'light-carousel'} carousel-with-spacing`}
+              >
+                {items.map((item, i) => (
+                  <div key={`${item.title}-${i}`} className="slide-item">
+                    <NewsItem item={item} />
                   </div>
-                </div>
-              ))}
-            </Carousel>
+                ))}
+              </Carousel>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </FeaturesContainer>
   );

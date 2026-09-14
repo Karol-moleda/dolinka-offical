@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
+import { createPortal } from "react-dom";
 import LazyImage from "./LazyImage";
 import './gallery.css';
 import styled from "styled-components";
@@ -173,6 +174,15 @@ const Gallery = () => {
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [lightboxOpen, navigateImage, closeLightbox]);
 
+  // Przy otwartym zdjeciu strona pod spodem nie moze sie przewijac -
+  // na telefonie inaczej "ucieka" tlo pod palcem zamiast przesuwac zdjecie.
+  useEffect(() => {
+    if (!lightboxOpen) return undefined;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = previous; };
+  }, [lightboxOpen]);
+
   if (!publishedAlbums.length) return null;
 
   return (
@@ -239,17 +249,30 @@ const Gallery = () => {
           </div>
         </div>
 
-        {lightboxOpen && selectedImage && (
-          <div className="lightbox-overlay" onClick={closeLightbox}>
-            <div className="lightbox-content" onClick={(event) => event.stopPropagation()}>
-              <button type="button" className="lightbox-close" onClick={closeLightbox} aria-label="Zamknij">×</button>
-              <button type="button" className="lightbox-nav prev" onClick={() => navigateImage('prev')} aria-label="Poprzednie zdjęcie">‹</button>
-              <img src={encodePath(selectedImage)} alt={`${activeAlbum} – powiększone zdjęcie`} />
-              <button type="button" className="lightbox-nav next" onClick={() => navigateImage('next')} aria-label="Następne zdjęcie">›</button>
-            </div>
-          </div>
-        )}
       </div>
+
+      {/* Lightbox trafia portalem prosto do <body>, a nie w srodek sekcji.
+          Okno na caly ekran nie moze siedziec wewnatrz kontenera, ktory ma
+          overflow/contain - wtedy przestaje byc "na caly ekran" i zamiast
+          zdjecia widac czarna plachte. */}
+      {lightboxOpen && selectedImage && createPortal(
+        <div className="lightbox-overlay" onClick={closeLightbox} role="dialog" aria-modal="true">
+          <button type="button" className="lightbox-close" onClick={closeLightbox} aria-label="Zamknij">×</button>
+          <div className="lightbox-content" onClick={(event) => event.stopPropagation()}>
+            <img src={encodePath(selectedImage)} alt={`${activeAlbum} – powiększone zdjęcie`} />
+          </div>
+          {visiblePhotos.length > 1 && (
+            <>
+              <button type="button" className="lightbox-nav prev" onClick={(e) => { e.stopPropagation(); navigateImage('prev'); }} aria-label="Poprzednie zdjęcie">‹</button>
+              <button type="button" className="lightbox-nav next" onClick={(e) => { e.stopPropagation(); navigateImage('next'); }} aria-label="Następne zdjęcie">›</button>
+            </>
+          )}
+          <div className="lightbox-caption">
+            {visiblePhotos.indexOf(selectedImage) + 1} z {visiblePhotos.length}
+          </div>
+        </div>,
+        document.body
+      )}
     </GalleryContainer>
   );
 };

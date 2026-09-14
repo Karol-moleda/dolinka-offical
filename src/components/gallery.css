@@ -4,7 +4,13 @@
   scroll-margin-top: 80px;
   padding-top: 20px;
   padding-bottom: 40px;
-  contain: content; /* Optymalizuje renderowanie */
+  /* UWAGA: bylo tu `contain: content`. To nie jest niewinna optymalizacja -
+     `contain` robi z sekcji blok zawierajacy dla elementow position: fixed
+     i przycina ich malowanie do swojego prostokata. Lightbox galerii
+     przestawal byc oknem na caly ekran i rozciagal sie na cala (13 000 px)
+     wysokosc sekcji - stad czarny ekran zamiast zdjecia na telefonie.
+     Lightbox jest teraz renderowany portalem w <body>, ale `contain`
+     zostaje usuniete, bo i tak nie dawalo mierzalnego zysku. */
 }
 
 .gallery-container {
@@ -287,26 +293,33 @@
   margin-bottom: 2rem;
 }
 
-/* Lightbox */
+/* =====================================================================
+   Lightbox
+   Wszystkie elementy (zdjecie, krzyzyk, strzalki, licznik) sa dziecmi
+   samego okna, wiec nic nie moze wyladowac poza ekranem. Wczesniej
+   strzalki byly pozycjonowane wzgledem zdjecia na left/right: -70px,
+   czyli na telefonie zawsze poza widokiem.
+   ===================================================================== */
 .lightbox-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.9);
+  inset: 0;
+  /* dvh uwzglednia pasek adresu przegladarki mobilnej; vh jest zapasem
+     dla starszych przegladarek. */
+  height: 100vh;
+  height: 100dvh;
+  background-color: rgba(0, 0, 0, 0.94);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1100;
-  padding: 30px;
-  backdrop-filter: blur(5px);
+  z-index: 2000;
+  padding: 56px 16px;
+  overscroll-behavior: contain;
 }
 
 .lightbox-content {
   position: relative;
-  max-width: 90%;
-  max-height: 90vh;
+  max-width: 100%;
+  max-height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -314,70 +327,74 @@
 
 .lightbox-content img {
   max-width: 100%;
-  max-height: 85vh;
+  /* Zdjecie zawsze miesci sie w oknie - zadnego przewijania i zadnego
+     wychodzenia poza ekran, niezaleznie od proporcji fotografii. */
+  max-height: calc(100vh - 112px);
+  max-height: calc(100dvh - 112px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
   border-radius: 8px;
   box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
-  object-fit: contain;
 }
 
 .lightbox-close {
   position: absolute;
-  top: -40px;
-  right: 0;
-  background: transparent;
+  top: 8px;
+  right: 8px;
+  background: rgba(255, 255, 255, 0.12);
   border: none;
   color: white;
-  font-size: 30px;
+  font-size: 28px;
+  line-height: 1;
   cursor: pointer;
-  width: 40px;
-  height: 40px;
-  z-index: 1110;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  z-index: 2010;
 }
 
 .lightbox-nav {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(255, 255, 255, 0.12);
   color: white;
   border: none;
-  width: 50px;
-  height: 70px;
+  width: 44px;
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   font-size: 30px;
+  line-height: 1;
   border-radius: 8px;
   transition: background 0.2s ease;
-  z-index: 1110;
+  z-index: 2010;
 }
 
 .lightbox-nav:hover {
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(255, 255, 255, 0.25);
 }
 
 .lightbox-nav.prev {
-  left: -70px;
+  left: 8px;
 }
 
 .lightbox-nav.next {
-  right: -70px;
+  right: 8px;
 }
 
 .lightbox-caption {
   position: absolute;
-  bottom: -40px;
+  bottom: 14px;
   left: 0;
   width: 100%;
-  color: white;
+  color: rgba(255, 255, 255, 0.75);
   text-align: center;
-}
-
-.lightbox-caption h3 {
-  margin: 0;
-  font-size: 1.2rem;
-  color: white !important;
+  font-size: 14px;
+  pointer-events: none;
 }
 
 /* Styles for gallery pagination */

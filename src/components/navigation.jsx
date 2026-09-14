@@ -79,13 +79,37 @@ const NavMenu = styled.div`
     position: fixed;
     top: 0;
     right: ${props => props.$isOpen ? '0' : '-300px'};
-    width: 300px;
+    /* Na waskich telefonach 300px to juz prawie caly ekran. */
+    width: min(300px, 85vw);
     height: 100vh;
+    /* dvh uwzglednia pasek adresu przegladarki mobilnej - bez tego dolne
+       pozycje menu potrafia schowac sie pod paskiem. */
+    height: 100dvh;
     background: ${props => props.$isDarkMode ? 'rgba(0, 0, 0, 0.95)' : 'rgba(255, 255, 255, 0.95)'};
     flex-direction: column;
     padding: 80px 30px;
     transition: right 0.3s ease;
     backdrop-filter: blur(10px);
+    overflow-y: auto;
+    z-index: 2;
+  }
+`;
+
+// Przycienione tlo za otwartym menu. Pelni dwie role: oddziela menu od
+// tresci i daje najbardziej naturalny sposob zamkniecia - tapniecie obok.
+const Backdrop = styled.div`
+  display: none;
+
+  @media (max-width: 991px) {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    opacity: ${props => props.$isOpen ? '1' : '0'};
+    /* visibility zamiast display, zeby zostalo przejscie opacity. */
+    visibility: ${props => props.$isOpen ? 'visible' : 'hidden'};
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 1;
   }
 `;
 
@@ -163,6 +187,19 @@ const CloseButton = styled.button`
   }
 `;
 
+// Pozycje menu trzymane w jednym miejscu - dodanie sekcji to jedna linijka,
+// a nie kopiowanie osmiu atrybutow.
+const POZYCJE = [
+  { href: '#features', label: 'Wydarzenia' },
+  { href: '#about', label: 'O nas' },
+  { href: '#calendar', label: 'Kalendarz' },
+  { href: '#services', label: 'Nasze działania' },
+  { href: '#team', label: 'Zarząd' },
+  { href: '#portfolio', label: 'Galeria' },
+  { href: '#inne', label: 'Dokumenty' },
+  { href: '#contact', label: 'Kontakt' },
+];
+
 const Navigation = () => {
   const { isDarkMode } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -177,45 +214,55 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+  const toggleMenu = () => setIsOpen((open) => !open);
+  const closeMenu = () => setIsOpen(false);
+
+  // Escape zamyka menu - tego oczekuje kazdy, kto korzysta z klawiatury.
+  useEffect(() => {
+    if (!isOpen) return undefined;
+    const onKeyDown = (event) => { if (event.key === 'Escape') closeMenu(); };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [isOpen]);
+
+  // Przy otwartym menu strona pod spodem nie moze sie przewijac.
+  useEffect(() => {
+    if (!isOpen) return undefined;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = previous; };
+  }, [isOpen]);
 
   return (
     <Nav $isScrolled={isScrolled} $isDarkMode={isDarkMode} className={isScrolled ? 'scrolled' : ''}>
       <Container>
-        <Brand href="#page-top" $isDarkMode={isDarkMode} $isScrolled={isScrolled}>Dolinka</Brand>
-        <MenuButton onClick={toggleMenu} $isDarkMode={isDarkMode}>
+        <Brand href="#page-top" onClick={closeMenu} $isDarkMode={isDarkMode} $isScrolled={isScrolled}>Dolinka</Brand>
+        <MenuButton onClick={toggleMenu} $isDarkMode={isDarkMode} aria-expanded={isOpen} aria-label="Otwórz menu">
           <FontAwesomeIcon icon={faBars} />
         </MenuButton>
+
+        <Backdrop $isOpen={isOpen} onClick={closeMenu} aria-hidden="true" />
+
         <NavMenu $isOpen={isOpen} $isDarkMode={isDarkMode}>
-          <CloseButton onClick={toggleMenu} $isDarkMode={isDarkMode}>
+          <CloseButton onClick={closeMenu} $isDarkMode={isDarkMode} aria-label="Zamknij menu">
             <FontAwesomeIcon icon={faTimes} />
-          </CloseButton>          <NavList>
-            <NavItem>
-              <NavLink href="#features" $isDarkMode={isDarkMode} $isScrolled={isScrolled}>Wydarzenia</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="#about" $isDarkMode={isDarkMode} $isScrolled={isScrolled}>O nas</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="#calendar" $isDarkMode={isDarkMode} $isScrolled={isScrolled}>Kalendarz</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="#services" $isDarkMode={isDarkMode} $isScrolled={isScrolled}>Nasze działania</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="#team" $isDarkMode={isDarkMode} $isScrolled={isScrolled}>Zarząd</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="#portfolio" $isDarkMode={isDarkMode} $isScrolled={isScrolled}>Galeria</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="#inne" $isDarkMode={isDarkMode} $isScrolled={isScrolled}>Dokumenty</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="#contact" $isDarkMode={isDarkMode} $isScrolled={isScrolled}>Kontakt</NavLink>
-            </NavItem>
+          </CloseButton>
+          <NavList>
+            {POZYCJE.map((pozycja) => (
+              <NavItem key={pozycja.href}>
+                {/* To jest sedno poprawki: klikniecie pozycji przenosi do
+                    sekcji I zamyka menu. Wczesniej menu zostawalo otwarte
+                    i zaslanialo to, do czego wlasnie przeszlismy. */}
+                <NavLink
+                  href={pozycja.href}
+                  onClick={closeMenu}
+                  $isDarkMode={isDarkMode}
+                  $isScrolled={isScrolled}
+                >
+                  {pozycja.label}
+                </NavLink>
+              </NavItem>
+            ))}
           </NavList>
         </NavMenu>
       </Container>

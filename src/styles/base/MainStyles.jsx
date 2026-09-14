@@ -7,6 +7,8 @@ import { createGlobalStyle } from 'styled-components';
 import './LegacyFixes.css';
 import './App.css';
 import '../components/CarouselDarkMode.css';
+// mobile.css MUSI byc importowany jako ostatni - nadpisuje reguly powyzej.
+import './mobile.css';
 
 const MainStyles = createGlobalStyle`
   /* Base styles */

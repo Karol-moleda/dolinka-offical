@@ -17,17 +17,28 @@ const CalendarContainer = styled.div`
 const CalendarHeader = styled.div`
   text-align: center;
   margin-bottom: 50px;
+
+  @media (max-width: 768px) {
+    margin-bottom: 28px;
+  }
 `;
 
 const Title = styled.h2`
-  font-size: 36px;
+  /* clamp: na telefonie 22px, na desktopie 36px, plynnie pomiedzy. */
+  font-size: clamp(22px, 6vw, 36px);
   font-weight: 700;
+  line-height: 1.25;
   margin-bottom: 15px;
 `;
 
 const Subtitle = styled.p`
   font-size: 16px;
   margin-bottom: 30px;
+
+  @media (max-width: 768px) {
+    font-size: 15px;
+    margin-bottom: 0;
+  }
 `;
 
 const Timeline = styled.div`
@@ -49,9 +60,12 @@ const Timeline = styled.div`
   
   @media (max-width: 768px) {
     max-width: 100%;
-    
+
+    /* Linia osi blizej lewej krawedzi - kazdy oddany piksel to szerszy
+       tekst w karcie wydarzenia. */
     &::after {
-      left: 31px;
+      left: 9px;
+      width: 4px;
       margin-left: 0;
     }
   }
@@ -89,16 +103,23 @@ const TimelineItem = styled.div`
   }
   
   @media (max-width: 768px) {
-    width: calc(100% - 70px);
-    padding: 10px 20px;
-    left: 70px !important;
+    /* Wczesniej karta byla wciskana o 70px w prawo i miala jeszcze
+       20px paddingu - na ekranie 375px zostawalo na tekst 275px.
+       Teraz wciecie to 32px i zero paddingu bocznego. */
+    width: calc(100% - 32px);
+    padding: 0;
+    left: 32px !important;
+    margin-bottom: 16px;
     text-align: left !important;
-    
+
     &::after {
-      left: -43px !important;
+      /* Kropka wysrodkowana na linii osi (lewa krawedz linii: 9px). */
+      left: -29px !important;
       right: auto !important;
-      width: 20px;
-      height: 20px;
+      top: 18px;
+      width: 18px;
+      height: 18px;
+      border-width: 3px;
     }
   }
 `;
@@ -144,9 +165,10 @@ const EventTitle = styled.h3`
 const EventDescription = styled.p`
   margin: 0;
   color: #666;
-  
+
   @media (max-width: 768px) {
-    font-size: 14px;
+    font-size: 15px;
+    line-height: 1.55;
   }
 `;
 
