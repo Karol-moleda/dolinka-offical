@@ -1,0 +1,348 @@
+---
+/**
+ * Nawigacja.astro — pasek u gory + menu na telefonie.
+ *
+ * Pozycje w jednym miejscu: dodanie sekcji to jedna linijka, a nie
+ * kopiowanie osmiu atrybutow i pamietanie o zamykaniu menu po kliknieciu.
+ */
+const pozycje = [
+  { href: '#aktualnosci', etykieta: 'Aktualności' },
+  { href: '#kalendarz', etykieta: 'Kalendarz' },
+  { href: '#o-nas', etykieta: 'O nas' },
+  { href: '#dzialania', etykieta: 'Nasze działania' },
+  { href: '#galeria', etykieta: 'Galeria' },
+  { href: '#zarzad', etykieta: 'Zarząd' },
+  { href: '#dokumenty', etykieta: 'Dokumenty' },
+  { href: '#kontakt', etykieta: 'Kontakt' },
+];
+---
+
+<header class="pasek" id="pasek">
+  <div class="pasek__wnetrze kontener">
+    <a class="marka" href="#gora">
+      Dolinka
+      <span class="marka__podpis">Osiedle Młodych w Olkuszu</span>
+    </a>
+
+    <button
+      type="button"
+      class="hamburger"
+      id="hamburger"
+      aria-expanded="false"
+      aria-controls="menu"
+      aria-label="Otwórz menu"
+    >
+      <span class="hamburger__kreski" aria-hidden="true"></span>
+    </button>
+
+    <div class="zaslona" id="zaslona" aria-hidden="true"></div>
+
+    <nav class="menu" id="menu" aria-label="Menu główne">
+      <button type="button" class="menu__zamknij" id="menu-zamknij" aria-label="Zamknij menu">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+      </button>
+
+      <ul class="menu__lista">
+        {pozycje.map((pozycja) => (
+          <li>
+            <a class="menu__link" href={pozycja.href}>{pozycja.etykieta}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const pasek = document.getElementById('pasek');
+  const hamburger = document.getElementById('hamburger');
+  const menu = document.getElementById('menu');
+  const zaslona = document.getElementById('zaslona');
+  const zamknijPrzycisk = document.getElementById('menu-zamknij');
+
+  /* ---- Otwieranie i zamykanie ---------------------------------------- */
+  const otworz = () => {
+    document.body.dataset.menu = 'otwarte';
+    hamburger.setAttribute('aria-expanded', 'true');
+    menu.querySelector('.menu__link')?.focus();
+  };
+
+  const zamknij = () => {
+    delete document.body.dataset.menu;
+    hamburger.setAttribute('aria-expanded', 'false');
+  };
+
+  hamburger?.addEventListener('click', () => {
+    if (document.body.dataset.menu) zamknij();
+    else otworz();
+  });
+
+  zaslona?.addEventListener('click', zamknij);
+
+  zamknijPrzycisk?.addEventListener('click', () => {
+    zamknij();
+    hamburger?.focus();
+  });
+
+  // Klikniecie pozycji przenosi do sekcji I zamyka menu. Bez tego menu
+  // zostaje otwarte i zaslania dokladnie to, do czego wlasnie przeszlismy.
+  menu?.querySelectorAll('.menu__link').forEach((link) => {
+    link.addEventListener('click', zamknij);
+  });
+
+  document.addEventListener('keydown', (zdarzenie) => {
+    if (zdarzenie.key === 'Escape' && document.body.dataset.menu) {
+      zamknij();
+      hamburger?.focus();
+    }
+  });
+
+  /* ---- Pasek po przewinieciu -------------------------------------------
+     Nad zdjeciem naglowka pasek jest przezroczysty, nizej dostaje tlo.
+     Uzywamy IntersectionObserver zamiast nasluchu na przewijaniu -
+     przegladarka liczy to sama, poza watkiem rysowania. */
+  const wartownik = document.getElementById('wartownik');
+
+  if (wartownik && 'IntersectionObserver' in window) {
+    new IntersectionObserver(
+      ([wpis]) => {
+        pasek?.classList.toggle('is-przewiniety', !wpis.isIntersecting);
+      },
+      { threshold: 0 }
+    ).observe(wartownik);
+  } else {
+    pasek?.classList.add('is-przewiniety');
+  }
+</script>
+
+<style>
+  .pasek {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 900;
+    transition: background var(--przejscie), box-shadow var(--przejscie);
+  }
+
+  /* Nad zdjeciem naglowka: bez tla, sam cien pod tekstem.
+     Po przewinieciu: pelne tlo. */
+  .pasek.is-przewiniety {
+    background: var(--powierzchnia);
+    box-shadow: var(--cien-s);
+    border-bottom: 1px solid var(--linia);
+  }
+
+  .pasek__wnetrze {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--o-4);
+    min-height: 68px;
+  }
+
+  /* ---- Marka --------------------------------------------------------- */
+  .marka {
+    display: grid;
+    font-family: var(--font-naglowki);
+    font-weight: 800;
+    font-size: var(--t-l);
+    line-height: 1.1;
+    color: #ffffff;
+    text-decoration: none;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  }
+
+  .marka__podpis {
+    font-family: var(--font-tresc);
+    font-weight: 500;
+    font-size: var(--t-xs);
+    opacity: 0.85;
+  }
+
+  .pasek.is-przewiniety .marka {
+    color: var(--tekst);
+    text-shadow: none;
+  }
+
+  .pasek.is-przewiniety .marka__podpis {
+    color: var(--tekst-3);
+    opacity: 1;
+  }
+
+  /* ---- Hamburger ------------------------------------------------------ */
+  .hamburger {
+    display: none;
+    width: 48px;
+    height: 48px;
+    border: 0;
+    border-radius: var(--r-m);
+    background: rgba(0, 0, 0, 0.35);
+    color: #ffffff;
+  }
+
+  .pasek.is-przewiniety .hamburger {
+    background: var(--powierzchnia-2);
+    color: var(--tekst);
+  }
+
+  /* Trzy kreski z jednego elementu - srodkowa to tlo, skrajne to cienie.
+     Mniej znacznikow w HTML, ten sam efekt. */
+  .hamburger__kreski,
+  .hamburger__kreski::before,
+  .hamburger__kreski::after {
+    display: block;
+    width: 22px;
+    height: 2px;
+    margin-inline: auto;
+    border-radius: 2px;
+    background: currentColor;
+  }
+
+  .hamburger__kreski {
+    position: relative;
+  }
+
+  .hamburger__kreski::before,
+  .hamburger__kreski::after {
+    content: '';
+    position: absolute;
+    left: 0;
+  }
+
+  .hamburger__kreski::before { top: -7px; }
+  .hamburger__kreski::after { top: 7px; }
+
+  /* ---- Menu ----------------------------------------------------------- */
+  .menu__lista {
+    display: flex;
+    align-items: center;
+    gap: var(--o-1);
+    margin: 0;
+  }
+
+  .menu__link {
+    display: block;
+    padding: var(--o-2) var(--o-3);
+    border-radius: var(--r-s);
+    color: #ffffff;
+    font-size: var(--t-s);
+    font-weight: 600;
+    text-decoration: none;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+    white-space: nowrap;
+  }
+
+  .menu__link:hover {
+    background: rgba(255, 255, 255, 0.18);
+    color: #ffffff;
+  }
+
+  .pasek.is-przewiniety .menu__link {
+    color: var(--tekst-2);
+    text-shadow: none;
+  }
+
+  .pasek.is-przewiniety .menu__link:hover {
+    background: var(--marka-delikatna);
+    color: var(--marka);
+  }
+
+  .menu__zamknij,
+  .zaslona {
+    display: none;
+  }
+
+  /* ---- Telefon i tablet ------------------------------------------------ */
+  @media (max-width: 1023px) {
+    .hamburger {
+      display: grid;
+      place-items: center;
+    }
+
+    .zaslona {
+      display: block;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity var(--przejscie), visibility var(--przejscie);
+    }
+
+    .menu {
+      position: fixed;
+      top: 0;
+      right: 0;
+      /* 320px to na waskim telefonie prawie caly ekran - min() pilnuje,
+         zeby pod menu bylo widac, ze strona nadal tam jest. */
+      width: min(320px, 86vw);
+      height: 100dvh;
+      padding: var(--o-16) var(--o-5) var(--o-5);
+      background: var(--powierzchnia);
+      border-left: 1px solid var(--linia);
+      box-shadow: var(--cien-l);
+      overflow-y: auto;
+      transform: translateX(100%);
+      transition: transform var(--przejscie);
+    }
+
+    .menu__zamknij {
+      display: grid;
+      place-items: center;
+      position: absolute;
+      top: var(--o-4);
+      right: var(--o-4);
+      width: 44px;
+      height: 44px;
+      border: 0;
+      border-radius: var(--r-pigulka);
+      background: var(--powierzchnia-2);
+      color: var(--tekst);
+    }
+
+    .menu__zamknij svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .menu__lista {
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--o-1);
+    }
+
+    .menu__link {
+      /* Cel dotykowy na cala szerokosc szuflady - nie sam tekst. */
+      padding: var(--o-4);
+      font-size: var(--t-m);
+      color: var(--tekst);
+      text-shadow: none;
+      border-radius: var(--r-m);
+    }
+
+    .menu__link:hover {
+      background: var(--marka-delikatna);
+      color: var(--marka);
+    }
+
+    /* Stan otwarty steruje atrybutem na <body> - dzieki temu jedna
+       zmiana wlacza szuflade, zaslone i blokade przewijania strony. */
+    :global(body[data-menu]) .menu {
+      transform: translateX(0);
+    }
+
+    :global(body[data-menu]) .zaslona {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+</style>
+
+<style is:global>
+  /* Przy otwartym menu strona pod spodem nie moze sie przewijac -
+     inaczej na telefonie "ucieka" tlo pod palcem. */
+  body[data-menu] {
+    overflow: hidden;
+  }
+</style>

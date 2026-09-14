@@ -1,0 +1,46 @@
+{
+  "osoby": [
+    {
+      "imieNazwisko": "Wojciech Ozdoba",
+      "funkcja": "Przewodniczący Zarządu",
+      "zdjecie": "/img/Ozdoba.jpg",
+      "opublikowane": true
+    },
+    {
+      "imieNazwisko": "Henryka Foryś",
+      "funkcja": "Członek Zarządu",
+      "zdjecie": "/img/Henryka.png",
+      "opublikowane": true
+    },
+    {
+      "imieNazwisko": "Kamil Czopek",
+      "funkcja": "Członek Zarządu",
+      "zdjecie": "/img/Czopek.jpg",
+      "opublikowane": true
+    },
+    {
+      "imieNazwisko": "Karol Molęda",
+      "funkcja": "Członek Zarządu",
+      "zdjecie": "/img/Moleda.png",
+      "opublikowane": true
+    },
+    {
+      "imieNazwisko": "Katarzyna Maliszewska-Tomsia",
+      "funkcja": "Członek Zarządu",
+      "zdjecie": "/img/Maliszewska.jpg",
+      "opublikowane": true
+    },
+    {
+      "imieNazwisko": "Roksana Gorajczyk",
+      "funkcja": "Członek Zarządu",
+      "zdjecie": "/img/Roskana.jpg",
+      "opublikowane": true
+    },
+    {
+      "imieNazwisko": "Zofia Patrykiewicz",
+      "funkcja": "Członek Zarządu",
+      "zdjecie": "/img/Zosia.jpeg",
+      "opublikowane": true
+    }
+  ]
+}

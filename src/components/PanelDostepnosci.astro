@@ -1,0 +1,456 @@
+---
+/**
+ * PanelDostepnosci.astro
+ *
+ * Trzy ustawienia, ktore realnie zmieniaja czytelnosc strony:
+ * rozmiar tekstu, kontrast i zatrzymanie animacji.
+ *
+ * Decyzje, ktore warto znac przy nastepnej zmianie:
+ *
+ * 1. To sa PRZYCISKI RADIO (role="radiogroup"), a nie przelaczniki.
+ *    Uzytkownik widzi wszystkie mozliwosci naraz i widzi, ktora jest
+ *    wlaczona. Przelacznik "tryb ciemny wl/wyl" nie da rady opisac
+ *    trzech stanow, a stan "zgodnie z systemem" musi byc widoczny -
+ *    inaczej nie da sie do niego wrocic.
+ *
+ * 2. Panel dziala bez JavaScriptu w tym sensie, ze strona bez niego jest
+ *    w pelni czytelna - po prostu w domyslnym motywie. Zaden tekst nie
+ *    jest ukryty za tym panelem.
+ *
+ * 3. Ustawienie zapisuje sie natychmiast. Nie ma przycisku "zapisz" -
+ *    kazde dodatkowe klikniecie to kolejna bariera.
+ */
+---
+
+<div class="panel">
+  <button
+    type="button"
+    class="panel__uchwyt"
+    id="panel-uchwyt"
+    aria-expanded="false"
+    aria-controls="panel-tresc"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2" />
+      <circle cx="12" cy="7" r="1.6" fill="currentColor" />
+      <path
+        d="M8 10.5h8M12 10.5V17M12 13.5l-2.5 3.5M12 13.5l2.5 3.5"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+      />
+    </svg>
+    <span class="panel__uchwyt-tekst">Dostępność</span>
+  </button>
+
+  <div class="panel__tresc" id="panel-tresc" hidden>
+    <div class="panel__naglowek">
+      <h2 id="panel-tytul">Ustawienia czytelności</h2>
+      <button type="button" class="panel__zamknij" id="panel-zamknij" aria-label="Zamknij ustawienia">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+      </button>
+    </div>
+
+    <fieldset class="grupa">
+      <legend class="grupa__tytul">Rozmiar tekstu</legend>
+      <div class="opcje opcje--tekst" role="radiogroup" aria-label="Rozmiar tekstu">
+        <button type="button" class="opcja" data-skala="1" role="radio" aria-checked="true">
+          <span class="opcja__litera" style="font-size: 15px">A</span>
+          <span class="opcja__podpis">Zwykły</span>
+        </button>
+        <button type="button" class="opcja" data-skala="1.15" role="radio" aria-checked="false">
+          <span class="opcja__litera" style="font-size: 19px">A</span>
+          <span class="opcja__podpis">Większy</span>
+        </button>
+        <button type="button" class="opcja" data-skala="1.35" role="radio" aria-checked="false">
+          <span class="opcja__litera" style="font-size: 24px">A</span>
+          <span class="opcja__podpis">Duży</span>
+        </button>
+      </div>
+    </fieldset>
+
+    <fieldset class="grupa">
+      <legend class="grupa__tytul">Kontrast</legend>
+      <div class="opcje" role="radiogroup" aria-label="Kontrast">
+        <button type="button" class="opcja" data-motyw="system" role="radio" aria-checked="true">
+          <span class="opcja__probka opcja__probka--system" aria-hidden="true"></span>
+          <span class="opcja__podpis">Jak w systemie</span>
+        </button>
+        <button type="button" class="opcja" data-motyw="light" role="radio" aria-checked="false">
+          <span class="opcja__probka opcja__probka--jasny" aria-hidden="true"></span>
+          <span class="opcja__podpis">Jasny</span>
+        </button>
+        <button type="button" class="opcja" data-motyw="dark" role="radio" aria-checked="false">
+          <span class="opcja__probka opcja__probka--ciemny" aria-hidden="true"></span>
+          <span class="opcja__podpis">Ciemny</span>
+        </button>
+        <button type="button" class="opcja" data-motyw="kontrast" role="radio" aria-checked="false">
+          <span class="opcja__probka opcja__probka--kontrast" aria-hidden="true"></span>
+          <span class="opcja__podpis">Wysoki kontrast</span>
+        </button>
+      </div>
+    </fieldset>
+
+    <fieldset class="grupa">
+      <legend class="grupa__tytul">Ruch</legend>
+      <label class="przelacznik">
+        <input type="checkbox" id="bez-animacji" />
+        <span>Zatrzymaj animacje i płynne przewijanie</span>
+      </label>
+    </fieldset>
+
+    <button type="button" class="panel__reset" id="panel-reset">
+      Przywróć ustawienia domyślne
+    </button>
+  </div>
+</div>
+
+<script>
+  // Klucze w pamieci przegladarki. Te same nazwy czyta skrypt w <head>,
+  // ktory ustawia motyw ZANIM cokolwiek zostanie narysowane.
+  const KLUCZ_MOTYW = 'dolinka-motyw';
+  const KLUCZ_SKALA = 'dolinka-skala-tekstu';
+  const KLUCZ_RUCH = 'dolinka-bez-animacji';
+
+  const html = document.documentElement;
+  const uchwyt = document.getElementById('panel-uchwyt');
+  const tresc = document.getElementById('panel-tresc');
+  const zamknij = document.getElementById('panel-zamknij');
+  const reset = document.getElementById('panel-reset');
+  const bezAnimacji = document.getElementById('bez-animacji');
+
+  // localStorage bywa zablokowany (tryb prywatny, polityka firmowa).
+  // Strona ma wtedy dzialac normalnie, tylko bez zapamietanego wyboru.
+  const zapisz = (klucz, wartosc) => {
+    try {
+      if (wartosc === null) localStorage.removeItem(klucz);
+      else localStorage.setItem(klucz, wartosc);
+    } catch (blad) {
+      /* trudno */
+    }
+  };
+  const odczytaj = (klucz) => {
+    try {
+      return localStorage.getItem(klucz);
+    } catch (blad) {
+      return null;
+    }
+  };
+
+  /* ---- Otwieranie i zamykanie ---------------------------------------- */
+  const otworz = () => {
+    tresc.hidden = false;
+    uchwyt.setAttribute('aria-expanded', 'true');
+    // Ustawienie fokusu w panelu - inaczej osoba nawigujaca klawiatura
+    // otwiera panel i zostaje kursorem na przycisku poza nim.
+    tresc.querySelector('.opcja')?.focus();
+  };
+
+  const zwin = () => {
+    tresc.hidden = true;
+    uchwyt.setAttribute('aria-expanded', 'false');
+  };
+
+  uchwyt?.addEventListener('click', () => {
+    if (tresc.hidden) otworz();
+    else zwin();
+  });
+
+  zamknij?.addEventListener('click', () => {
+    zwin();
+    uchwyt?.focus();
+  });
+
+  document.addEventListener('keydown', (zdarzenie) => {
+    if (zdarzenie.key === 'Escape' && !tresc.hidden) {
+      zwin();
+      uchwyt?.focus();
+    }
+  });
+
+  document.addEventListener('click', (zdarzenie) => {
+    if (tresc.hidden) return;
+    if (!zdarzenie.target.closest('.panel')) zwin();
+  });
+
+  /* ---- Zaznaczanie aktywnej opcji ------------------------------------ */
+  const oznacz = (selektor, atrybut, wartosc) => {
+    document.querySelectorAll(selektor).forEach((opcja) => {
+      const aktywna = opcja.dataset[atrybut] === wartosc;
+      opcja.setAttribute('aria-checked', String(aktywna));
+      opcja.classList.toggle('is-wybrana', aktywna);
+    });
+  };
+
+  /* ---- Rozmiar tekstu ------------------------------------------------- */
+  const ustawSkale = (skala) => {
+    html.style.setProperty('--skala-tekstu', skala);
+    oznacz('[data-skala]', 'skala', skala);
+    zapisz(KLUCZ_SKALA, skala === '1' ? null : skala);
+  };
+
+  document.querySelectorAll('[data-skala]').forEach((opcja) => {
+    opcja.addEventListener('click', () => ustawSkale(opcja.dataset.skala));
+  });
+
+  /* ---- Kontrast -------------------------------------------------------- */
+  const ustawMotyw = (motyw) => {
+    if (motyw === 'system') delete html.dataset.theme;
+    else html.dataset.theme = motyw;
+    oznacz('[data-motyw]', 'motyw', motyw);
+    zapisz(KLUCZ_MOTYW, motyw === 'system' ? null : motyw);
+  };
+
+  document.querySelectorAll('[data-motyw]').forEach((opcja) => {
+    opcja.addEventListener('click', () => ustawMotyw(opcja.dataset.motyw));
+  });
+
+  /* ---- Ruch ------------------------------------------------------------ */
+  const ustawRuch = (stop) => {
+    if (stop) html.dataset.ruch = 'stop';
+    else delete html.dataset.ruch;
+    bezAnimacji.checked = stop;
+    zapisz(KLUCZ_RUCH, stop ? '1' : null);
+  };
+
+  bezAnimacji?.addEventListener('change', () => ustawRuch(bezAnimacji.checked));
+
+  /* ---- Reset ----------------------------------------------------------- */
+  reset?.addEventListener('click', () => {
+    ustawSkale('1');
+    ustawMotyw('system');
+    ustawRuch(false);
+  });
+
+  /* ---- Stan poczatkowy --------------------------------------------------
+     Motyw i skala sa juz ZASTOSOWANE przez skrypt w <head>. Tutaj tylko
+     zaznaczamy odpowiednie opcje, zeby panel pokazywal prawde. */
+  oznacz('[data-skala]', 'skala', odczytaj(KLUCZ_SKALA) ?? '1');
+  oznacz('[data-motyw]', 'motyw', odczytaj(KLUCZ_MOTYW) ?? 'system');
+  if (bezAnimacji) bezAnimacji.checked = odczytaj(KLUCZ_RUCH) === '1';
+</script>
+
+<style>
+  .panel {
+    position: fixed;
+    right: var(--o-4);
+    bottom: var(--o-4);
+    z-index: 1000;
+    display: flex;
+    /* column-reverse: uchwyt zostaje przyklejony do dolu ekranu, a panel
+       rozwija sie NAD nim. Przy zwyklym `column` otwarcie panelu spycha
+       przycisk w gore i uzytkownik traci go z oczu. */
+    flex-direction: column-reverse;
+    align-items: flex-end;
+    gap: var(--o-3);
+  }
+
+  /* ---- Uchwyt --------------------------------------------------------
+     Z podpisem, nie sama ikona. Ikona dostepnosci nie jest powszechnie
+     rozpoznawana, a osoba, ktora tego panelu najbardziej potrzebuje,
+     najmniej ma ochoty zgadywac, co znaczy kolko z ludzikiem. */
+  .panel__uchwyt {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--o-2);
+    min-height: 48px;
+    padding: var(--o-3) var(--o-5);
+    border: 2px solid var(--marka);
+    border-radius: var(--r-pigulka);
+    background: var(--marka);
+    color: var(--na-marce);
+    font-weight: 600;
+    box-shadow: var(--cien-l);
+    transition: background var(--przejscie);
+  }
+
+  .panel__uchwyt:hover {
+    background: var(--marka-mocna);
+    border-color: var(--marka-mocna);
+  }
+
+  .panel__uchwyt svg {
+    width: 22px;
+    height: 22px;
+    flex: 0 0 auto;
+  }
+
+  /* ---- Zawartosc ------------------------------------------------------ */
+  /* MUSI byc razem z regula ponizej. `display: grid` z klasy wygrywa
+     ze wbudowana regula przegladarki `[hidden] { display: none }`,
+     bo style autora maja pierwszenstwo nad stylami przegladarki.
+     Bez tego panel jest otwarty od wejscia na strone. */
+  .panel__tresc[hidden] {
+    display: none;
+  }
+
+  .panel__tresc {
+    width: min(320px, calc(100vw - 2 * var(--o-4)));
+    max-height: min(70vh, 560px);
+    overflow-y: auto;
+    padding: var(--o-5);
+    background: var(--powierzchnia);
+    border: 1px solid var(--linia);
+    border-radius: var(--r-l);
+    box-shadow: var(--cien-l);
+    display: grid;
+    gap: var(--o-5);
+  }
+
+  .panel__naglowek {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--o-3);
+  }
+
+  .panel__naglowek h2 {
+    font-size: var(--t-naglowek-s);
+    margin: 0;
+  }
+
+  .panel__zamknij {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    flex: 0 0 auto;
+    border: 0;
+    border-radius: var(--r-pigulka);
+    background: var(--powierzchnia-2);
+    color: var(--tekst);
+  }
+
+  .panel__zamknij svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .grupa {
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
+
+  .grupa__tytul {
+    padding: 0;
+    margin-bottom: var(--o-3);
+    font-size: var(--t-s);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--tekst-3);
+  }
+
+  .opcje {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--o-2);
+  }
+
+  .opcje--tekst {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Cel dotykowy 64px wysokosci. Ten panel obsluguja miedzy innymi osoby
+     z drzeniem rak - male przyciski sa tu gorsze niz brak panelu. */
+  .opcja {
+    display: grid;
+    justify-items: center;
+    align-content: center;
+    gap: var(--o-1);
+    min-height: 64px;
+    padding: var(--o-2);
+    border: 2px solid var(--linia);
+    border-radius: var(--r-m);
+    background: var(--powierzchnia);
+    color: var(--tekst-2);
+    text-align: center;
+  }
+
+  .opcja:hover {
+    border-color: var(--linia-pole);
+  }
+
+  .opcja.is-wybrana {
+    border-color: var(--marka);
+    background: var(--marka-delikatna);
+    color: var(--marka);
+    font-weight: 700;
+  }
+
+  .opcja__litera {
+    font-family: var(--font-naglowki);
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .opcja__podpis {
+    font-size: var(--t-xs);
+    line-height: 1.2;
+  }
+
+  /* Probki motywu. Kolory sa tu zapisane wprost - i to jedyne takie
+     miejsce w projekcie. Musza pokazywac, jak wyglada DANY motyw,
+     wiec nie moga sie zmieniac razem z aktualnym. */
+  .opcja__probka {
+    width: 26px;
+    height: 26px;
+    border-radius: var(--r-pigulka);
+    border: 1px solid var(--linia-pole);
+  }
+
+  .opcja__probka--system {
+    background: linear-gradient(90deg, #ffffff 50%, #0e100f 50%);
+  }
+  .opcja__probka--jasny {
+    background: #ffffff;
+  }
+  .opcja__probka--ciemny {
+    background: #0e100f;
+  }
+  .opcja__probka--kontrast {
+    background: linear-gradient(90deg, #000000 50%, #ffff00 50%);
+  }
+
+  .przelacznik {
+    display: flex;
+    align-items: center;
+    gap: var(--o-3);
+    min-height: 48px;
+    font-size: var(--t-s);
+    color: var(--tekst-2);
+    cursor: pointer;
+  }
+
+  .przelacznik input {
+    width: 22px;
+    height: 22px;
+    flex: 0 0 auto;
+    accent-color: var(--marka);
+  }
+
+  .panel__reset {
+    min-height: 44px;
+    border: 1px solid var(--linia-pole);
+    border-radius: var(--r-m);
+    background: transparent;
+    color: var(--tekst-2);
+    font-size: var(--t-s);
+  }
+
+  .panel__reset:hover {
+    background: var(--powierzchnia-2);
+    color: var(--tekst);
+  }
+
+  /* Podpis przy uchwycie zostaje widoczny takze na telefonie. Kusilo,
+     zeby na waskim ekranie zostawic sama ikone - ale ikona dostepnosci
+     nie jest powszechnie rozpoznawana, a telefon jest tu glownym ekranem.
+     Ukrycie podpisu akurat tam, gdzie strona jest najczesciej czytana,
+     bylo dokladnie odwrotnie niz trzeba. */
+</style>

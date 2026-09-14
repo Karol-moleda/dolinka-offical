@@ -1,0 +1,95 @@
+---
+import { strona } from '../tresc.js';
+const { oNas } = strona;
+---
+
+<section class="sekcja sekcja--wyrozniona" id="o-nas">
+  <div class="kontener uklad">
+    <div class="uklad__zdjecie">
+      <img src={oNas.zdjecie} alt={oNas.opisZdjecia} width="1200" height="800" loading="lazy" decoding="async" />
+    </div>
+
+    <div class="uklad__tekst">
+      <p class="sekcja__nadtytul">O nas</p>
+      <h2 class="sekcja__tytul">{oNas.tytul}</h2>
+      <p class="tresc">{oNas.tresc}</p>
+
+      <h3 class="podtytul">Co organizujemy</h3>
+      <ul class="lista">
+        {oNas.coRobimy.map((pozycja) => <li>{pozycja}</li>)}
+      </ul>
+
+      <h3 class="podtytul">Czym się zajmujemy</h3>
+      <ul class="lista">
+        {oNas.czymSieZajmujemy.map((pozycja) => <li>{pozycja}</li>)}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .uklad {
+    display: grid;
+    gap: var(--o-10);
+    align-items: start;
+  }
+
+  @media (min-width: 900px) {
+    .uklad {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--o-16);
+    }
+
+    /* Zdjecie zostaje w kadrze, gdy dluzszy tekst obok sie przewija. */
+    .uklad__zdjecie {
+      position: sticky;
+      top: 100px;
+    }
+  }
+
+  .uklad__zdjecie img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--r-l);
+    box-shadow: var(--cien-m);
+  }
+
+  .tresc {
+    color: var(--tekst-2);
+    margin-bottom: var(--o-8);
+  }
+
+  .podtytul {
+    font-size: var(--t-naglowek-s);
+    margin-bottom: var(--o-4);
+  }
+
+  .lista {
+    display: grid;
+    gap: var(--o-3);
+    margin-bottom: var(--o-8);
+  }
+
+  .lista:last-child {
+    margin-bottom: 0;
+  }
+
+  .lista li {
+    position: relative;
+    padding-left: var(--o-8);
+    color: var(--tekst-2);
+  }
+
+  /* Znacznik rysowany w CSS, nie znakiem listy - dzieki temu czytnik
+     ekranu nie odczytuje go jako tresci, a kolor idzie z motywu. */
+  .lista li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 18px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--marka);
+  }
+</style>

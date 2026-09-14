@@ -1,0 +1,40 @@
+{
+  "pozycje": [
+    {
+      "tytul": "Festyn rodzinny",
+      "opis": "Organizujemy rodzinny festyn w Dolince w Olkuszu, który integruje mieszkańców Osiedla Młodych i okolic. Przygotowujemy atrakcje dla dzieci i dorosłych, konkursy, animacje oraz wspólną zabawę, dzięki którym Dolinka Olkusz jest kojarzona z aktywną lokalną społecznością i wartościowymi wydarzeniami dla rodzin.",
+      "zdjecie": "/img/Festyn.jpg",
+      "opublikowane": true
+    },
+    {
+      "tytul": "Kino plenerowe",
+      "opis": "Kino plenerowe w Dolince Olkusz to letnie wydarzenie dla mieszkańców Osiedla Młodych i całego miasta. Pokazy pod chmurką tworzą przestrzeń do sąsiedzkich spotkań, rodzinnego wypoczynku i wspólnego spędzania czasu w przyjaznej atmosferze.",
+      "zdjecie": "/img/kino.jpg",
+      "opublikowane": true
+    },
+    {
+      "tytul": "Turnieje sportowe",
+      "opis": "Turnieje sportowe organizowane przez Zarząd Osiedla Młodych w Olkuszu zachęcają mieszkańców do aktywności i integracji. Rozgrywki na Dolince budują wspólnotę, promują zdrowy styl życia i przyciągają osoby szukające sportowych wydarzeń w Olkuszu.",
+      "zdjecie": "/img/kosz.jpg",
+      "opublikowane": true
+    },
+    {
+      "tytul": "Potańcówki",
+      "opis": "Potańcówki na Osiedlu Młodych w Olkuszu łączą pokolenia i tworzą przestrzeń do wspólnej zabawy. To wydarzenia lokalne, które wzmacniają więzi sąsiedzkie i pokazują, że Dolinka Olkusz żyje kulturą, muzyką i aktywnością mieszkańców.",
+      "zdjecie": "/img/tance.jpg",
+      "opublikowane": true
+    },
+    {
+      "tytul": "Mikołajki- spotkanie świąteczne",
+      "opis": "Mikołajki w Dolince Olkusz to świąteczne spotkanie dla dzieci i rodzin z Osiedla Młodych oraz całego Olkusza. Organizujemy wydarzenie pełne atrakcji, konkursów i wspólnej radości, dzięki któremu lokalna społeczność może spędzić wyjątkowy czas razem.",
+      "zdjecie": "/img/miko.jpg",
+      "opublikowane": true
+    },
+    {
+      "tytul": "Sprzątanie Osiedla",
+      "opis": "Akcje sprzątania Osiedla Młodych pokazują, że Dolinka Olkusz działa nie tylko przy wydarzeniach, ale też na rzecz porządku, estetyki i jakości życia mieszkańców. Wspólne działania ekologiczne wzmacniają odpowiedzialność za lokalną przestrzeń i integrują sąsiadów.",
+      "zdjecie": "/img/smieci.jpg",
+      "opublikowane": true
+    }
+  ]
+}

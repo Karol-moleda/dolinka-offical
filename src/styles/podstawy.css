@@ -1,0 +1,176 @@
+/**
+ * base.css — reset i style bazowe. Tylko elementy HTML, zadnych klas.
+ * Wszystko, co tu jest, obowiazuje na calej stronie; reszta siedzi
+ * w plikach poszczegolnych sekcji.
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Marginesy domyslne przeszkadzaja czesciej, niz pomagaja - odstepy
+   ustawiamy swiadomie, skala z tokens.css. */
+* {
+  margin: 0;
+}
+
+html {
+  /* Skakanie do sekcji z menu - bez biblioteki, przegladarka umie to sama. */
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Osoby, ktore w systemie wylaczyly animacje, czesto robia to z powodu
+   zawrotow glowy. Plynne przewijanie jest dla nich problemem, nie ozdoba. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  background: var(--tlo);
+  color: var(--tekst);
+  font-family: var(--font-tresc);
+  font-size: var(--t-m);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Nic nie powinno wystawac w bok. Gdy jednak wystaje, chcemy o tym
+     wiedziec przy budowaniu, a nie ukryc to przed soba `overflow: hidden`
+     na body - tak jak jest to zrobione dzis. */
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-naglowki);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  text-wrap: balance; /* naglowek nie konczy sie jednym slowem w nowej linii */
+  color: var(--tekst);
+}
+
+h1 { font-size: var(--t-naglowek-xl); font-weight: 800; }
+h2 { font-size: var(--t-naglowek-l); }
+h3 { font-size: var(--t-naglowek-m); }
+h4 { font-size: var(--t-naglowek-s); }
+
+p {
+  text-wrap: pretty; /* zapobiega pojedynczemu slowu w ostatniej linii */
+}
+
+a {
+  color: var(--marka);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+a:hover {
+  color: var(--marka-mocna);
+}
+
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+/* height: auto jest tu OBOWIAZKOWE, nie kosmetyczne.
+   Zdjecia maja w HTML atrybuty width/height (zeby przegladarka
+   zarezerwowala miejsce i uklad nie skakal przy wczytywaniu). Ale te
+   atrybuty daja realna wysokosc w px, a `aspect-ratio` w CSS dziala
+   TYLKO wtedy, gdy wysokosc jest `auto`. Bez tej linijki kadr 1:1
+   albo 3:2 jest po cichu ignorowany i zdjecie rozciaga sie na 400px
+   wysokosci - dokladnie to zrobilo z portretow Zarzadu pionowe pigulki. */
+img {
+  height: auto;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+/* Widoczny obrys tylko przy nawigacji klawiatura - mysz go nie wywoluje. */
+:focus-visible {
+  outline: 3px solid var(--marka);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ---- Elementy uzywane w kilku sekcjach ------------------------------- */
+
+/* Jeden kontener na cala strone zamiast .container z Bootstrapa. */
+.kontener {
+  width: 100%;
+  max-width: var(--szer-tresci);
+  margin-inline: auto;
+  padding-inline: var(--margines);
+}
+
+.sekcja {
+  padding-block: var(--sekcja-y);
+  /* Pasek nawigacji jest przyklejony u gory - bez tego naglowek sekcji
+     po skoku z menu chowa sie pod nim. */
+  scroll-margin-top: 76px;
+}
+
+/* Tresc widoczna tylko dla czytnikow ekranu. */
+.tylko-dla-czytnika {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Link "przejdz do tresci" - pojawia sie dopiero po tabulacji. */
+.pomin-nawigacje {
+  position: absolute;
+  left: var(--o-4);
+  top: -100px;
+  z-index: 10000;
+  padding: var(--o-3) var(--o-5);
+  background: var(--powierzchnia);
+  color: var(--tekst);
+  border-radius: var(--r-m);
+  box-shadow: var(--cien-l);
+  text-decoration: none;
+  transition: top var(--przejscie);
+}
+
+.pomin-nawigacje:focus {
+  top: var(--o-4);
+}

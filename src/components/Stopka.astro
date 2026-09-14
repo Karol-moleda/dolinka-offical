@@ -1,0 +1,118 @@
+---
+import { strona } from '../tresc.js';
+const { kontakt } = strona;
+const rok = new Date().getFullYear();
+---
+
+<footer class="stopka" id="kontakt">
+  <div class="kontener">
+    <div class="stopka__gora">
+      <div>
+        <p class="stopka__marka">Dolinka</p>
+        <p class="stopka__podpis">Zarząd Osiedla Młodych w Olkuszu</p>
+      </div>
+
+      <ul class="dane">
+        <li>
+          <span class="dane__etykieta">Adres</span>
+          <span class="dane__wartosc">{kontakt.adres}</span>
+        </li>
+        <li>
+          <span class="dane__etykieta">E-mail</span>
+          <a class="dane__wartosc" href={`mailto:${kontakt.email}`}>{kontakt.email}</a>
+        </li>
+        <li>
+          <span class="dane__etykieta">Facebook</span>
+          {/* rel="noopener" jest tu obowiazkowy przy target="_blank" -
+              bez niego otwarta strona dostaje dostep do naszego okna. */}
+          <a
+            class="dane__wartosc"
+            href={kontakt.facebook}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Profil Osiedla Młodych
+            <span class="tylko-dla-czytnika">(otwiera się w nowej karcie)</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <p class="stopka__dol">© {rok} Zarząd Osiedla Młodych w Olkuszu</p>
+  </div>
+</footer>
+
+<style>
+  .stopka {
+    padding-block: var(--o-16) var(--o-8);
+    background: var(--powierzchnia);
+    border-top: 1px solid var(--linia);
+  }
+
+  .stopka__gora {
+    display: grid;
+    gap: var(--o-10);
+    padding-bottom: var(--o-10);
+    border-bottom: 1px solid var(--linia);
+  }
+
+  @media (min-width: 760px) {
+    .stopka__gora {
+      grid-template-columns: auto 1fr;
+      gap: var(--o-16);
+    }
+  }
+
+  .stopka__marka {
+    font-family: var(--font-naglowki);
+    font-weight: 800;
+    font-size: var(--t-naglowek-m);
+    line-height: 1.1;
+  }
+
+  .stopka__podpis {
+    color: var(--tekst-3);
+    font-size: var(--t-s);
+  }
+
+  .dane {
+    display: grid;
+    gap: var(--o-5);
+  }
+
+  @media (min-width: 760px) {
+    .dane {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .dane li {
+    display: grid;
+    gap: var(--o-1);
+  }
+
+  .dane__etykieta {
+    font-size: var(--t-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--tekst-3);
+  }
+
+  .dane__wartosc {
+    color: var(--tekst);
+    text-decoration: none;
+    word-break: break-word;
+  }
+
+  a.dane__wartosc:hover {
+    color: var(--marka);
+    text-decoration: underline;
+  }
+
+  .stopka__dol {
+    padding-top: var(--o-6);
+    font-size: var(--t-s);
+    color: var(--tekst-3);
+  }
+</style>

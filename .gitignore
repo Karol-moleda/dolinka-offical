@@ -10,6 +10,10 @@
 
 # production
 /build
+/dist
+
+# Astro - katalog roboczy generatora i typy
+.astro/
 
 # paczki i archiwa - nie trzymamy ich w repozytorium (patrz build.rar)
 *.rar

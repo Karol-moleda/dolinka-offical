@@ -1,0 +1,252 @@
+/**
+ * tokens.css — jedyne miejsce, w ktorym zapisane sa kolory, odstepy,
+ * zaokraglenia i skala typografii.
+ *
+ * Zasada: zaden inny plik nie zapisuje wartosci koloru wprost. Jesli
+ * gdzies pojawi sie "#608dfd", to znaczy, ze cos poszlo nie tak. Dzieki
+ * temu motyw to po prostu inny zestaw wartosci tych samych zmiennych,
+ * a nie rownolegly zestaw regul `body.dark-mode` przy kazdym elemencie -
+ * czyli dokladnie to, co dzis siedzi rozsiane po osmiu plikach CSS.
+ *
+ * ---------------------------------------------------------------------
+ * KONTRAST — to nie jest strona firmowa, tylko oficjalna strona Zarzadu
+ * Osiedla. Czytaja ja osoby slabowidzace, a ustawa z 4 kwietnia 2019
+ * o dostepnosci cyfrowej stron podmiotow publicznych wymaga WCAG 2.1 AA.
+ *
+ * Kazda para kolor/tlo ponizej jest policzona, nie dobrana na oko.
+ * Wymagane minimum: 4.5:1 dla tekstu, 3:1 dla ramek elementow sterujacych.
+ * Wartosci zmierzone (tryb jasny, na bialej karcie):
+ *
+ *   --tekst      na --powierzchnia   17.69:1   AAA
+ *   --tekst-2    na --powierzchnia    7.66:1   AAA
+ *   --tekst-3    na --powierzchnia    5.29:1   AA   (na --tlo 4.92:1)
+ *   --marka      na --powierzchnia    6.36:1   AA
+ *   --na-marce   na --marka           6.36:1   AA
+ *   --linia-pole na --powierzchnia    3.25:1   AA   (ramki pol)
+ *
+ * Przy zmianie ktoregokolwiek koloru trzeba te liczby przeliczyc.
+ * ---------------------------------------------------------------------
+ *
+ * Motyw ustawia sie atrybutem data-theme na <html>:
+ *   brak atrybutu       -> zgodnie z ustawieniem systemu
+ *   data-theme="light"  -> jasny
+ *   data-theme="dark"   -> ciemny
+ *   data-theme="kontrast" -> wysoki kontrast (zolty na czarnym)
+ */
+
+:root {
+  /* ---- Kolory: tryb jasny --------------------------------------------
+     Zielen jest kolorem wiodacym, bo strona jest o parku. Dzis strona ma
+     trzy rownorzedne kolory (zielen kalendarza, niebieski gradient sekcji
+     dzialan, niebieskie linki) i przez to wyglada na sklejona z kawalkow. */
+  --tlo: #f6f7f5;              /* tlo strony */
+  --powierzchnia: #ffffff;     /* karty, pola */
+  --powierzchnia-2: #eef0ec;   /* delikatne wyroznienie */
+
+  --tekst: #131a16;            /* naglowki i tresc glowna */
+  --tekst-2: #4b564f;          /* tresc drugorzedna, opisy */
+  --tekst-3: #646e67;          /* podpisy, liczniki, etykiety */
+
+  --linia: #e2e6e0;            /* wlos ramki — dekoracja, nie niesie tresci */
+  --linia-pole: #88918a;       /* ramka pola i przycisku — musi byc widoczna */
+
+  --marka: #2e6b43;            /* kolor wiodacy: przyciski, akcenty, linki */
+  --marka-mocna: #245535;      /* stan :hover / :active */
+  --marka-delikatna: #e6f0e9;  /* tlo plakietek i podswietlen */
+  --na-marce: #ffffff;         /* tekst na kolorze wiodacym */
+
+  --uwaga: #8a5a12;            /* terminy minione, ostrzezenia */
+  --uwaga-delikatna: #f6ecda;
+
+  /* ---- Cienie --------------------------------------------------------
+     Dwie warstwy: ostry 1px rysuje krawedz, rozmyty daje glebie.
+     Pojedynczy rozmyty cien zawsze wyglada jak rozmazana plama. */
+  --cien-s: 0 1px 2px rgba(19, 26, 22, 0.06);
+  --cien-m: 0 1px 2px rgba(19, 26, 22, 0.06), 0 8px 20px -8px rgba(19, 26, 22, 0.14);
+  --cien-l: 0 1px 2px rgba(19, 26, 22, 0.06), 0 18px 40px -16px rgba(19, 26, 22, 0.22);
+
+  /* ---- Odstepy -------------------------------------------------------
+     Skala czworkowa. Odstep spoza tej listy to sygnal, ze cos jest
+     dopasowywane "na oko" - i zwykle znaczy, ze problem jest gdzie indziej. */
+  --o-1: 4px;
+  --o-2: 8px;
+  --o-3: 12px;
+  --o-4: 16px;
+  --o-5: 20px;
+  --o-6: 24px;
+  --o-8: 32px;
+  --o-10: 40px;
+  --o-12: 48px;
+  --o-16: 64px;
+  --o-20: 80px;
+
+  /* Pionowy oddech sekcji. Jedna zmienna zamiast osmiu regul
+     `padding: 80px 0` rozsianych po plikach. */
+  --sekcja-y: clamp(48px, 8vw, 96px);
+
+  /* Boczny margines tresci - ten sam na kazdej sekcji. */
+  --margines: clamp(16px, 4vw, 32px);
+
+  --szer-tresci: 1180px;
+  --szer-tekstu: 68ch; /* dla dlugich akapitow - powyzej tego czyta sie zle */
+
+  /* ---- Zaokraglenia --------------------------------------------------- */
+  --r-s: 8px;
+  --r-m: 12px;
+  --r-l: 18px;
+  --r-pigulka: 999px;
+
+  /* ---- Typografia ------------------------------------------------------
+     Naglowki dostaja wlasny kroj, tresc idzie na czcionce systemowej.
+     Czcionka systemowa nic nie kosztuje w pobieraniu i na telefonie
+     wyglada natywnie - a to wlasnie telefon jest tu glownym ekranem. */
+  --font-naglowki: 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
+  --font-tresc: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+  /* Panel dostepnosci zmienia te jedna wartosc, a nie rozmiar kazdego
+     elementu z osobna. Odstepy w kartach sa w px i nie skaluja sie razem
+     z tekstem - to celowe: przy 135% tekst ma urosnac, a nie rozepchnac
+     caly uklad tak, ze na telefonie zostanie po pol slowa w linii. */
+  --skala-tekstu: 1;
+
+  --t-xs: calc(0.75rem * var(--skala-tekstu));
+  --t-s: calc(0.875rem * var(--skala-tekstu));
+  --t-m: calc(1rem * var(--skala-tekstu));
+  --t-l: calc(1.125rem * var(--skala-tekstu));
+  --t-naglowek-s: calc(clamp(1.125rem, 3.5vw, 1.3125rem) * var(--skala-tekstu));
+  --t-naglowek-m: calc(clamp(1.375rem, 4.5vw, 1.75rem) * var(--skala-tekstu));
+  --t-naglowek-l: calc(clamp(1.625rem, 6vw, 2.5rem) * var(--skala-tekstu));
+  --t-naglowek-xl: calc(clamp(2.25rem, 9vw, 4rem) * var(--skala-tekstu));
+
+  /* ---- Ruch ------------------------------------------------------------ */
+  --przejscie: 0.2s ease;
+}
+
+/* =====================================================================
+   TRYB CIEMNY
+   Nie sa to odwrocone kolory jasne. Na ciemnym tle czysta biel razi,
+   wiec tekst jest lekko przygaszony, a kolor wiodacy musi sie rozjasnic,
+   zeby w ogole bylo go widac.
+
+   Zmierzone (na --powierzchnia #171a18):
+     --tekst 15.40:1 AAA · --tekst-2 9.15:1 AAA · --tekst-3 5.26:1 AA
+     --marka 7.94:1 AAA · --na-marce na --marce 8.41:1 AAA
+   ===================================================================== */
+
+/* Ustawienie systemowe - tylko gdy uzytkownik NICZEGO nie wybral.
+   `:not([data-theme])` jest tu istotne: gdyby bylo `:not([data-theme="light"])`,
+   to wybor wysokiego kontrastu na systemie w trybie ciemnym zostalby
+   czesciowo nadpisany kolorami ciemnymi. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --tlo: #0e100f;
+    --powierzchnia: #171a18;
+    --powierzchnia-2: #202421;
+
+    --tekst: #eef1ed;
+    --tekst-2: #b6bdb8;
+    --tekst-3: #9aa39d;
+
+    --linia: #2a2f2c;
+    --linia-pole: #6c756e;
+
+    --marka: #7bbd8d;
+    --marka-mocna: #96cda5;
+    --marka-delikatna: #1b2a20;
+    --na-marce: #0c150f;
+
+    --uwaga: #d6a55f;
+    --uwaga-delikatna: #2a2216;
+
+    --cien-s: 0 1px 2px rgba(0, 0, 0, 0.5);
+    --cien-m: 0 1px 2px rgba(0, 0, 0, 0.5), 0 8px 20px -8px rgba(0, 0, 0, 0.6);
+    --cien-l: 0 1px 2px rgba(0, 0, 0, 0.5), 0 18px 40px -16px rgba(0, 0, 0, 0.75);
+  }
+}
+
+/* Wybor uzytkownika - ma pierwszenstwo nad ustawieniem systemu. */
+:root[data-theme='dark'] {
+  --tlo: #0e100f;
+  --powierzchnia: #171a18;
+  --powierzchnia-2: #202421;
+
+  --tekst: #eef1ed;
+  --tekst-2: #b6bdb8;
+  --tekst-3: #9aa39d;
+
+  --linia: #2a2f2c;
+  --linia-pole: #6c756e;
+
+  --marka: #7bbd8d;
+  --marka-mocna: #96cda5;
+  --marka-delikatna: #1b2a20;
+  --na-marce: #0c150f;
+
+  --uwaga: #d6a55f;
+  --uwaga-delikatna: #2a2216;
+
+  --cien-s: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --cien-m: 0 1px 2px rgba(0, 0, 0, 0.5), 0 8px 20px -8px rgba(0, 0, 0, 0.6);
+  --cien-l: 0 1px 2px rgba(0, 0, 0, 0.5), 0 18px 40px -16px rgba(0, 0, 0, 0.75);
+}
+
+/* =====================================================================
+   WYSOKI KONTRAST — zolty na czarnym, 19.56:1
+   To nie jest "jeszcze ciemniejszy tryb ciemny". To osobny zestaw dla
+   osob, dla ktorych nawet 15:1 to za malo: jeden kolor tekstu, jedno tlo,
+   zero polcieni i zero cieni. Zolte na czarnym to konwencja, ktora osoby
+   slabowidzace znaja z innych stron urzedowych - dlatego nie wymyslamy
+   tu wlasnego zestawu kolorow.
+   ===================================================================== */
+:root[data-theme='kontrast'] {
+  --tlo: #000000;
+  --powierzchnia: #000000;
+  --powierzchnia-2: #000000;
+
+  --tekst: #ffff00;
+  --tekst-2: #ffff00;
+  --tekst-3: #ffff00;
+
+  /* W tym trybie ramka nie jest ozdoba - to ona zastepuje cienie
+     i roznice tla, wiec musi byc pelnym kolorem tekstu. */
+  --linia: #ffff00;
+  --linia-pole: #ffff00;
+
+  --marka: #ffff00;
+  --marka-mocna: #ffffff;
+  --marka-delikatna: #000000;
+  --na-marce: #000000;
+
+  --uwaga: #ffffff;
+  --uwaga-delikatna: #000000;
+
+  --cien-s: none;
+  --cien-m: none;
+  --cien-l: none;
+}
+
+/* Cienie w tym trybie nic nie wnosza, a ramki musza byc grubsze niz wlos. */
+:root[data-theme='kontrast'] * {
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+:root[data-theme='kontrast'] img {
+  /* Zdjecie na czarnym tle bez obramowania zlewa sie z tlem
+     i nie widac, gdzie sie konczy. */
+  border: 2px solid var(--linia);
+}
+
+/* =====================================================================
+   ZATRZYMANE ANIMACJE
+   Ustawienie z panelu dostepnosci, niezaleznie od ustawienia systemowego
+   (nie kazdy wie, ze takie ustawienie w systemie w ogole istnieje).
+   ===================================================================== */
+:root[data-ruch='stop'] *,
+:root[data-ruch='stop'] *::before,
+:root[data-ruch='stop'] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}

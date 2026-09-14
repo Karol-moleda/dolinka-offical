@@ -1,0 +1,134 @@
+---
+/**
+ * Naglowek.astro — pierwszy ekran ze zdjeciem Dolinki.
+ *
+ * Zdjecie jest tlem, ale NIE przez `background-image`: idzie jako <img>,
+ * zeby przegladarka mogla je pobrac z priorytetem (fetchpriority="high")
+ * i zeby dalo sie podac wymiary. Tlo w CSS jest pobierane dopiero po
+ * wczytaniu arkusza stylow - na telefonie w parku widac to golym okiem.
+ */
+import { strona } from '../tresc.js';
+
+const { naglowek } = strona;
+---
+
+<section class="naglowek" id="gora">
+  <img
+    class="naglowek__zdjecie"
+    src={naglowek.zdjecie}
+    alt=""
+    width="1920"
+    height="1280"
+    fetchpriority="high"
+    decoding="async"
+  />
+
+  <div class="naglowek__tresc kontener">
+    <p class="naglowek__nadtytul">Oficjalna strona</p>
+    <h1 class="naglowek__tytul">{naglowek.tytul}</h1>
+    <p class="naglowek__podtytul">{naglowek.podtytul}</p>
+
+    <div class="naglowek__przyciski">
+      <a class="przycisk" href="#aktualnosci">Zobacz aktualności</a>
+      <a class="przycisk przycisk--przezroczysty" href="#kalendarz">Kalendarz wydarzeń</a>
+    </div>
+  </div>
+
+  <!-- Niewidoczny znacznik. Gdy wyjedzie poza ekran, pasek nawigacji
+       dostaje tlo. Tansze niz nasluchiwanie na przewijaniu. -->
+  <div id="wartownik" aria-hidden="true"></div>
+</section>
+
+<style>
+  .naglowek {
+    position: relative;
+    display: grid;
+    align-items: end;
+    /* 100svh, nie 100vh: na telefonie vh liczy sie razem z paskiem adresu,
+       wiec przy pierwszym przewinieciu caly ekran podskakuje. */
+    min-height: 100svh;
+    padding-block: var(--o-20) var(--o-16);
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .naglowek__zdjecie {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+  }
+
+  /* Przyciemnienie. Gradient, nie plaskie krycie - u gory mocniejsze,
+     zeby bialy tekst paska nawigacji mial na czym stac, a u dolu
+     lzejsze, zeby zdjecie bylo widac. */
+  .naglowek::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(8, 14, 10, 0.72) 0%,
+      rgba(8, 14, 10, 0.45) 35%,
+      rgba(8, 14, 10, 0.78) 100%
+    );
+    z-index: -1;
+  }
+
+  .naglowek__tresc {
+    color: #ffffff;
+    max-width: 44rem;
+  }
+
+  .naglowek__nadtytul {
+    font-size: var(--t-s);
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin-bottom: var(--o-3);
+  }
+
+  .naglowek__tytul {
+    color: #ffffff;
+    letter-spacing: -0.03em;
+    margin-bottom: var(--o-4);
+  }
+
+  .naglowek__podtytul {
+    font-size: var(--t-l);
+    line-height: 1.5;
+    opacity: 0.95;
+    margin-bottom: var(--o-8);
+  }
+
+  .naglowek__przyciski {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--o-3);
+  }
+
+  #wartownik {
+    position: absolute;
+    top: 60px;
+    height: 1px;
+    width: 100%;
+  }
+
+  /* W trybie wysokiego kontrastu zdjecie pod tekstem jest przeszkoda,
+     a nie ozdoba - bialy tekst na fotografii nigdy nie da 19:1. */
+  :global(:root[data-theme='kontrast']) .naglowek__zdjecie {
+    display: none;
+  }
+
+  :global(:root[data-theme='kontrast']) .naglowek::after {
+    background: var(--tlo);
+  }
+
+  :global(:root[data-theme='kontrast']) .naglowek__tresc,
+  :global(:root[data-theme='kontrast']) .naglowek__tytul {
+    color: var(--tekst);
+  }
+</style>

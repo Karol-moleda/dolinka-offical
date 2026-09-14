@@ -1,0 +1,30 @@
+{
+  "naglowek": {
+    "tytul": "DOLINKA",
+    "podtytul": "Oficjalna strona Zarządu Osiedla Młodych w Olkuszu",
+    "zdjecie": "/img/Dolinka.jpg"
+  },
+  "oNas": {
+    "tytul": "O Dolince i Osiedlu Młodych w Olkuszu",
+    "tresc": "Dolinka Olkusz to oficjalna inicjatywa Zarządu Osiedla Młodych w Olkuszu tworzona z myślą o mieszkańcach naszej części miasta. Działamy lokalnie na Osiedlu Młodych i w okolicach, organizując wydarzenia, wspierając inicjatywy sąsiedzkie oraz promując aktywne, bezpieczne i przyjazne miejsce do życia. Naszym celem jest integrowanie mieszkańców, rozwijanie wspólnoty i budowanie nowoczesnej lokalnej przestrzeni dla rodzin, dzieci, młodzieży i seniorów.",
+    "zdjecie": "/img/zarzad.jpg",
+    "opisZdjecia": "Członkowie Zarządu Osiedla Młodych w Olkuszu",
+    "coRobimy": [
+      "Festyny rodzinne i imprezy osiedlowe w Olkuszu",
+      "Kino plenerowe dla mieszkańców Osiedla Młodych",
+      "Wydarzenia sportowe i integracyjne",
+      "Mikołajki, spotkania sezonowe i akcje lokalne"
+    ],
+    "czymSieZajmujemy": [
+      "Doposażamy Dolinkę",
+      "Zgłaszamy usterki i problemy",
+      "Wspieramy inicjatywy sąsiedzkie",
+      "Działamy na rzecz Osiedla"
+    ]
+  },
+  "kontakt": {
+    "adres": "Osiedla Młodych, 32-300 Olkusz",
+    "email": "dolinka.olkusz@gmail.com",
+    "facebook": "https://www.facebook.com/profile.php?id=61563485266766"
+  }
+}

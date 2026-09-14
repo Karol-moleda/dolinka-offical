@@ -1,0 +1,148 @@
+---
+import { kalendarz, rokKalendarza } from '../tresc.js';
+---
+
+<section class="sekcja" id="kalendarz">
+  <div class="kontener">
+    <div class="sekcja__naglowek">
+      <p class="sekcja__nadtytul">Kalendarz</p>
+      <h2 class="sekcja__tytul">Wydarzenia {rokKalendarza}</h2>
+      <p class="sekcja__opis">Zaplanuj swój czas z nami. Minione wydarzenia zostają na liście.</p>
+    </div>
+
+    <ol class="os">
+      {kalendarz.map((wydarzenie) => (
+        <li class:list={['os__wpis', wydarzenie.minione && 'is-minione']}>
+          <div class="os__kropka" aria-hidden="true"></div>
+
+          <article class="karta os__karta">
+            <div class="karta__tresc">
+              <p class="os__data">
+                <time datetime={wydarzenie.dataISO}>{wydarzenie.etykieta}</time>
+                {wydarzenie.minione && <span class="plakietka plakietka--uwaga">Minione</span>}
+              </p>
+              <h3 class="os__tytul">{wydarzenie.title}</h3>
+              {wydarzenie.text && <p class="os__opis">{wydarzenie.text}</p>}
+            </div>
+          </article>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  /* Os czasu: jedna kolumna na telefonie, naprzemiennie na szerokim
+     ekranie. Na telefonie NIE robimy dwoch kolumn - dzis karta jest
+     wciskana o 70px w prawo i na tekst zostaje 275px z 375px. */
+  .os {
+    position: relative;
+    display: grid;
+    gap: var(--o-5);
+    margin: 0;
+    padding-left: var(--o-8);
+  }
+
+  /* Pionowa linia. Konczy sie na ostatniej kropce, a nie na dole
+     ostatniej karty - inaczej pod ostatnim wydarzeniem wisi ogonek. */
+  .os::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 10px;
+    bottom: 10px;
+    width: 3px;
+    border-radius: 3px;
+    background: var(--linia);
+  }
+
+  .os__wpis {
+    position: relative;
+  }
+
+  .os__kropka {
+    position: absolute;
+    left: calc(-1 * var(--o-8) + 1px);
+    top: 12px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--marka);
+    box-shadow: 0 0 0 4px var(--tlo);
+  }
+
+  .is-minione .os__kropka {
+    background: var(--linia-pole);
+  }
+
+  .is-minione .os__karta {
+    /* Wyszarzenie przez krycie, nie przez zmiane koloru tekstu -
+       przy 0.7 kontrast nadal miesci sie w normie. */
+    opacity: 0.7;
+  }
+
+  .os__data {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--o-3);
+    font-size: var(--t-s);
+    font-weight: 700;
+    color: var(--marka);
+    margin-bottom: var(--o-2);
+  }
+
+  .is-minione .os__data {
+    color: var(--tekst-3);
+  }
+
+  .os__tytul {
+    font-size: var(--t-naglowek-s);
+    margin-bottom: var(--o-2);
+  }
+
+  .os__opis {
+    color: var(--tekst-2);
+    font-size: var(--t-s);
+    line-height: 1.6;
+  }
+
+  @media (min-width: 860px) {
+    .os {
+      padding-left: 0;
+      max-width: 900px;
+      margin-inline: auto;
+      gap: var(--o-6);
+    }
+
+    .os::before {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .os__wpis {
+      width: calc(50% - var(--o-8));
+    }
+
+    .os__wpis:nth-child(even) {
+      margin-left: auto;
+    }
+
+    .os__wpis:nth-child(odd) {
+      text-align: right;
+    }
+
+    .os__wpis:nth-child(odd) .os__data {
+      justify-content: flex-end;
+    }
+
+    .os__wpis:nth-child(odd) .os__kropka {
+      left: auto;
+      right: calc(-1 * var(--o-8) - 4px);
+    }
+
+    .os__wpis:nth-child(even) .os__kropka {
+      left: calc(-1 * var(--o-8) - 4px);
+    }
+  }
+</style>

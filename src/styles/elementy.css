@@ -1,0 +1,137 @@
+/**
+ * elementy.css — klocki wracajace w wielu sekcjach.
+ * Sekcja definiuje u siebie tylko to, co ma wylacznie ona.
+ */
+
+/* ---- Naglowek sekcji -------------------------------------------------- */
+.sekcja__naglowek {
+  max-width: var(--szer-tekstu);
+  margin-bottom: var(--o-10);
+}
+
+.sekcja__nadtytul {
+  font-size: var(--t-s);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--marka);
+  margin-bottom: var(--o-3);
+}
+
+.sekcja__tytul {
+  margin-bottom: var(--o-3);
+}
+
+.sekcja__opis {
+  font-size: var(--t-l);
+  color: var(--tekst-2);
+}
+
+/* Sekcja na innym tle - do rozdzielania dlugiej strony na bloki.
+   Zamiast naprzemiennych kolorow co druga sekcja, co dzis wyglada
+   jak paski i nie niesie zadnej informacji. */
+.sekcja--wyrozniona {
+  background: var(--powierzchnia);
+  border-block: 1px solid var(--linia);
+}
+
+/* ---- Przyciski --------------------------------------------------------- */
+.przycisk {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--o-2);
+  /* 48px - cel dotykowy, ktory da sie trafic kciukiem. */
+  min-height: 48px;
+  padding: var(--o-3) var(--o-6);
+  border: 2px solid var(--marka);
+  border-radius: var(--r-m);
+  background: var(--marka);
+  color: var(--na-marce);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background var(--przejscie), border-color var(--przejscie);
+}
+
+.przycisk:hover {
+  background: var(--marka-mocna);
+  border-color: var(--marka-mocna);
+  color: var(--na-marce);
+}
+
+.przycisk--obrys {
+  background: transparent;
+  color: var(--marka);
+  border-color: var(--linia-pole);
+}
+
+.przycisk--obrys:hover {
+  background: var(--marka-delikatna);
+  border-color: var(--marka);
+  color: var(--marka);
+}
+
+/* Wariant na zdjeciu - stale biale krawedzie, bo pod spodem jest fotografia
+   i kolory motywu nic tu nie gwarantuja. */
+.przycisk--przezroczysty {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.75);
+  color: #ffffff;
+  backdrop-filter: blur(6px);
+}
+
+.przycisk--przezroczysty:hover {
+  background: rgba(255, 255, 255, 0.24);
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+/* ---- Karta -------------------------------------------------------------- */
+.karta {
+  background: var(--powierzchnia);
+  border: 1px solid var(--linia);
+  border-radius: var(--r-l);
+  box-shadow: var(--cien-m);
+  overflow: hidden;
+}
+
+.karta__tresc {
+  padding: var(--o-5);
+}
+
+/* ---- Plakietka ---------------------------------------------------------- */
+.plakietka {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: var(--r-pigulka);
+  background: var(--marka-delikatna);
+  color: var(--marka);
+  font-size: var(--t-xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.plakietka--uwaga {
+  background: var(--uwaga-delikatna);
+  color: var(--uwaga);
+}
+
+/* ---- Siatka ------------------------------------------------------------- */
+/* min(100%, Xpx) zamiast samego Xpx: bez tego na ekranie wezszym niz X
+   kolumna wystaje poza ekran i strona przewija sie w bok. */
+.siatka {
+  display: grid;
+  gap: var(--o-6);
+}
+
+.siatka--2 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); }
+.siatka--3 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+.siatka--4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)); }
+
+/* Szerszy kontener dla sekcji, ktore ustawiaja duzo waskich kafelkow
+   w jednym rzedzie (Zarzad). Przy 1180px siedem portretow schodzi do
+   145px szerokosci - twarze robia sie znaczkami. */
+.kontener--szeroki {
+  max-width: 1400px;
+}

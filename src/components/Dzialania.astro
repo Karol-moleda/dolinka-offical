@@ -1,0 +1,61 @@
+---
+import { dzialania } from '../tresc.js';
+---
+
+<section class="sekcja" id="dzialania">
+  <div class="kontener">
+    <div class="sekcja__naglowek">
+      <p class="sekcja__nadtytul">Nasze działania</p>
+      <h2 class="sekcja__tytul">Wydarzenia i imprezy w Dolince</h2>
+      <p class="sekcja__opis">
+        To dzieje się na Osiedlu Młodych przez cały rok — od festynów po sprzątanie okolicy.
+      </p>
+    </div>
+
+    <div class="siatka siatka--3">
+      {dzialania.map((pozycja) => (
+        <article class="karta dzialanie">
+          <img
+            class="dzialanie__zdjecie"
+            src={pozycja.zdjecie}
+            alt=""
+            width="800"
+            height="600"
+            loading="lazy"
+            decoding="async"
+          />
+          <div class="karta__tresc">
+            <h3 class="dzialanie__tytul">{pozycja.tytul}</h3>
+            <p class="dzialanie__opis">{pozycja.opis}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .dzialanie {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Stala ramka 3:2 - karty w rzedzie maja rowna wysokosc zdjec
+     niezaleznie od tego, w jakich proporcjach ktos je wrzucil. */
+  .dzialanie__zdjecie {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+  }
+
+  .dzialanie__tytul {
+    font-size: var(--t-naglowek-s);
+    margin-bottom: var(--o-2);
+  }
+
+  .dzialanie__opis {
+    color: var(--tekst-2);
+    font-size: var(--t-s);
+    line-height: 1.6;
+  }
+</style>

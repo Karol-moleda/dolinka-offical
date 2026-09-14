@@ -1,0 +1,129 @@
+---
+import { zarzad } from '../tresc.js';
+
+// Przewodniczacy dostaje plakietke. Na liscie samych "Czlonek Zarzadu"
+// mieszkaniec nie wie, do kogo sie zwrocic.
+const czyPrzewodniczacy = (funkcja) => /przewodnicz/i.test(funkcja);
+---
+
+<section class="sekcja sekcja--wyrozniona" id="zarzad">
+  <div class="kontener">
+    <div class="sekcja__naglowek">
+      <p class="sekcja__nadtytul">Zarząd</p>
+      <h2 class="sekcja__tytul">Kto prowadzi Osiedle Młodych</h2>
+      <p class="sekcja__opis">
+        Zarząd Osiedla wybierany przez mieszkańców na Zebraniu Ogólnym.
+      </p>
+    </div>
+
+    <ul class="osoby">
+      {zarzad.map((osoba) => (
+        <li class="osoba">
+          <div class="osoba__kadr">
+            {/* alt="" celowo: imie i funkcja stoja tuz obok jako tekst.
+                Powtorzenie ich w opisie zdjecia sprawia, ze czytnik ekranu
+                odczytuje kazda osobe dwa razy. */}
+            <img
+              class="osoba__zdjecie"
+              src={osoba.zdjecie}
+              alt=""
+              width="800"
+              height="1000"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+
+          <div class="osoba__opis">
+            <p class="osoba__imie">{osoba.imieNazwisko}</p>
+            <p class:list={['osoba__funkcja', czyPrzewodniczacy(osoba.funkcja) && 'is-glowna']}>
+              {osoba.funkcja}
+            </p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  /* Caly Zarzad w jednym rzedzie na monitorze.
+     auto-fit + minmax(150px) zamiast sztywnego repeat(7, 1fr): gdy po
+     wyborach dojdzie osma osoba, rzad sam sie przelicza. Przy sztywnej
+     siodemce trzeba by pamietac o zmianie CSS - a nikt nie pamieta.
+     Na wezszych ekranach lamie sie sam: 4, potem 3, potem 2. */
+  .osoby {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 132px), 1fr));
+    gap: var(--o-4);
+  }
+
+  /* 132px to nie jest liczba z sufitu: przy kontenerze 1180px i odstepie
+     16px daje dokladnie siedem kolumn w jednym rzedzie (7 x 146px).
+     Przy 150px miescilo sie szesc i siodma osoba spadala do drugiego rzedu. */
+
+  @media (max-width: 430px) {
+    .osoby {
+      /* Na waskim telefonie minmax(150px) zmiescilby dwie kolumny po 160px,
+         ale z marginesem sekcji robi sie z tego 145px na karte i nazwisko
+         lamie sie na trzy linie. Dwie kolumny wymuszone, bez minimum. */
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .osoba {
+    background: var(--tlo);
+    border: 1px solid var(--linia);
+    border-radius: var(--r-l);
+    overflow: hidden;
+  }
+
+  /* Stala ramka 4:5 dla kazdego portretu. Zdjecia przychodza w czym
+     popadnie - poziome, pionowe, kwadratowe, z roznym tlem. Wspolny kadr
+     jest jedyna rzecza, ktora scala je w jedna sekcje zamiast siedmiu
+     przypadkowych fotografii. */
+  .osoba__kadr {
+    aspect-ratio: 4 / 5;
+    background: var(--powierzchnia-2);
+    overflow: hidden;
+  }
+
+  .osoba__zdjecie {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Twarz siedzi zwykle w gornej czesci kadru - srodek ucina czolo. */
+    object-position: center 22%;
+  }
+
+  .osoba__opis {
+    padding: var(--o-4);
+    text-align: center;
+  }
+
+  .osoba__imie {
+    font-family: var(--font-naglowki);
+    font-weight: 700;
+    font-size: var(--t-s);
+    line-height: 1.3;
+    /* Dlugie nazwisko ze spacja lamie sie w rozsadnym miejscu,
+       zamiast zostawiac samo "Tomsia" w nowej linii. */
+    text-wrap: balance;
+    margin-bottom: var(--o-1);
+  }
+
+  .osoba__funkcja {
+    font-size: var(--t-xs);
+    color: var(--tekst-3);
+  }
+
+  .osoba__funkcja.is-glowna {
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: var(--r-pigulka);
+    background: var(--marka-delikatna);
+    color: var(--marka);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+</style>

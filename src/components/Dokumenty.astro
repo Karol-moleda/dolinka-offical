@@ -1,0 +1,133 @@
+---
+import { dokumenty } from '../tresc.js';
+---
+
+{dokumenty.length > 0 && (
+  <section class="sekcja sekcja--wyrozniona" id="dokumenty">
+    <div class="kontener">
+      <div class="sekcja__naglowek">
+        <p class="sekcja__nadtytul">Dokumenty</p>
+        <h2 class="sekcja__tytul">Regulaminy i formularze do pobrania</h2>
+        <p class="sekcja__opis">Wszystkie pliki w formacie PDF, gotowe do wydruku.</p>
+      </div>
+
+      {dokumenty.map((kategoria) => (
+        <div class="grupa">
+          <h3 class="grupa__tytul">{kategoria.label}</h3>
+
+          <ul class="siatka siatka--2">
+            {kategoria.pozycje.map((dokument) => (
+              <li>
+                {/* Caly kafelek jest linkiem, a nie maly przycisk w rogu.
+                    `download` podpowiada nazwe pliku przy zapisie. */}
+                <a
+                  class="plik"
+                  href={dokument.file}
+                  download={dokument.downloadName || undefined}
+                >
+                  <span class="plik__ikona" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path
+                        d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5z"
+                        fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"
+                      />
+                      <path d="M14 3v5h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+
+                  <span class="plik__tresc">
+                    <span class="plik__tytul">{dokument.title}</span>
+                    {dokument.description && <span class="plik__opis">{dokument.description}</span>}
+                    {/* Format pliku powiedziany slowami, nie sama ikona -
+                        czytnik ekranu ikony nie odczyta. */}
+                    <span class="plik__format">Pobierz PDF</span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+)}
+
+<style>
+  .grupa + .grupa {
+    margin-top: var(--o-10);
+  }
+
+  .grupa__tytul {
+    font-size: var(--t-naglowek-s);
+    margin-bottom: var(--o-5);
+    padding-bottom: var(--o-3);
+    border-bottom: 1px solid var(--linia);
+  }
+
+  .plik {
+    display: flex;
+    gap: var(--o-4);
+    height: 100%;
+    padding: var(--o-5);
+    background: var(--tlo);
+    border: 1px solid var(--linia);
+    border-radius: var(--r-l);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color var(--przejscie), background var(--przejscie);
+  }
+
+  .plik:hover {
+    border-color: var(--marka);
+    background: var(--marka-delikatna);
+    color: inherit;
+  }
+
+  .plik__ikona {
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--r-m);
+    background: var(--marka-delikatna);
+    color: var(--marka);
+  }
+
+  .plik:hover .plik__ikona {
+    background: var(--marka);
+    color: var(--na-marce);
+  }
+
+  .plik__ikona svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .plik__tresc {
+    display: grid;
+    gap: var(--o-1);
+    align-content: start;
+  }
+
+  .plik__tytul {
+    font-family: var(--font-naglowki);
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .plik__opis {
+    font-size: var(--t-s);
+    color: var(--tekst-2);
+    line-height: 1.5;
+  }
+
+  .plik__format {
+    margin-top: var(--o-2);
+    font-size: var(--t-xs);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--marka);
+  }
+</style>

@@ -1,0 +1,30 @@
+---
+import Base from '../layouts/Base.astro';
+import Nawigacja from '../components/Nawigacja.astro';
+import Naglowek from '../components/Naglowek.astro';
+import Kalendarz from '../components/Kalendarz.astro';
+import ONas from '../components/ONas.astro';
+import Dzialania from '../components/Dzialania.astro';
+import Zarzad from '../components/Zarzad.astro';
+import Dokumenty from '../components/Dokumenty.astro';
+import Stopka from '../components/Stopka.astro';
+---
+
+<Base>
+  <Nawigacja />
+
+  <main id="tresc">
+    <Naglowek />
+
+    {/* Aktualnosci i galeria dochodza w kroku 5 - sa jedynymi sekcjami,
+        ktore potrzebuja wlasnego zachowania, a nie samego wyswietlenia. */}
+
+    <Kalendarz />
+    <ONas />
+    <Dzialania />
+    <Zarzad />
+    <Dokumenty />
+  </main>
+
+  <Stopka />
+</Base>

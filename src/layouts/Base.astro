@@ -1,0 +1,84 @@
+---
+/**
+ * Base.astro — wspolna rama kazdej strony: <head>, czcionki, motyw.
+ * Sekcje trafiaja tu przez <slot />.
+ */
+import '../styles/tokens.css';
+import '../styles/podstawy.css';
+import '../styles/elementy.css';
+import PanelDostepnosci from '../components/PanelDostepnosci.astro';
+
+const {
+  title = 'Dolinka Olkusz | Wydarzenia, imprezy i aktualności Osiedla Młodych',
+  description = 'Aktualności, kalendarz wydarzeń i galeria Osiedla Młodych w Olkuszu. Dolinka — miejsce spotkań mieszkańców.',
+} = Astro.props;
+
+const kanoniczny = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={kanoniczny} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={kanoniczny} />
+    <meta property="og:locale" content="pl_PL" />
+
+    {/* Kolor paska przegladarki na telefonie - osobno dla obu motywow. */}
+    <meta name="theme-color" content="#f6f7f5" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0e100f" media="(prefers-color-scheme: dark)" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&display=swap"
+    />
+
+    {/*
+      Ten skrypt MUSI byc w <head> i MUSI byc zwykly, nieprzetworzony
+      (is:inline), zeby wykonal sie zanim przegladarka cokolwiek narysuje.
+      Inaczej przy kazdym wejsciu na strone w trybie ciemnym mignie bialy
+      ekran - dokladnie to robi dzisiejsza wersja, bo motyw ustawia sie
+      dopiero po uruchomieniu Reacta.
+    */}
+    <script is:inline>
+      (() => {
+        try {
+          // Motyw: 'light' | 'dark' | 'kontrast'. Brak wpisu = jak w systemie.
+          const motyw = localStorage.getItem('dolinka-motyw');
+          if (motyw === 'dark' || motyw === 'light' || motyw === 'kontrast') {
+            document.documentElement.dataset.theme = motyw;
+          }
+
+          // Rozmiar tekstu: mnoznik, np. '1.35'.
+          const skala = localStorage.getItem('dolinka-skala-tekstu');
+          if (skala) {
+            document.documentElement.style.setProperty('--skala-tekstu', skala);
+          }
+
+          // Zatrzymane animacje - ustawienie z panelu, niezalezne od systemu.
+          if (localStorage.getItem('dolinka-bez-animacji') === '1') {
+            document.documentElement.dataset.ruch = 'stop';
+          }
+        } catch (blad) {
+          /* Tryb prywatny potrafi blokowac localStorage. Strona ma wtedy
+             dzialac normalnie, tylko bez zapamietanego wyboru. */
+        }
+      })();
+    </script>
+  </head>
+
+  <body>
+    <a class="pomin-nawigacje" href="#tresc">Przejdź do treści</a>
+    <slot />
+    <PanelDostepnosci />
+  </body>
+</html>
