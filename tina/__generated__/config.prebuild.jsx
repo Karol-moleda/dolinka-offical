@@ -1,6 +1,36 @@
 // tina/config.ts
 import { defineConfig } from "tinacms";
 var galaz = process.env.GITHUB_BRANCH || process.env.HEAD || "main";
+var sprawdzDate = (wartosc) => {
+  if (!wartosc) return void 0;
+  const dopasowanie = /^(\d{4})-(\d{2})-(\d{2})$/.exec(wartosc.trim());
+  if (!dopasowanie) {
+    return "Data musi mie\u0107 posta\u0107 RRRR-MM-DD, np. 2026-09-25";
+  }
+  const [, rok, miesiac, dzien] = dopasowanie.map(Number);
+  const data = new Date(Date.UTC(rok, miesiac - 1, dzien));
+  const istnieje = data.getUTCFullYear() === rok && data.getUTCMonth() === miesiac - 1 && data.getUTCDate() === dzien;
+  return istnieje ? void 0 : "Taka data nie istnieje w kalendarzu";
+};
+var sprawdzRok = (wartosc) => {
+  if (!wartosc) return "Podaj rok, np. 2026";
+  return /^(19|20)\d{2}$/.test(wartosc.trim()) ? void 0 : "Rok to cztery cyfry, np. 2026";
+};
+var sprawdzAdresWww = (wartosc) => {
+  if (!wartosc) return void 0;
+  try {
+    const czysty = wartosc.trim();
+    new URL(/^https?:\/\//i.test(czysty) ? czysty : `https://${czysty}`);
+    return void 0;
+  } catch {
+    return "To nie wygl\u0105da na adres strony, np. https://umig.olkusz.pl";
+  }
+};
+var sprawdzEmail = (wartosc) => {
+  if (!wartosc) return void 0;
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(wartosc.trim()) ? void 0 : "To nie wygl\u0105da na adres e-mail";
+};
+var sprawdzNiepuste = (co) => (wartosc) => wartosc && wartosc.trim().length > 0 ? void 0 : `${co} nie mo\u017Ce by\u0107 puste`;
 var poleOpublikowane = (nazwa) => ({
   type: "boolean",
   name: nazwa,
@@ -82,7 +112,8 @@ var config_default = defineConfig({
                 type: "string",
                 name: "data",
                 label: "Data og\u0142oszenia (opcjonalnie)",
-                description: "Posta\u0107 RRRR-MM-DD, np. 2026-09-25. Pokazuje si\u0119 pod tytu\u0142em i m\xF3wi Google, jak \u015Bwie\u017Ce jest og\u0142oszenie."
+                description: "Posta\u0107 RRRR-MM-DD, np. 2026-09-25. Pokazuje si\u0119 pod tytu\u0142em i m\xF3wi Google, jak \u015Bwie\u017Ce jest og\u0142oszenie.",
+                ui: { validate: sprawdzDate }
               },
               {
                 type: "string",
@@ -130,7 +161,10 @@ var config_default = defineConfig({
                 name: "date",
                 label: "Data",
                 required: true,
-                description: "Posta\u0107 RRRR-MM-DD, np. 2026-09-25. Data, kt\xF3rej nie ma w kalendarzu (np. 2026-02-31), zatrzyma budowanie strony z czytelnym komunikatem."
+                description: "Posta\u0107 RRRR-MM-DD, np. 2026-09-25.",
+                ui: {
+                  validate: (wartosc) => sprawdzNiepuste("Data")(wartosc) ?? sprawdzDate(wartosc)
+                }
               },
               {
                 type: "string",
@@ -185,7 +219,8 @@ var config_default = defineConfig({
                 name: "year",
                 label: "Rok",
                 required: true,
-                description: "Cztery cyfry, np. 2026. Decyduje o zak\u0142adce nad galeri\u0105."
+                description: "Cztery cyfry, np. 2026. Decyduje o zak\u0142adce nad galeri\u0105.",
+                ui: { validate: sprawdzRok }
               },
               {
                 type: "image",
@@ -225,7 +260,13 @@ var config_default = defineConfig({
                 name: "id",
                 label: "Identyfikator",
                 required: true,
-                description: "Tylko ma\u0142e litery, cyfry i my\u015Blniki \u2014 np. \u201Ekoszykowka\u201D. To po nim dokument wie, do kt\xF3rej zak\u0142adki nale\u017Cy, wi\u0119c po utworzeniu lepiej go ju\u017C nie zmienia\u0107."
+                description: "Tylko ma\u0142e litery, cyfry i my\u015Blniki \u2014 np. \u201Ekoszykowka\u201D. To po nim dokument wie, do kt\xF3rej zak\u0142adki nale\u017Cy, wi\u0119c po utworzeniu lepiej go ju\u017C nie zmienia\u0107.",
+                ui: {
+                  validate: (wartosc) => {
+                    if (!wartosc || !wartosc.trim()) return "Identyfikator nie mo\u017Ce by\u0107 pusty";
+                    return /^[a-z0-9-]+$/.test(wartosc.trim()) ? void 0 : "Tylko ma\u0142e litery bez polskich znak\xF3w, cyfry i my\u015Blniki \u2014 np. \u201Ekoszykowka\u201D";
+                  }
+                }
               },
               {
                 type: "string",
@@ -453,14 +494,16 @@ var config_default = defineConfig({
                 name: "email",
                 label: "E-mail",
                 required: true,
-                description: "Widoczny publicznie na stronie."
+                description: "Widoczny publicznie na stronie.",
+                ui: { validate: sprawdzEmail }
               },
               {
                 type: "string",
                 name: "facebook",
                 label: "Adres profilu na Facebooku",
                 required: true,
-                description: "Pe\u0142ny adres, razem z https://"
+                description: "Pe\u0142ny adres, razem z https://",
+                ui: { validate: sprawdzAdresWww }
               },
               {
                 type: "object",
@@ -512,7 +555,8 @@ var config_default = defineConfig({
                     name: "adres",
                     label: "Adres",
                     required: true,
-                    description: "Pe\u0142ny adres, razem z https://"
+                    description: "Pe\u0142ny adres, razem z https://",
+                    ui: { validate: sprawdzAdresWww }
                   }
                 ]
               }

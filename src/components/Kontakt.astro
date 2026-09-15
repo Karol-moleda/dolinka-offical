@@ -47,10 +47,15 @@ const doWybrania = (numer) => `tel:${numer.replace(/\s/g, '')}`;
             </a>
           </li>
 
-          <li>
-            <span class="dane__etykieta">E-mail</span>
-            <a class="dane__link" href={`mailto:${kontakt.email}`}>{kontakt.email}</a>
-          </li>
+          {/* Adres wpisany z bledem zostaje w tresci pusty (patrz tresc.js).
+              Wtedy nie pokazujemy pozycji wcale - lepiej, zeby mieszkaniec
+              nie zobaczyl e-maila, niz zeby kliknal w odnosnik donikad. */}
+          {kontakt.email && (
+            <li>
+              <span class="dane__etykieta">E-mail</span>
+              <a class="dane__link" href={`mailto:${kontakt.email}`}>{kontakt.email}</a>
+            </li>
+          )}
 
           <li>
             <span class="dane__etykieta">Adres</span>
@@ -58,6 +63,7 @@ const doWybrania = (numer) => `tel:${numer.replace(/\s/g, '')}`;
           </li>
         </ul>
 
+        {kontakt.facebook && (
         <a class="przycisk fejsbuk" href={kontakt.facebook} target="_blank" rel="noopener noreferrer">
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path
@@ -68,6 +74,7 @@ const doWybrania = (numer) => `tel:${numer.replace(/\s/g, '')}`;
           Profil na Facebooku
           <span class="tylko-dla-czytnika">(otwiera się w nowej karcie)</span>
         </a>
+        )}
       </div>
 
       <!-- ---- Telefony ---- -->

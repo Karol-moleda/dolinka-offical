@@ -32,29 +32,103 @@ import galeriaSurowa from './content/galeria.json';
    Sprawdzanie
    ===================================================================== */
 
-function sprawdz(nazwaPliku, schemat, dane) {
+/* Lista rzeczy, ktore zostaly pominiete. Wypisujemy ja na koniec, zebrana
+   w jednym miejscu - inaczej ostrzezenia gina w tysiacu linii logu z
+   przetwarzania zdjec. */
+const pominiete = [];
+
+function opiszBledy(blad) {
+  return blad.issues
+    .map((problem) => {
+      const gdzie = problem.path.length ? problem.path.join(' → ') : '(cały wpis)';
+      return `${gdzie}: ${problem.message}`;
+    })
+    .join('; ');
+}
+
+/**
+ * Sprawdza listę wpisów POJEDYNCZO.
+ *
+ * To jest najwazniejsza decyzja w tym pliku. Wczesniej caly plik szedl
+ * przez jedno sprawdzenie i pierwszy zly wpis wysypywal budowanie - czyli
+ * literowka w jednym ogloszeniu zatrzymywala publikacje CALEJ strony,
+ * razem z wszystkim, co bylo poprawne. Przewodniczacy nie widzi logow
+ * z GitHuba, wiec dowiedzialby sie o tym dopiero wtedy, gdy ktos zapyta,
+ * czemu strona nie dziala.
+ *
+ * Teraz zepsuty wpis jest pomijany, reszta strony wychodzi normalnie,
+ * a powod laduje w podsumowaniu budowania.
+ *
+ * Pierwsza linia obrony jest w panelu (tina/config.ts) - tam pola sa
+ * sprawdzane przy wpisywaniu i przewodniczacy widzi blad od razu.
+ * To tutaj jest siatka bezpieczenstwa, nie glowne zabezpieczenie.
+ */
+function kolekcja(nazwaPliku, klucz, schematWpisu, dane, nazwaWpisu = 'wpis') {
+  const lista = dane?.[klucz];
+
+  if (!Array.isArray(lista)) {
+    // Brak calej listy to co innego niz zly wpis - pliku nie da sie
+    // uratowac zgadywaniem. Zwracamy pusto i mowimy o tym glosno.
+    pominiete.push(`${nazwaPliku}: brak listy „${klucz}” — sekcja będzie pusta`);
+    return [];
+  }
+
+  const dobre = [];
+
+  lista.forEach((wpis, i) => {
+    const wynik = schematWpisu.safeParse(wpis);
+
+    if (wynik.success) {
+      dobre.push(wynik.data);
+      return;
+    }
+
+    // Do opisu bierzemy tytul, jesli jakikolwiek da sie odczytac -
+    // numer pozycji nic nie mowi komus, kto patrzy na panel.
+    const etykieta =
+      wpis?.title || wpis?.tytul || wpis?.imieNazwisko || `${nazwaWpisu} nr ${i + 1}`;
+
+    pominiete.push(`${nazwaPliku}: pominięto „${etykieta}” — ${opiszBledy(wynik.error)}`);
+  });
+
+  return dobre;
+}
+
+/**
+ * Sprawdza plik ustawien strony. Tu nie ma listy, z ktorej da sie cos
+ * wyrzucic - kazde pole jest czescia szkieletu strony. Dlatego zamiast
+ * pomijac, podstawiamy wartosc zastepcza (patrz `.catch()` w schemacie).
+ */
+function ustawienia(nazwaPliku, schemat, dane) {
   const wynik = schemat.safeParse(dane);
 
   if (!wynik.success) {
-    const bledy = wynik.error.issues
-      .map((problem) => {
-        const gdzie = problem.path.length ? problem.path.join(' → ') : '(cały plik)';
-        return `   • ${gdzie}: ${problem.message}`;
-      })
-      .join('\n');
-
-    // Rzucamy blad z czytelnym opisem zamiast pozwolic Astro pokazac
-    // "Cannot read property of undefined" gdzies w srodku szablonu.
+    // Tu juz naprawde nie ma co ratowac - plik ma zla budowe, a nie zla
+    // wartosc w polu. Zatrzymujemy budowanie z czytelnym opisem.
     throw new Error(
       `\n\n┌─────────────────────────────────────────────────────────\n` +
         `│ BŁĄD W TREŚCI: src/content/${nazwaPliku}\n` +
         `└─────────────────────────────────────────────────────────\n` +
-        `${bledy}\n\n` +
+        `   • ${opiszBledy(wynik.error)}\n\n` +
         `Popraw plik i zapisz — strona przebuduje się sama.\n`
     );
   }
 
   return wynik.data;
+}
+
+/** Wypisuje podsumowanie na koniec wczytywania tresci. */
+function podsumujTresc() {
+  if (pominiete.length === 0) return;
+
+  console.warn(
+    `\n┌─────────────────────────────────────────────────────────\n` +
+      `│ UWAGA: ${pominiete.length} rzecz(y) pominięto w treści\n` +
+      `└─────────────────────────────────────────────────────────\n` +
+      pominiete.map((wiersz) => `   • ${wiersz}`).join('\n') +
+      `\n\n   Strona zbudowała się mimo to — te pozycje po prostu` +
+      `\n   się na niej nie pojawią. Popraw je w panelu i zapisz.\n`
+  );
 }
 
 /* Sciezki do plikow zapisywane byly raz z ukosnikiem, raz bez
@@ -65,6 +139,23 @@ const sciezka = z
   .transform((wartosc) => (wartosc && !wartosc.startsWith('/') ? `/${wartosc}` : wartosc));
 
 const niepusty = (co) => z.string().trim().min(1, `${co} nie może być puste`);
+
+/* Pole, ktore w razie bledu dostaje wartosc zastepcza zamiast zatrzymywac
+   budowanie. Uzywane tam, gdzie brak wartosci rozwalilby uklad strony. */
+const zZapasem = (schemat, zapas) => schemat.catch(zapas);
+
+/* Adres strony internetowej. Ludzie wklejaja "www.olkusz.pl" albo
+   "umig.olkusz.pl" bez "https://" - to nie jest blad, tylko sposob,
+   w jaki normalnie zapisuje sie adresy. Dopisujemy brakujacy poczatek
+   zamiast odrzucac wpis. */
+const adresWww = z
+  .string()
+  .trim()
+  .transform((wartosc) => {
+    if (!wartosc) return wartosc;
+    return /^https?:\/\//i.test(wartosc) ? wartosc : `https://${wartosc}`;
+  })
+  .pipe(z.string().url('To nie wygląda na adres strony'));
 
 /* =====================================================================
    Schematy
@@ -81,62 +172,84 @@ const schematStrony = z.object({
     tresc: niepusty('Treść'),
     zdjecie: sciezka,
     opisZdjecia: niepusty('Opis zdjęcia'),
-    coRobimy: z.array(niepusty('Pozycja listy')),
-    czymSieZajmujemy: z.array(niepusty('Pozycja listy')),
+    // Puste punkty listy (ktos kliknal "dodaj" i nie wpisal nic) odsiewamy
+    // tutaj, zamiast pokazywac mieszkancowi pusty punktor.
+    coRobimy: zZapasem(z.array(z.string().trim().catch('')), []),
+    czymSieZajmujemy: zZapasem(z.array(z.string().trim().catch('')), []),
   }),
   kontakt: z.object({
     adres: niepusty('Adres'),
-    email: z.string().trim().email('To nie wygląda na adres e-mail'),
-    facebook: z.string().trim().url('To nie wygląda na adres strony'),
+    /* E-mail i Facebook: zly wpis nie moze zabrac calej sekcji Kontakt,
+       w ktorej jest jeszcze adres i numery alarmowe. Puste = sekcja
+       po prostu nie pokaze tego odnosnika. */
+    email: zZapasem(z.string().trim().email(), ''),
+    facebook: zZapasem(adresWww, ''),
     przewodniczacy: z.object({
       imieNazwisko: niepusty('Imię i nazwisko'),
       telefon: niepusty('Telefon'),
     }),
-    telefony: z.array(
-      z.object({
-        numer: niepusty('Numer'),
-        opis: niepusty('Opis'),
-        // Numery alarmowe sa wyroznione na stronie - to nie jest ozdoba,
-        // tylko informacja, ze tego numeru uzywa sie w innej sytuacji.
-        alarmowy: z.boolean().default(false),
-      })
+    /* Cala lista z zapasem: gdyby ktos skasowal ja w panelu, sekcja
+       pokaze sie bez numerow, zamiast wywalic budowanie. Pojedyncze
+       zepsute pozycje odsiewamy nizej. */
+    /* `.catch(null)` stoi przy POJEDYNCZEJ pozycji, nie przy calej liscie.
+       Roznica jest istotna: gdyby zapas byl na liscie, jeden zly numer
+       kasowalby wszystkie pozostale, razem z numerami alarmowymi.
+       Tak zepsuta pozycja znika sama, a reszta zostaje. */
+    telefony: zZapasem(
+      z.array(
+        z
+          .object({
+            numer: niepusty('Numer'),
+            opis: niepusty('Opis'),
+            // Numery alarmowe sa wyroznione na stronie - to nie jest ozdoba,
+            // tylko informacja, ze tego numeru uzywa sie w innej sytuacji.
+            alarmowy: zZapasem(z.boolean(), false),
+          })
+          .catch(null)
+      ),
+      []
     ),
-    linki: z.array(
-      z.object({
-        nazwa: niepusty('Nazwa'),
-        adres: z.string().trim().url('To nie wygląda na adres strony'),
-      })
+    linki: zZapasem(
+      z.array(
+        z
+          .object({
+            nazwa: niepusty('Nazwa'),
+            adres: adresWww,
+          })
+          .catch(null)
+      ),
+      []
     ),
   }),
 });
 
-const schematAktualnosci = z.object({
-  wpisy: z.array(
-    z.object({
+/* Od tego miejsca schematy opisuja POJEDYNCZY wpis, nie caly plik.
+   Sprawdzanie idzie wpis po wpisie (patrz `kolekcja`), zeby jedna
+   literowka nie zabierala calej sekcji. */
+
+const wpisAktualnosci = z.object({
       title: niepusty('Tytuł'),
       text: niepusty('Treść'),
-      img: sciezka.optional(),
+      // Zle wpisana sciezka do zdjecia nie moze skasowac ogloszenia -
+      // tresc jest wazniejsza niz plakat. Brak zdjecia = wpis bez zdjecia.
+      img: zZapasem(sciezka.optional(), undefined),
       // Adres wlasnej podstrony wpisu. Puste = wyliczamy z tytulu.
-      slug: z.string().trim().optional(),
-      // Data publikacji. Nieobowiazkowa, bo starsze wpisy jej nie maja,
-      // ale wyszukiwarki i czytelnicy jej szukaja - warto uzupelniac.
-      data: z
-        .union([
-          z.literal(''),
-          z
-            .string()
-            .trim()
-            .regex(/^\d{4}-\d{2}-\d{2}$/, 'Data musi mieć postać RRRR-MM-DD, np. 2026-09-25'),
-        ])
-        .optional(),
-      published: z.boolean().default(true),
-    })
-  ),
+      slug: zZapasem(z.string().trim().optional(), undefined),
+      // Data publikacji. Nieobowiazkowa, bo starsze wpisy jej nie maja.
+      // Zle wpisana data odpada sama - ogloszenie pokaze sie bez daty,
+      // zamiast zniknac ze strony.
+      data: zZapasem(
+        z
+          .string()
+          .trim()
+          .regex(/^\d{4}-\d{2}-\d{2}$/)
+          .optional(),
+        undefined
+      ),
+      published: zZapasem(z.boolean(), true),
 });
 
-const schematKalendarza = z.object({
-  wydarzenia: z.array(
-    z.object({
+const wydarzenieKalendarza = z.object({
       title: niepusty('Nazwa wydarzenia'),
       // Sprawdzamy nie tylko format, ale czy to naprawde istniejaca data.
       //
@@ -160,73 +273,92 @@ const schematKalendarza = z.object({
           },
           { message: 'Taka data nie istnieje w kalendarzu' }
         ),
-      dateText: z.string().trim().optional(),
-      text: z.string().trim().optional().default(''),
-      published: z.boolean().default(true),
-    })
-  ),
+      dateText: zZapasem(z.string().trim().optional(), undefined),
+      text: zZapasem(z.string().trim(), '').default(''),
+      published: zZapasem(z.boolean(), true),
 });
 
-const schematDzialan = z.object({
-  pozycje: z.array(
-    z.object({
-      tytul: niepusty('Tytuł'),
-      opis: niepusty('Opis'),
-      zdjecie: sciezka,
-      opublikowane: z.boolean().default(true),
-    })
-  ),
+const dzialanie = z.object({
+  tytul: niepusty('Tytuł'),
+  opis: niepusty('Opis'),
+  // Brak zdjecia nie usuwa dzialania - sekcja pokaze sama karte z opisem.
+  zdjecie: zZapasem(sciezka.optional(), undefined),
+  opublikowane: zZapasem(z.boolean(), true),
 });
 
-const schematZarzadu = z.object({
-  osoby: z.array(
-    z.object({
-      imieNazwisko: niepusty('Imię i nazwisko'),
-      funkcja: niepusty('Funkcja'),
-      zdjecie: sciezka,
-      opublikowane: z.boolean().default(true),
-    })
-  ),
+const czlonekZarzadu = z.object({
+  imieNazwisko: niepusty('Imię i nazwisko'),
+  funkcja: niepusty('Funkcja'),
+  zdjecie: zZapasem(sciezka.optional(), undefined),
+  opublikowane: zZapasem(z.boolean(), true),
 });
 
-const schematDokumentow = z.object({
-  kategorie: z.array(
-    z.object({
-      id: z
-        .string()
-        .regex(/^[a-z0-9-]+$/, 'Identyfikator: tylko małe litery, cyfry i myślniki'),
-      label: niepusty('Nazwa zakładki'),
-      icon: z.string().trim().optional(),
-    })
-  ),
-  dokumenty: z.array(
-    z.object({
-      title: niepusty('Nazwa'),
-      description: z.string().trim().optional().default(''),
-      file: sciezka,
-      downloadName: z.string().trim().optional(),
-      kategoria: niepusty('Zakładka'),
-      published: z.boolean().default(true),
-    })
-  ),
+const kategoriaDokumentow = z.object({
+  /* Identyfikator laczy zakladke z dokumentami. Ludzie wpisuja tu
+     "Koszykówka" albo "turniej 2026" - sprowadzamy do dozwolonej postaci
+     zamiast odrzucac, bo odrzucenie zabiera cala zakladke razem z plikami. */
+  id: z
+    .string()
+    .trim()
+    .toLowerCase()
+    .transform((wartosc) =>
+      wartosc
+        .replace(/ą/g, 'a').replace(/ć/g, 'c').replace(/ę/g, 'e')
+        .replace(/ł/g, 'l').replace(/ń/g, 'n').replace(/ó/g, 'o')
+        .replace(/ś/g, 's').replace(/ż/g, 'z').replace(/ź/g, 'z')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+    )
+    .pipe(z.string().min(1, 'Identyfikator nie może być pusty')),
+  label: niepusty('Nazwa zakładki'),
+  icon: zZapasem(z.string().trim().optional(), undefined),
 });
 
-const schematGalerii = z.object({
-  albumy: z.array(
-    z.object({
-      title: niepusty('Nazwa albumu'),
-      year: z.string().regex(/^(19|20)\d{2}$/, 'Rok to cztery cyfry, np. 2026'),
-      photos: z.array(sciezka),
-      published: z.boolean().default(true),
-    })
-  ),
+const dokument = z.object({
+  title: niepusty('Nazwa'),
+  description: zZapasem(z.string().trim(), '').default(''),
+  file: sciezka,
+  downloadName: zZapasem(z.string().trim().optional(), undefined),
+  kategoria: niepusty('Zakładka'),
+  published: zZapasem(z.boolean(), true),
+});
+
+const albumGalerii = z.object({
+  title: niepusty('Nazwa albumu'),
+  // .trim() PRZED sprawdzeniem: spacja doklejona w panelu ("2018 ")
+  // zatrzymywala budowanie strony. Zbedna spacja to nie jest blad
+  // w tresci - to jest cos, co program ma po cichu posprzatac.
+  year: z
+    .string()
+    .trim()
+    .regex(/^(19|20)\d{2}$/, 'Rok to cztery cyfry, np. 2026'),
+  // Pojedyncze zdjecie ze zla sciezka nie moze skasowac albumu z pięćdziesięcioma
+  // innymi. Zle wpisy odpadaja, album zostaje.
+  photos: zZapasem(z.array(zZapasem(sciezka, '')), []),
+  published: zZapasem(z.boolean(), true),
 });
 
 /* =====================================================================
    Dane gotowe do wyswietlenia
    ===================================================================== */
 
-export const strona = sprawdz('strona.json', schematStrony, stronaSurowa);
+const stronaSprawdzona = ustawienia('strona.json', schematStrony, stronaSurowa);
+
+export const strona = {
+  ...stronaSprawdzona,
+  oNas: {
+    ...stronaSprawdzona.oNas,
+    // Puste punkty listy odsiewamy tu, a nie w szablonie - szablon ma
+    // rysowac, a nie decydowac, co jest tresci a co niedokonczonym wpisem.
+    coRobimy: stronaSprawdzona.oNas.coRobimy.filter(Boolean),
+    czymSieZajmujemy: stronaSprawdzona.oNas.czymSieZajmujemy.filter(Boolean),
+  },
+  kontakt: {
+    ...stronaSprawdzona.kontakt,
+    telefony: stronaSprawdzona.kontakt.telefony.filter(Boolean),
+    linki: stronaSprawdzona.kontakt.linki.filter(Boolean),
+  },
+};
 
 /* Jeden formatownik daty dla calej strony - "25 września 2026".
    Stoi tutaj, bo uzywaja go i aktualnosci, i kalendarz. */
@@ -261,8 +393,13 @@ function zrobSlug(tekst) {
     .slice(0, 80);
 }
 
-const wpisySurowe = sprawdz('aktualnosci.json', schematAktualnosci, aktualnosciSurowe)
-  .wpisy.filter((wpis) => wpis.published);
+const wpisySurowe = kolekcja(
+  'aktualnosci.json',
+  'wpisy',
+  wpisAktualnosci,
+  aktualnosciSurowe,
+  'ogłoszenie'
+).filter((wpis) => wpis.published);
 
 /* Dwa wpisy o tym samym tytule dalyby ten sam adres i jeden z nich
    przykrylby drugi przy budowaniu - bez slowa ostrzezenia. Numerujemy. */
@@ -286,11 +423,21 @@ export const aktualnosci = wpisySurowe.map((wpis) => {
   };
 });
 
-export const dzialania = sprawdz('dzialania.json', schematDzialan, dzialaniaSurowe)
-  .pozycje.filter((pozycja) => pozycja.opublikowane);
+export const dzialania = kolekcja(
+  'dzialania.json',
+  'pozycje',
+  dzialanie,
+  dzialaniaSurowe,
+  'działanie'
+).filter((pozycja) => pozycja.opublikowane);
 
-export const zarzad = sprawdz('zarzad.json', schematZarzadu, zarzadSurowy)
-  .osoby.filter((osoba) => osoba.opublikowane);
+export const zarzad = kolekcja(
+  'zarzad.json',
+  'osoby',
+  czlonekZarzadu,
+  zarzadSurowy,
+  'osoba'
+).filter((osoba) => osoba.opublikowane);
 
 /* ---- Kalendarz ------------------------------------------------------
    Kolejnosc i wyszarzanie minionych wydarzen wynikaja z daty, a nie
@@ -304,8 +451,14 @@ const koniecMiesiaca = (data) =>
 
 const dzis = new Date();
 
-export const kalendarz = sprawdz('kalendarz.json', schematKalendarza, kalendarzSurowy)
-  .wydarzenia.filter((wydarzenie) => wydarzenie.published)
+export const kalendarz = kolekcja(
+  'kalendarz.json',
+  'wydarzenia',
+  wydarzenieKalendarza,
+  kalendarzSurowy,
+  'wydarzenie'
+)
+  .filter((wydarzenie) => wydarzenie.published)
   .map((wydarzenie) => {
     const data = new Date(`${wydarzenie.date}T00:00:00`);
     const przyblizony = Boolean(wydarzenie.dateText);
@@ -332,13 +485,40 @@ export const rokKalendarza = (() => {
    Zakladka pojawia sie na stronie tylko wtedy, gdy ma choc jeden
    opublikowany dokument. Pusta zakladka to slepy zaulek dla mieszkanca. */
 
-const wszystkieDokumenty = sprawdz('dokumenty.json', schematDokumentow, dokumentySurowe);
+const kategorieDokumentow = kolekcja(
+  'dokumenty.json',
+  'kategorie',
+  kategoriaDokumentow,
+  dokumentySurowe,
+  'zakładka'
+);
 
-export const dokumenty = wszystkieDokumenty.kategorie
+const plikiDokumentow = kolekcja(
+  'dokumenty.json',
+  'dokumenty',
+  dokument,
+  dokumentySurowe,
+  'dokument'
+);
+
+/* Dokument przypisany do nieistniejacej zakladki nie pokazalby sie nigdzie
+   i nikt by nie wiedzial dlaczego. Mowimy o tym wprost. */
+const znaneZakladki = new Set(kategorieDokumentow.map((kategoria) => kategoria.id));
+
+plikiDokumentow
+  .filter((plik) => plik.published && !znaneZakladki.has(plik.kategoria))
+  .forEach((plik) => {
+    pominiete.push(
+      `dokumenty.json: „${plik.title}” ma zakładkę „${plik.kategoria}”, ` +
+        `której nie ma na liście zakładek — dokument się nie pokaże`
+    );
+  });
+
+export const dokumenty = kategorieDokumentow
   .map((kategoria) => ({
     ...kategoria,
-    pozycje: wszystkieDokumenty.dokumenty.filter(
-      (dokument) => dokument.published && dokument.kategoria === kategoria.id
+    pozycje: plikiDokumentow.filter(
+      (plik) => plik.published && plik.kategoria === kategoria.id
     ),
   }))
   .filter((kategoria) => kategoria.pozycje.length > 0);
@@ -346,9 +526,15 @@ export const dokumenty = wszystkieDokumenty.kategorie
 /* ---- Galeria --------------------------------------------------------
    Lata schodza od najnowszego. Album bez zdjec nie ma po co istniec. */
 
-export const galeria = sprawdz('galeria.json', schematGalerii, galeriaSurowa)
-  .albumy.filter((album) => album.published && album.photos.length > 0);
+export const galeria = kolekcja('galeria.json', 'albumy', albumGalerii, galeriaSurowa, 'album')
+  .map((album) => ({ ...album, photos: album.photos.filter(Boolean) }))
+  .filter((album) => album.published && album.photos.length > 0);
 
 export const lataGalerii = [...new Set(galeria.map((album) => album.year))].sort((a, b) =>
   b.localeCompare(a)
 );
+
+/* Na koniec: jedno podsumowanie wszystkiego, co zostalo pominiete.
+   Wywolanie stoi tutaj, a nie przy kazdym pliku, zeby lista byla w logu
+   budowania w jednym kawalku. */
+podsumujTresc();

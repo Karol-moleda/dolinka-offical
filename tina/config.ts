@@ -33,6 +33,70 @@ const galaz =
 /* Pola powtarzalne - wydzielone, zeby nie kopiowac tego samego opisu
    w czterech miejscach i nie rozjechac ich przy pierwszej poprawce. */
 
+/* =====================================================================
+   Sprawdzanie przy wpisywaniu
+   =====================================================================
+
+   To jest PIERWSZA linia obrony i najwazniejsza, bo dziala natychmiast:
+   przewodniczacy widzi czerwony komunikat pod polem i nie moze zapisac.
+
+   Druga linia jest w `src/tresc.js` - tam zepsuty wpis jest pomijany,
+   zeby budowanie strony nigdy sie nie zatrzymalo. Ale to juz tylko siatka
+   bezpieczenstwa: wtedy wpis po cichu nie pojawia sie na stronie, a autor
+   nie wie dlaczego. Dlatego blad ma byc zlapany tutaj.
+*/
+
+/** Data w postaci RRRR-MM-DD, ktora naprawde istnieje w kalendarzu. */
+const sprawdzDate = (wartosc?: string) => {
+  if (!wartosc) return undefined;
+
+  const dopasowanie = /^(\d{4})-(\d{2})-(\d{2})$/.exec(wartosc.trim());
+  if (!dopasowanie) {
+    return 'Data musi mieć postać RRRR-MM-DD, np. 2026-09-25';
+  }
+
+  const [, rok, miesiac, dzien] = dopasowanie.map(Number) as unknown as number[];
+  const data = new Date(Date.UTC(rok, miesiac - 1, dzien));
+
+  // `new Date('2026-02-31')` nie zglasza bledu - JavaScript po cichu
+  // przewija te date na 3 marca. Bez tego porownania 31 lutego
+  // wyladowalby na stronie jako 3 marca.
+  const istnieje =
+    data.getUTCFullYear() === rok &&
+    data.getUTCMonth() === miesiac - 1 &&
+    data.getUTCDate() === dzien;
+
+  return istnieje ? undefined : 'Taka data nie istnieje w kalendarzu';
+};
+
+const sprawdzRok = (wartosc?: string) => {
+  if (!wartosc) return 'Podaj rok, np. 2026';
+  return /^(19|20)\d{2}$/.test(wartosc.trim())
+    ? undefined
+    : 'Rok to cztery cyfry, np. 2026';
+};
+
+const sprawdzAdresWww = (wartosc?: string) => {
+  if (!wartosc) return undefined;
+  try {
+    const czysty = wartosc.trim();
+    new URL(/^https?:\/\//i.test(czysty) ? czysty : `https://${czysty}`);
+    return undefined;
+  } catch {
+    return 'To nie wygląda na adres strony, np. https://umig.olkusz.pl';
+  }
+};
+
+const sprawdzEmail = (wartosc?: string) => {
+  if (!wartosc) return undefined;
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(wartosc.trim())
+    ? undefined
+    : 'To nie wygląda na adres e-mail';
+};
+
+const sprawdzNiepuste = (co: string) => (wartosc?: string) =>
+  wartosc && wartosc.trim().length > 0 ? undefined : `${co} nie może być puste`;
+
 const poleOpublikowane = (nazwa: string) => ({
   type: 'boolean' as const,
   name: nazwa,
@@ -132,6 +196,7 @@ export default defineConfig({
                 description:
                   'Postać RRRR-MM-DD, np. 2026-09-25. Pokazuje się pod tytułem ' +
                   'i mówi Google, jak świeże jest ogłoszenie.',
+                ui: { validate: sprawdzDate },
               },
               {
                 type: 'string',
@@ -189,9 +254,11 @@ export default defineConfig({
                 name: 'date',
                 label: 'Data',
                 required: true,
-                description:
-                  'Postać RRRR-MM-DD, np. 2026-09-25. Data, której nie ma w kalendarzu ' +
-                  '(np. 2026-02-31), zatrzyma budowanie strony z czytelnym komunikatem.',
+                description: 'Postać RRRR-MM-DD, np. 2026-09-25.',
+                ui: {
+                  validate: (wartosc?: string) =>
+                    sprawdzNiepuste('Data')(wartosc) ?? sprawdzDate(wartosc),
+                },
               },
               {
                 type: 'string',
@@ -256,6 +323,7 @@ export default defineConfig({
                 label: 'Rok',
                 required: true,
                 description: 'Cztery cyfry, np. 2026. Decyduje o zakładce nad galerią.',
+                ui: { validate: sprawdzRok },
               },
               {
                 type: 'image',
@@ -304,6 +372,14 @@ export default defineConfig({
                   'Tylko małe litery, cyfry i myślniki — np. „koszykowka”. ' +
                   'To po nim dokument wie, do której zakładki należy, ' +
                   'więc po utworzeniu lepiej go już nie zmieniać.',
+                ui: {
+                  validate: (wartosc?: string) => {
+                    if (!wartosc || !wartosc.trim()) return 'Identyfikator nie może być pusty';
+                    return /^[a-z0-9-]+$/.test(wartosc.trim())
+                      ? undefined
+                      : 'Tylko małe litery bez polskich znaków, cyfry i myślniki — np. „koszykowka”';
+                  },
+                },
               },
               {
                 type: 'string',
@@ -543,6 +619,7 @@ export default defineConfig({
                 label: 'E-mail',
                 required: true,
                 description: 'Widoczny publicznie na stronie.',
+                ui: { validate: sprawdzEmail },
               },
               {
                 type: 'string',
@@ -550,6 +627,7 @@ export default defineConfig({
                 label: 'Adres profilu na Facebooku',
                 required: true,
                 description: 'Pełny adres, razem z https://',
+                ui: { validate: sprawdzAdresWww },
               },
               {
                 type: 'object',
@@ -606,6 +684,7 @@ export default defineConfig({
                     label: 'Adres',
                     required: true,
                     description: 'Pełny adres, razem z https://',
+                    ui: { validate: sprawdzAdresWww },
                   },
                 ],
               },
