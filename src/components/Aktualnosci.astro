@@ -68,7 +68,21 @@ const DLUGI = 260;
 
             <div class="wiesc__tresc">
               {i === 0 && wpisy.length > 1 && <p><span class="plakietka">Najnowsza</span></p>}
-              <h3 class="wiesc__tytul">{wpis.title}</h3>
+
+              {/* Tytul jest linkiem do wlasnej podstrony wpisu. Wczesniej
+                  rozwijalismy tresc na miejscu przyciskiem - teraz caly
+                  wpis ma swoj adres, wiec "wiecej" prowadzi tam, gdzie
+                  da sie ogloszenie oznaczyc w zakladkach, wyslac znajomemu
+                  i gdzie znajdzie je wyszukiwarka. */}
+              <h3 class="wiesc__tytul">
+                <a class="wiesc__link" href={wpis.adres}>{wpis.title}</a>
+              </h3>
+
+              {wpis.dataCzytelna && (
+                <p class="wiesc__data">
+                  <time datetime={wpis.data}>{wpis.dataCzytelna}</time>
+                </p>
+              )}
 
               <div class="wiesc__tekst" data-dlugi={wpis.text.length > DLUGI}>
                 {wpis.text.split('\n').map((linia, nr, tab) => (
@@ -79,9 +93,14 @@ const DLUGI = 260;
                 ))}
               </div>
 
-              {wpis.text.length > DLUGI && (
-                <button type="button" class="wiesc__wiecej" aria-expanded="false">Czytaj więcej</button>
-              )}
+              <a class="wiesc__wiecej" href={wpis.adres}>
+                Czytaj całość
+                <span class="tylko-dla-czytnika">: {wpis.title}</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </a>
             </div>
           </article>
         ))}
@@ -126,16 +145,6 @@ const DLUGI = 260;
 
       wpisy.forEach((wpis, i) => {
         wpis.hidden = i !== biezacy;
-
-        // Kazda zmiana wpisu zaczyna od zwinietej tresci - inaczej krotki
-        // wpis dziedziczylby "rozwiniete" po poprzednim, dlugim.
-        const tekst = wpis.querySelector('.wiesc__tekst');
-        const przycisk = wpis.querySelector('.wiesc__wiecej');
-        if (tekst && przycisk) {
-          tekst.classList.remove('is-rozwiniety');
-          przycisk.setAttribute('aria-expanded', 'false');
-          przycisk.textContent = 'Czytaj więcej';
-        }
       });
 
       if (pole) pole.value = String(biezacy);
@@ -151,15 +160,6 @@ const DLUGI = 260;
 
     sekcja.querySelectorAll('.krok').forEach((krok) => {
       krok.addEventListener('click', () => pokaz(biezacy + Number(krok.dataset.ruch)));
-    });
-
-    sekcja.querySelectorAll('.wiesc__wiecej').forEach((przycisk) => {
-      przycisk.addEventListener('click', () => {
-        const tekst = przycisk.previousElementSibling;
-        const rozwiniety = tekst.classList.toggle('is-rozwiniety');
-        przycisk.setAttribute('aria-expanded', String(rozwiniety));
-        przycisk.textContent = rozwiniety ? 'Zwiń' : 'Czytaj więcej';
-      });
     });
 
     pokaz(0);
@@ -291,6 +291,24 @@ const DLUGI = 260;
     margin-block: var(--o-3) var(--o-4);
   }
 
+  .wiesc__link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .wiesc__link:hover {
+    color: var(--marka);
+    text-decoration: underline;
+  }
+
+  .wiesc__data {
+    margin-top: calc(var(--o-4) * -1 + var(--o-1));
+    margin-bottom: var(--o-4);
+    color: var(--tekst-3);
+    font-size: var(--t-s);
+    font-weight: 600;
+  }
+
   .wiesc__tresc > p:first-child + .wiesc__tytul {
     margin-top: var(--o-3);
   }
@@ -300,8 +318,8 @@ const DLUGI = 260;
     line-height: 1.65;
   }
 
-  /* Zwiniete: piec linii i miekkie sciecie. */
-  .wiesc__tekst[data-dlugi='true']:not(.is-rozwiniety) {
+  /* Zapowiedz: piec linii i miekkie sciecie. Calosc jest na podstronie. */
+  .wiesc__tekst[data-dlugi='true'] {
     display: -webkit-box;
     -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
@@ -309,16 +327,24 @@ const DLUGI = 260;
   }
 
   .wiesc__wiecej {
-    margin-top: var(--o-4);
-    padding: 0;
-    border: 0;
-    background: none;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--o-1);
+    /* 44px celu dotykowego - to jest teraz link, a nie ozdobny napis. */
+    min-height: 44px;
+    margin-top: var(--o-3);
     color: var(--marka);
     font-weight: 600;
+    text-decoration: none;
   }
 
   .wiesc__wiecej:hover {
     text-decoration: underline;
+  }
+
+  .wiesc__wiecej svg {
+    width: 18px;
+    height: 18px;
   }
 
   /* ---- Pasek nawigacji --------------------------------------------------- */

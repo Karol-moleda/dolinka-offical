@@ -76,7 +76,19 @@ var config_default = defineConfig({
                 type: "image",
                 name: "img",
                 label: "Plakat (opcjonalnie)",
-                description: "Pokazywany obok tre\u015Bci, zawsze w ca\u0142o\u015Bci \u2014 nic nie zostanie uci\u0119te."
+                description: "Pokazywany obok tre\u015Bci, zawsze w ca\u0142o\u015Bci \u2014 nic nie zostanie uci\u0119te. To samo zdj\u0119cie pojawia si\u0119 w podgl\u0105dzie linku na Facebooku, wi\u0119c warto je doda\u0107 nawet do kr\xF3tkiego og\u0142oszenia."
+              },
+              {
+                type: "string",
+                name: "data",
+                label: "Data og\u0142oszenia (opcjonalnie)",
+                description: "Posta\u0107 RRRR-MM-DD, np. 2026-09-25. Pokazuje si\u0119 pod tytu\u0142em i m\xF3wi Google, jak \u015Bwie\u017Ce jest og\u0142oszenie."
+              },
+              {
+                type: "string",
+                name: "slug",
+                label: "Adres podstrony (opcjonalnie)",
+                description: "Ka\u017Cde og\u0142oszenie ma w\u0142asny adres, np. dolinka-olkusz.pl/aktualnosci/zebranie-z-mieszkancami/. Zostaw puste, a powstanie sam z tytu\u0142u. UWAGA: zmiana tego pola (albo tytu\u0142u, gdy pole jest puste) zmienia adres \u2014 linki wys\u0142ane wcze\u015Bniej na Facebooku przestan\u0105 dzia\u0142a\u0107."
               },
               poleOpublikowane("published")
             ]

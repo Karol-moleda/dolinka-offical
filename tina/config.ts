@@ -121,7 +121,27 @@ export default defineConfig({
                 name: 'img',
                 label: 'Plakat (opcjonalnie)',
                 description:
-                  'Pokazywany obok treści, zawsze w całości — nic nie zostanie ucięte.',
+                  'Pokazywany obok treści, zawsze w całości — nic nie zostanie ucięte. ' +
+                  'To samo zdjęcie pojawia się w podglądzie linku na Facebooku, ' +
+                  'więc warto je dodać nawet do krótkiego ogłoszenia.',
+              },
+              {
+                type: 'string',
+                name: 'data',
+                label: 'Data ogłoszenia (opcjonalnie)',
+                description:
+                  'Postać RRRR-MM-DD, np. 2026-09-25. Pokazuje się pod tytułem ' +
+                  'i mówi Google, jak świeże jest ogłoszenie.',
+              },
+              {
+                type: 'string',
+                name: 'slug',
+                label: 'Adres podstrony (opcjonalnie)',
+                description:
+                  'Każde ogłoszenie ma własny adres, np. dolinka-olkusz.pl/aktualnosci/zebranie-z-mieszkancami/. ' +
+                  'Zostaw puste, a powstanie sam z tytułu. ' +
+                  'UWAGA: zmiana tego pola (albo tytułu, gdy pole jest puste) ' +
+                  'zmienia adres — linki wysłane wcześniej na Facebooku przestaną działać.',
               },
               poleOpublikowane('published'),
             ],

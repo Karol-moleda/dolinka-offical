@@ -7,10 +7,14 @@ export default defineConfig({
   // kanonicznych - bez tego w znacznikach ladowaly relatywne sciezki.
   site: 'https://dolinka-olkusz.pl',
 
-  // Strona ma jeden adres, wiec format nie ma tu wielkiego znaczenia,
-  // ale 'file' generuje dist/index.html zamiast dist/index/index.html.
+  // Bylo 'file', bo strona miala jeden adres. Odkad ogloszenia maja
+  // wlasne podstrony, 'file' dawaloby adresy w rodzaju
+  // /aktualnosci/zebranie.html - z rozszerzeniem, ktore widac w wynikach
+  // Google i na plakacie z kodem QR. 'directory' generuje
+  // /aktualnosci/zebranie/index.html, czyli adres bez rozszerzenia.
+  // Apache na vh.pl sam podstawia index.html dla adresu katalogu.
   build: {
-    format: 'file',
+    format: 'directory',
   },
 
   // Zdjecia przetwarzane przy budowaniu. Domyslnie Astro uzywa sharpa;

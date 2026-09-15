@@ -15,7 +15,9 @@ const { naglowek } = strona;
 const zdjecie = obraz(naglowek.zdjecie);
 ---
 
-<section class="naglowek" id="gora">
+{/* Identyfikator "gora" przeniesiony do Base.astro - jest teraz na kazdej
+    stronie, takze na podstronach ogloszen, ktore naglowka nie maja. */}
+<section class="naglowek">
   {zdjecie && (
     <Image
       class="naglowek__zdjecie"

@@ -22,6 +22,9 @@ const rok = new Date().getFullYear();
       </p>
     </div>
 
+    {/* Na stronie glownej "#gora" to sekcja naglowka. Na podstronie
+        ogloszenia tej sekcji nie ma, wiec kotwica prowadzilaby donikad -
+        stad zapasowy element o tym samym identyfikatorze w Base.astro. */}
     <a class="stopka__gora" href="#gora">
       Na górę
       <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">

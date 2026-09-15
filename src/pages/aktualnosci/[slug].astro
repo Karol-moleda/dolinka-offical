@@ -1,0 +1,276 @@
+---
+/**
+ * Podstrona pojedynczego ogloszenia: /aktualnosci/<slug>/
+ *
+ * Po co osobny adres, skoro tresc jest tez na stronie glownej:
+ *
+ * 1. Wyszukiwarka pokazuje w wynikach adresy, nie fragmenty strony.
+ *    Dopoki wszystko siedzialo pod jednym adresem, ogloszenie o zebraniu
+ *    nie mialo jak trafic do kogos, kto wpisuje "zebranie Osiedle Mlodych
+ *    Olkusz". Teraz kazde ogloszenie jest osobnym wynikiem.
+ *
+ * 2. Taki adres da sie wyslac. Na Facebooka, w SMS-ie, na plakacie jako
+ *    kod QR - i ladujesz dokladnie na tym ogloszeniu, a nie na gorze
+ *    strony glownej, skad trzeba jeszcze doscrollowac.
+ *
+ * 3. Podglad linku (og:image) pokazuje plakat TEGO ogloszenia, a nie
+ *    ogolne zdjecie Dolinki.
+ */
+import { Image } from 'astro:assets';
+import { getImage } from 'astro:assets';
+
+import Base from '../../layouts/Base.astro';
+import Nawigacja from '../../components/Nawigacja.astro';
+import Stopka from '../../components/Stopka.astro';
+
+import { aktualnosci, strona } from '../../tresc.js';
+import { obraz } from '../../zdjecia.js';
+
+export function getStaticPaths() {
+  // Wpis trafia tu razem z sasiadami, zeby na dole podstrony dalo sie
+  // pokazac "inne ogloszenia" bez ponownego szukania po tablicy.
+  return aktualnosci.map((wpis, i) => ({
+    params: { slug: wpis.slug },
+    props: {
+      wpis,
+      inne: aktualnosci.filter((_, nr) => nr !== i).slice(0, 3),
+    },
+  }));
+}
+
+const { wpis, inne } = Astro.props;
+
+const zdjecie = obraz(wpis.img);
+
+// Podglad linku na Facebooku: plakat tego ogloszenia, przyciety do
+// proporcji, ktorej oczekuja media spolecznosciowe.
+const podglad = zdjecie
+  ? (await getImage({ src: zdjecie, width: 1200, height: 630, fit: 'cover', format: 'jpeg', quality: 72 })).src
+  : undefined;
+
+const akapity = wpis.text.split('\n').filter((linia) => linia.trim().length > 0);
+
+/* Dane strukturalne - opis ogloszenia w formacie, ktory rozumie Google.
+   Dzieki temu w wynikach moze pokazac date i wydawce, a nie sam tytul. */
+const dane = {
+  '@context': 'https://schema.org',
+  '@type': 'NewsArticle',
+  headline: wpis.title,
+  description: wpis.zajawka,
+  ...(wpis.data ? { datePublished: wpis.data } : {}),
+  ...(podglad ? { image: new URL(podglad, Astro.site).href } : {}),
+  mainEntityOfPage: new URL(wpis.adres, Astro.site).href,
+  publisher: {
+    '@type': 'Organization',
+    name: 'Zarząd Osiedla Młodych w Olkuszu',
+    url: Astro.site?.href,
+  },
+};
+---
+
+<Base
+  title={`${wpis.title} | Dolinka Olkusz`}
+  description={wpis.zajawka}
+  obrazek={podglad}
+  typ="article"
+>
+  <Nawigacja />
+
+  <main id="tresc" class="wpis-strona">
+    <div class="kontener kontener--waski">
+      {/* Sciezka powrotu. Na podstronie, na ktora ktos wszedl prosto
+          z Facebooka, to jedyny sygnal, ze strona ma reszte. */}
+      <nav class="okruchy" aria-label="Ścieżka nawigacji">
+        <a href="/">Strona główna</a>
+        <span aria-hidden="true">/</span>
+        <a href="/#aktualnosci">Aktualności</a>
+      </nav>
+
+      <article class="wpis">
+        <header class="wpis__naglowek">
+          <h1 class="wpis__tytul">{wpis.title}</h1>
+          {wpis.dataCzytelna && (
+            <p class="wpis__data">
+              <time datetime={wpis.data}>{wpis.dataCzytelna}</time>
+            </p>
+          )}
+        </header>
+
+        {zdjecie && (
+          <figure class="wpis__media">
+            <Image
+              src={zdjecie}
+              alt={`Plakat: ${wpis.title}`}
+              widths={[480, 900, 1400]}
+              sizes="(min-width: 800px) 760px, 100vw"
+              quality={72}
+              loading="eager"
+            />
+          </figure>
+        )}
+
+        <div class="wpis__tekst">
+          {akapity.map((akapit) => <p>{akapit}</p>)}
+        </div>
+      </article>
+
+      <div class="wpis__stopka">
+        <a class="przycisk przycisk--obrys" href="/#aktualnosci">← Wszystkie aktualności</a>
+      </div>
+
+      {inne.length > 0 && (
+        <section class="pozostale" aria-labelledby="pozostale-tytul">
+          <h2 class="pozostale__tytul" id="pozostale-tytul">Inne ogłoszenia</h2>
+          <ul class="pozostale__lista">
+            {inne.map((sasiad) => (
+              <li>
+                <a class="pozostale__link" href={sasiad.adres}>
+                  <span class="pozostale__nazwa">{sasiad.title}</span>
+                  {sasiad.dataCzytelna && (
+                    <span class="pozostale__data">{sasiad.dataCzytelna}</span>
+                  )}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+    </div>
+  </main>
+
+  <Stopka />
+
+  <script type="application/ld+json" set:html={JSON.stringify(dane)} is:inline />
+</Base>
+
+<style>
+  .wpis-strona {
+    /* Pasek nawigacji jest przyklejony u gory i na podstronie nie ma
+       pod soba zdjecia naglowka, ktore by go "podtrzymalo". Bez tego
+       odstepu tytul wchodzilby pod pasek. */
+    padding-block: calc(68px + var(--o-8)) var(--o-12);
+  }
+
+  .kontener--waski {
+    max-width: 780px;
+  }
+
+  /* ---- Okruchy --------------------------------------------------------- */
+  .okruchy {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--o-2);
+    margin-bottom: var(--o-6);
+    font-size: var(--t-s);
+    color: var(--tekst-3);
+  }
+
+  .okruchy a {
+    color: var(--tekst-3);
+    text-decoration: none;
+  }
+
+  .okruchy a:hover {
+    color: var(--marka);
+    text-decoration: underline;
+  }
+
+  /* ---- Wpis ------------------------------------------------------------ */
+  .wpis__tytul {
+    font-size: var(--t-naglowek-l);
+    line-height: 1.15;
+    margin: 0;
+  }
+
+  .wpis__data {
+    margin-top: var(--o-3);
+    color: var(--tekst-3);
+    font-size: var(--t-s);
+    font-weight: 600;
+  }
+
+  .wpis__media {
+    margin: var(--o-8) 0 0;
+    display: grid;
+    place-items: center;
+    padding: var(--o-4);
+    background: var(--powierzchnia-2);
+    border: 1px solid var(--linia);
+    border-radius: var(--r-l);
+  }
+
+  .wpis__media :global(img) {
+    width: auto;
+    max-width: 100%;
+    /* Plakat ma byc czytelny w calosci - to zwykle jedyne miejsce,
+       gdzie stoi godzina i lista atrakcji. Zadnego przycinania. */
+    max-height: 70svh;
+    object-fit: contain;
+    border-radius: var(--r-m);
+  }
+
+  .wpis__tekst {
+    margin-top: var(--o-8);
+    color: var(--tekst-2);
+    font-size: var(--t-m);
+    line-height: 1.75;
+  }
+
+  .wpis__tekst p {
+    margin: 0 0 var(--o-4);
+  }
+
+  .wpis__tekst p:last-child {
+    margin-bottom: 0;
+  }
+
+  .wpis__stopka {
+    margin-top: var(--o-10);
+  }
+
+  /* ---- Inne ogloszenia -------------------------------------------------- */
+  .pozostale {
+    margin-top: var(--o-12);
+    padding-top: var(--o-8);
+    border-top: 1px solid var(--linia);
+  }
+
+  .pozostale__tytul {
+    font-size: var(--t-naglowek-s);
+    margin: 0 0 var(--o-4);
+  }
+
+  .pozostale__lista {
+    display: grid;
+    gap: var(--o-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .pozostale__link {
+    display: grid;
+    gap: var(--o-1);
+    padding: var(--o-4);
+    border: 1px solid var(--linia);
+    border-radius: var(--r-m);
+    background: var(--powierzchnia);
+    color: var(--tekst);
+    text-decoration: none;
+  }
+
+  .pozostale__link:hover {
+    border-color: var(--marka);
+    background: var(--marka-delikatna);
+  }
+
+  .pozostale__nazwa {
+    font-weight: 600;
+  }
+
+  .pozostale__data {
+    font-size: var(--t-xs);
+    color: var(--tekst-3);
+  }
+</style>

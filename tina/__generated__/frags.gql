@@ -5,6 +5,8 @@ fragment AktualnosciParts on Aktualnosci {
     title
     text
     img
+    data
+    slug
     published
   }
 }

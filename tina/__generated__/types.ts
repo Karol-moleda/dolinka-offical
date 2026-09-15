@@ -278,6 +278,8 @@ export type AktualnosciWpisy = {
   title: Scalars['String']['output'];
   text: Scalars['String']['output'];
   img?: Maybe<Scalars['String']['output']>;
+  data?: Maybe<Scalars['String']['output']>;
+  slug?: Maybe<Scalars['String']['output']>;
   published?: Maybe<Scalars['Boolean']['output']>;
 };
 
@@ -312,6 +314,8 @@ export type AktualnosciWpisyFilter = {
   title?: InputMaybe<StringFilter>;
   text?: InputMaybe<StringFilter>;
   img?: InputMaybe<ImageFilter>;
+  data?: InputMaybe<StringFilter>;
+  slug?: InputMaybe<StringFilter>;
   published?: InputMaybe<BooleanFilter>;
 };
 
@@ -833,6 +837,8 @@ export type AktualnosciWpisyMutation = {
   title?: InputMaybe<Scalars['String']['input']>;
   text?: InputMaybe<Scalars['String']['input']>;
   img?: InputMaybe<Scalars['String']['input']>;
+  data?: InputMaybe<Scalars['String']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
   published?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -951,7 +957,7 @@ export type StronaMutation = {
   kontakt?: InputMaybe<StronaKontaktMutation>;
 };
 
-export type AktualnosciPartsFragment = { __typename: 'Aktualnosci', wpisy?: Array<{ __typename: 'AktualnosciWpisy', title: string, text: string, img?: string | null, published?: boolean | null } | null> | null };
+export type AktualnosciPartsFragment = { __typename: 'Aktualnosci', wpisy?: Array<{ __typename: 'AktualnosciWpisy', title: string, text: string, img?: string | null, data?: string | null, slug?: string | null, published?: boolean | null } | null> | null };
 
 export type KalendarzPartsFragment = { __typename: 'Kalendarz', wydarzenia?: Array<{ __typename: 'KalendarzWydarzenia', title: string, date: string, dateText?: string | null, text?: string | null, published?: boolean | null } | null> | null };
 
@@ -970,7 +976,7 @@ export type AktualnosciQueryVariables = Exact<{
 }>;
 
 
-export type AktualnosciQuery = { __typename?: 'Query', aktualnosci: { __typename: 'Aktualnosci', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, wpisy?: Array<{ __typename: 'AktualnosciWpisy', title: string, text: string, img?: string | null, published?: boolean | null } | null> | null } };
+export type AktualnosciQuery = { __typename?: 'Query', aktualnosci: { __typename: 'Aktualnosci', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, wpisy?: Array<{ __typename: 'AktualnosciWpisy', title: string, text: string, img?: string | null, data?: string | null, slug?: string | null, published?: boolean | null } | null> | null } };
 
 export type AktualnosciConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -982,7 +988,7 @@ export type AktualnosciConnectionQueryVariables = Exact<{
 }>;
 
 
-export type AktualnosciConnectionQuery = { __typename?: 'Query', aktualnosciConnection: { __typename?: 'AktualnosciConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'AktualnosciConnectionEdges', cursor: string, node?: { __typename: 'Aktualnosci', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, wpisy?: Array<{ __typename: 'AktualnosciWpisy', title: string, text: string, img?: string | null, published?: boolean | null } | null> | null } | null } | null> | null } };
+export type AktualnosciConnectionQuery = { __typename?: 'Query', aktualnosciConnection: { __typename?: 'AktualnosciConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'AktualnosciConnectionEdges', cursor: string, node?: { __typename: 'Aktualnosci', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, wpisy?: Array<{ __typename: 'AktualnosciWpisy', title: string, text: string, img?: string | null, data?: string | null, slug?: string | null, published?: boolean | null } | null> | null } | null } | null> | null } };
 
 export type KalendarzQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -1106,6 +1112,8 @@ export const AktualnosciPartsFragmentDoc = gql`
     title
     text
     img
+    data
+    slug
     published
   }
 }

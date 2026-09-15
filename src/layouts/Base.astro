@@ -8,12 +8,35 @@ import '../styles/podstawy.css';
 import '../styles/elementy.css';
 import PanelDostepnosci from '../components/PanelDostepnosci.astro';
 
+import { getImage } from 'astro:assets';
+import { strona } from '../tresc.js';
+import { obraz } from '../zdjecia.js';
+
 const {
   title = 'Dolinka Olkusz | Wydarzenia, imprezy i aktualności Osiedla Młodych',
   description = 'Aktualności, kalendarz wydarzeń i galeria Osiedla Młodych w Olkuszu. Dolinka — miejsce spotkań mieszkańców.',
+  /* Zdjecie podgladu przy udostepnianiu linku. Facebook i Messenger
+     pokazuja je nad tytulem; link bez zdjecia to sam tekst, ktory ginie
+     w potoku postow. Podstrona ogloszenia podaje tu swoj plakat,
+     reszta strony dostaje zdjecie Dolinki. */
+  obrazek,
+  typ = 'website',
 } = Astro.props;
 
 const kanoniczny = new URL(Astro.url.pathname, Astro.site);
+
+const domyslnyPodglad = await getImage({
+  src: obraz(strona.naglowek.zdjecie),
+  width: 1200,
+  height: 630,
+  fit: 'cover',
+  format: 'jpeg',
+  quality: 72,
+});
+
+// og:image musi byc adresem bezwzglednym - Facebook nie domysli sie
+// domeny z "/_astro/dolinka.jpg".
+const podgladPelny = new URL(obrazek ?? domyslnyPodglad.src, Astro.site).href;
 ---
 
 <!doctype html>
@@ -25,11 +48,18 @@ const kanoniczny = new URL(Astro.url.pathname, Astro.site);
     <meta name="description" content={description} />
     <link rel="canonical" href={kanoniczny} />
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={typ} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={kanoniczny} />
     <meta property="og:locale" content="pl_PL" />
+    <meta property="og:site_name" content="Dolinka Olkusz" />
+    <meta property="og:image" content={podgladPelny} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    {/* Bez tego X/Twitter pokazuje maly kwadracik zamiast szerokiego zdjecia. */}
+    <meta name="twitter:card" content="summary_large_image" />
 
     {/* Kolor paska przegladarki na telefonie - osobno dla obu motywow. */}
     <meta name="theme-color" content="#f6f7f5" media="(prefers-color-scheme: light)" />
@@ -77,6 +107,9 @@ const kanoniczny = new URL(Astro.url.pathname, Astro.site);
   </head>
 
   <body>
+    {/* Punkt zaczepienia dla "Na górę" ze stopki. Na stronie glownej ten
+        identyfikator nosi sekcja naglowka, ale podstrony naglowka nie maja. */}
+    <span id="gora" tabindex="-1"></span>
     <a class="pomin-nawigacje" href="#tresc">Przejdź do treści</a>
     <slot />
     <PanelDostepnosci />

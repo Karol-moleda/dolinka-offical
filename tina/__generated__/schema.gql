@@ -109,6 +109,8 @@ type AktualnosciWpisy {
   title: String!
   text: String!
   img: String
+  data: String
+  slug: String
   published: Boolean
 }
 
@@ -142,6 +144,8 @@ input AktualnosciWpisyFilter {
   title: StringFilter
   text: StringFilter
   img: ImageFilter
+  data: StringFilter
+  slug: StringFilter
   published: BooleanFilter
 }
 
@@ -513,6 +517,8 @@ input AktualnosciWpisyMutation {
   title: String
   text: String
   img: String
+  data: String
+  slug: String
   published: Boolean
 }
 

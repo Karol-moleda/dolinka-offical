@@ -1,5 +1,10 @@
 # https://www.robotstxt.org/robotstxt.html
+
 User-agent: *
 Disallow:
 
-Sitemap: https://dolinka.olkusz.pl/sitemap.xml
+# Panel do zarzadzania trescia. Nie jest tajny (i tak wymaga logowania),
+# ale nie ma czego szukac w wynikach Google.
+Disallow: /admin/
+
+Sitemap: https://dolinka-olkusz.pl/sitemap.xml

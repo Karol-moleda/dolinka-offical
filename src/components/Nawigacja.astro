@@ -5,21 +5,24 @@
  * Pozycje w jednym miejscu: dodanie sekcji to jedna linijka, a nie
  * kopiowanie osmiu atrybutow i pamietanie o zamykaniu menu po kliknieciu.
  */
+/* Adresy zaczynaja sie od "/", nie od samego "#".
+   Na podstronie ogloszenia "#galeria" szukaloby sekcji NA TEJ podstronie
+   i nie robiloby nic. "/#galeria" wraca na strone glowna i tam przewija. */
 const pozycje = [
-  { href: '#aktualnosci', etykieta: 'Aktualności' },
-  { href: '#kalendarz', etykieta: 'Kalendarz' },
-  { href: '#o-nas', etykieta: 'O nas' },
-  { href: '#dzialania', etykieta: 'Nasze działania' },
-  { href: '#galeria', etykieta: 'Galeria' },
-  { href: '#zarzad', etykieta: 'Zarząd' },
-  { href: '#dokumenty', etykieta: 'Dokumenty' },
-  { href: '#kontakt', etykieta: 'Kontakt' },
+  { href: '/#aktualnosci', etykieta: 'Aktualności' },
+  { href: '/#kalendarz', etykieta: 'Kalendarz' },
+  { href: '/#o-nas', etykieta: 'O nas' },
+  { href: '/#dzialania', etykieta: 'Nasze działania' },
+  { href: '/#galeria', etykieta: 'Galeria' },
+  { href: '/#zarzad', etykieta: 'Zarząd' },
+  { href: '/#dokumenty', etykieta: 'Dokumenty' },
+  { href: '/#kontakt', etykieta: 'Kontakt' },
 ];
 ---
 
 <header class="pasek" id="pasek">
   <div class="pasek__wnetrze kontener">
-    <a class="marka" href="#gora">
+    <a class="marka" href="/">
       Dolinka
       <span class="marka__podpis">Osiedle Młodych w Olkuszu</span>
     </a>
