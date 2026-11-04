@@ -96,6 +96,13 @@
       "downloadName": "Regulamin Biegu 2025.pdf",
       "kategoria": "bieg",
       "published": false
+    },
+    {
+      "title": "Oświadczenie do Konkursu Plastycznego w Dolince 2026",
+      "description": "Do każdej pracy ucznia rodzic/ opiekun zobowiązany jest do dołączenia niniejszego Oświadczenia ",
+      "file": "/images/Oświadczenie rodzica opiekuna.pdf",
+      "downloadName": "Oświadczenie rodzica/ opiekuna Konkurs Plastyczny ",
+      "kategoria": "Konkurs plastyczny"
     }
   ]
 }
