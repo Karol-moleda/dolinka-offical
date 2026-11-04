@@ -12,7 +12,7 @@
     },
     {
       "id": "konkurs",
-      "label": "Konkurs plastyczny ",
+      "label": "Konkurs plastyczny",
       "icon": "Mikołajki"
     }
   ],
@@ -21,8 +21,8 @@
       "title": "Oświadczenie do Konkursu Plastycznego w Dolince 2026",
       "description": "Do każdej pracy ucznia rodzic/ opiekun zobowiązany jest do dołączenia niniejszego Oświadczenia ",
       "file": "/images/Oświadczenie rodzica opiekuna.pdf",
-      "downloadName": "Oświadczenie rodzica/ opiekuna Konkurs Plastyczny ",
-      "kategoria": "Konkurs plastyczny",
+      "downloadName": "Oświadczenie rodzica-opiekuna Konkurs Plastyczny.pdf",
+      "kategoria": "konkurs",
       "published": true
     },
     {
