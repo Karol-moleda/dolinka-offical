@@ -99,7 +99,8 @@ const lata = lataGalerii.filter((rok) => widoczne.some((album) => album.year ===
       </div>
 
       {widoczne.map((album) => (
-        <ul class="siatka-zdjec" data-album-tresc={album.title} hidden={album.title !== pierwszyAlbum?.title}>
+        <div data-album-tresc={album.title} hidden={album.title !== pierwszyAlbum?.title}>
+        <ul class="siatka-zdjec">
           {album.zdjecia.map((zdjecie, i) => (
             <li>
               {/* Miniatura jest przyciskiem, nie linkiem - nie prowadzi
@@ -122,6 +123,19 @@ const lata = lataGalerii.filter((rok) => widoczne.some((album) => album.year ===
             </li>
           ))}
         </ul>
+
+        {/* Pokazuje sie tylko, gdy album ma wiecej zdjec niz miesci sie
+            w dwoch rzedach - wlacza to skrypt ponizej. */}
+        <div class="wiecej" hidden>
+          <button type="button" class="wiecej__przycisk" aria-expanded="false" data-razem={album.zdjecia.length}>
+            <span class="wiecej__tekst"></span>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+        </div>
+        </div>
       ))}
     </div>
 
@@ -162,6 +176,57 @@ const lata = lataGalerii.filter((rok) => widoczne.some((album) => album.year ===
     const zakladkiAlbumow = [...sekcja.querySelectorAll('[data-album]')];
     const siatki = [...sekcja.querySelectorAll('[data-album-tresc]')];
 
+    /* ---- "Pokaz wiecej" --------------------------------------------------
+       Domyslnie widac dwa pelne rzedy siatki. Ile to zdjec, zalezy od liczby
+       kolumn (telefon 2, komputer 4-5), wiec czytamy ja z wyliczonego stylu
+       zamiast zgadywac w liczbach. Ukryte zdjecia nie sa pobierane
+       (lazy + display:none), wiec telefon nie sciaga calego albumu. */
+    const RZEDY = 2;
+
+    const odswiez = (blok) => {
+      const siatka = blok.querySelector('.siatka-zdjec');
+      const pole = blok.querySelector('.wiecej');
+      const przycisk = blok.querySelector('.wiecej__przycisk');
+      const elementy = [...siatka.children];
+      const rozwiniete = przycisk.getAttribute('aria-expanded') === 'true';
+
+      const kolumny = getComputedStyle(siatka).gridTemplateColumns.split(' ').length;
+      const limit = kolumny * RZEDY;
+      const potrzebny = elementy.length > limit;
+
+      elementy.forEach((el, i) => {
+        el.hidden = potrzebny && !rozwiniete && i >= limit;
+      });
+
+      pole.hidden = !potrzebny;
+      przycisk.querySelector('.wiecej__tekst').textContent = rozwiniete
+        ? 'Zwiń zdjęcia'
+        : `Pokaż wszystkie ${elementy.length} zdjęć`;
+    };
+
+    const bloki = [...sekcja.querySelectorAll('[data-album-tresc]')];
+
+    sekcja.addEventListener('click', (zdarzenie) => {
+      const przycisk = zdarzenie.target.closest('.wiecej__przycisk');
+      if (!przycisk) return;
+
+      const blok = przycisk.closest('[data-album-tresc]');
+      const bylo = przycisk.getAttribute('aria-expanded') === 'true';
+      przycisk.setAttribute('aria-expanded', String(!bylo));
+      odswiez(blok);
+
+      // Po zwinieciu wracamy do poczatku albumu, zeby nie zostac
+      // na pustym miejscu w srodku strony.
+      if (bylo) blok.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    });
+
+    // Liczba kolumn zmienia sie z szerokoscia okna (obrot telefonu).
+    let czeka;
+    window.addEventListener('resize', () => {
+      clearTimeout(czeka);
+      czeka = setTimeout(() => bloki.forEach(odswiez), 120);
+    });
+
     const pokazAlbum = (tytul) => {
       zakladkiAlbumow.forEach((z) => {
         const wybrana = z.dataset.album === tytul;
@@ -170,8 +235,14 @@ const lata = lataGalerii.filter((rok) => widoczne.some((album) => album.year ===
       });
       siatki.forEach((s) => {
         s.hidden = s.dataset.albumTresc !== tytul;
+        // Policzone po pokazaniu - ukryta siatka nie ma kolumn.
+        if (!s.hidden) odswiez(s);
       });
     };
+
+    bloki.forEach((blok) => {
+      if (!blok.hidden) odswiez(blok);
+    });
 
     zakladkiLat.forEach((zakladka) => {
       zakladka.addEventListener('click', () => {
@@ -300,8 +371,49 @@ const lata = lataGalerii.filter((rok) => widoczne.some((album) => album.year ===
     margin: 0;
   }
 
-  .siatka-zdjec[hidden] {
+  .siatka-zdjec > li[hidden] {
     display: none;
+  }
+
+  /* ---- Pokaz wiecej ----------------------------------------------------- */
+  .wiecej {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--o-6);
+  }
+
+  .wiecej[hidden] {
+    display: none;
+  }
+
+  .wiecej__przycisk {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--o-2);
+    min-height: 48px;
+    padding: var(--o-2) var(--o-6);
+    border: 1px solid var(--marka);
+    border-radius: var(--r-pigulka);
+    background: transparent;
+    color: var(--marka);
+    font-size: var(--t-s);
+    font-weight: 700;
+    transition: background var(--przejscie), color var(--przejscie);
+  }
+
+  .wiecej__przycisk:hover {
+    background: var(--marka);
+    color: var(--na-marce);
+  }
+
+  .wiecej__przycisk svg {
+    width: 18px;
+    height: 18px;
+    transition: transform var(--przejscie);
+  }
+
+  .wiecej__przycisk[aria-expanded='true'] svg {
+    transform: rotate(180deg);
   }
 
   @media (min-width: 700px) {
